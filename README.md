@@ -34,6 +34,9 @@ A GUI-based tool has been developed to configure and monitor AVB streams, device
 3. Run the `AVBTool.exe` executable.
 4. Use the user-friendly interface to manage your AVB network, configure streams, and monitor time synchronization.
 
+## AVTP and gPTP Stack Porting from OpenAvnu to Windows
+The AVTP and gPTP stacks have been ported from the OpenAvnu project to Windows. This porting process involved adapting the code to work with Windows-specific APIs and network interfaces. The AVTP stack is responsible for handling the transport of audio and video data over AVB networks, while the gPTP stack ensures precise time synchronization between AVB devices.
+
 ## Suggested Steps for Development
 
 1. Research Existing AVB Projects: Start by reviewing OpenAvnu for reference implementations of gPTP and AVTP on Linux.
