@@ -2,6 +2,8 @@
 #include <wdf.h>
 #include <wdm.h>
 #include <ndis.h>
+#include "../AVTP/AVTP.h"
+#include "../gPTP/gPTP.h"
 
 #define GPTP_EVENT_PORT 319
 #define GPTP_MULTICAST_ADDRESS "224.0.1.129"
@@ -152,4 +154,79 @@ ReceiveSyncMessage(
         buffer[result] = '\0';
         KdPrint(("Received: %s\n", buffer));
     }
+}
+
+VOID
+StartAVTP(
+    _In_ PDEVICE_CONTEXT DeviceContext
+    )
+{
+    DeviceContext->Running = TRUE;
+    HANDLE threadHandle;
+    PsCreateSystemThread(&threadHandle, THREAD_ALL_ACCESS, NULL, NULL, NULL, AVTPThread, DeviceContext);
+    ZwClose(threadHandle);
+}
+
+VOID
+StopAVTP(
+    _In_ PDEVICE_CONTEXT DeviceContext
+    )
+{
+    DeviceContext->Running = FALSE;
+    KeSetEvent(&DeviceContext->StopEvent, 0, FALSE);
+}
+
+VOID
+AVTPThread(
+    _In_ PVOID Context
+    )
+{
+    PDEVICE_CONTEXT deviceContext = (PDEVICE_CONTEXT)Context;
+    SOCKET sock;
+    sockaddr_in serverAddr;
+    WSADATA wsaData;
+
+    WSAStartup(MAKEWORD(2, 2), &wsaData);
+    sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    if (sock == INVALID_SOCKET) {
+        KdPrint(("Socket creation failed with error: %d\n", WSAGetLastError()));
+        return;
+    }
+
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_port = htons(1720); // AVTP port
+    inet_pton(AF_INET, "224.0.1.129", &serverAddr.sin_addr); // AVTP multicast address
+
+    while (deviceContext->Running) {
+        CaptureAVBFrames(sock, &serverAddr);
+        ProcessAVBFrames();
+        KeWaitForSingleObject(&deviceContext->StopEvent, Executive, KernelMode, FALSE, NULL);
+    }
+
+    closesocket(sock);
+    WSACleanup();
+}
+
+VOID
+CaptureAVBFrames(
+    _In_ SOCKET Sock,
+    _In_ sockaddr_in* ServerAddr
+    )
+{
+    char buffer[2048];
+    int serverAddrSize = sizeof(*ServerAddr);
+    int result = recvfrom(Sock, buffer, sizeof(buffer), 0, (sockaddr*)ServerAddr, &serverAddrSize);
+    if (result == SOCKET_ERROR) {
+        KdPrint(("Receive failed with error: %d\n", WSAGetLastError()));
+    } else {
+        buffer[result] = '\0';
+        KdPrint(("Captured AVB Frame: %s\n", buffer));
+    }
+}
+
+VOID
+ProcessAVBFrames()
+{
+    // Process the captured AVB frames
+    KdPrint(("Processing AVB Frames...\n"));
 }
