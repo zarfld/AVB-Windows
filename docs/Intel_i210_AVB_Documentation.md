@@ -62,3 +62,33 @@ To configure AVTP streams, follow these steps:
 - [Intel Community Discussion on AVB](https://community.intel.com/t5/Ethernet-Products/AVB/td-p/)
 
 These resources provide comprehensive information on how Intel Ethernet adapters, particularly the i210, can be configured and used for AVB. However, most of the detailed support is available for Linux, and as mentioned earlier, AVB support on Windows requires third-party software or modifications.
+
+## Detailed Instructions for Installing and Configuring the Custom AVB Driver on Windows
+
+### Installing the Custom AVB Driver
+
+1. Download the custom AVB driver package from the repository.
+2. Extract the package to a desired location.
+3. Open Device Manager and locate the Intel i210 NIC.
+4. Right-click on the device and select "Update driver".
+5. Choose "Browse my computer for drivers" and navigate to the extracted driver package.
+6. Follow the on-screen instructions to complete the installation.
+7. Restart your computer to apply the changes.
+
+### Configuring gPTP Synchronization
+
+1. Ensure the custom driver is installed and the Intel i210 NIC is properly configured.
+2. Download and run the gPTP daemon from the repository.
+3. Monitor the synchronization status using the provided tools.
+
+### Configuring Priority Queuing
+
+1. Ensure the custom driver is installed and the Intel i210 NIC is properly configured.
+2. Use the provided AVBTool to configure priority queuing for AVTP streams.
+3. Monitor the stream status and adjust settings as needed.
+
+### Configuring Traffic Shaping
+
+1. Ensure the custom driver is installed and the Intel i210 NIC is properly configured.
+2. Use the provided AVBTool to configure traffic shaping for AVTP streams.
+3. Monitor the stream status and adjust settings as needed.

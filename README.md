@@ -47,3 +47,20 @@ The AVTP and gPTP stacks have been ported from the OpenAvnu project to Windows. 
 4. Testing & Validation: Build test environments with AVB switches and endpoints to ensure compatibility and functionality with the newly developed stack.
 
 This project bridges the current gap in Windows AVB support, enabling the use of Intel i210 NICs for professional audio/video streaming over an AVB network.
+
+### Availability of Custom Driver for AVB Features on Windows
+A custom driver is now available to support AVB features on Windows, including gPTP synchronization, priority queuing, and traffic shaping. This driver integrates with the existing AVTP and gPTP implementations in `AVTP/AVTP.cpp` and `gPTP/gPTP.cpp`.
+
+### Installation Instructions for the Custom Driver
+To install the custom driver, follow these steps:
+
+1. Download the custom driver package from the repository.
+2. Extract the package to a desired location.
+3. Open Device Manager and locate the Intel i210 NIC.
+4. Right-click on the device and select "Update driver".
+5. Choose "Browse my computer for drivers" and navigate to the extracted driver package.
+6. Follow the on-screen instructions to complete the installation.
+7. Restart your computer to apply the changes.
+
+### Integration of AVTP and gPTP Implementations with the Windows Driver for Intel i210
+The current codebase includes AVTP and gPTP implementations in `AVTP/AVTP.cpp` and `gPTP/gPTP.cpp`, which are now integrated with the Windows driver for Intel i210. This integration ensures that AVTP frames are handled efficiently and gPTP synchronization is maintained accurately.
