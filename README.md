@@ -26,6 +26,8 @@ A custom driver has been developed to support AVB-specific features such as gPTP
 6. Follow the on-screen instructions to complete the installation.
 7. Restart your computer to apply the changes.
 
+For detailed AVB-specific documentation, please refer to the [Intel i210 AVB Documentation](docs/Intel_i210_AVB_Documentation.md).
+
 ### GUI-based Tool for AVB Configuration and Monitoring
 A GUI-based tool has been developed to configure and monitor AVB streams, devices, and time synchronization. Follow these steps to use the tool:
 
