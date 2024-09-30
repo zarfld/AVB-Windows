@@ -24,6 +24,9 @@ jobs:
     - name: Restore NuGet packages
       run: nuget restore AVB_Windows.sln
 
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
     - name: Build solution
       run: msbuild AVB_Windows.sln /p:Configuration=Release
 
@@ -88,9 +91,6 @@ jobs:
     - name: Run Error Detection
       run: |
         python scripts/error_detection.py
-
-    - name: Install dependencies
-      run: pip install -r requirements.txt
 
     - name: Run Issue Creation
       if: failure()
