@@ -92,3 +92,65 @@ These resources provide comprehensive information on how Intel Ethernet adapters
 1. Ensure the custom driver is installed and the Intel i210 NIC is properly configured.
 2. Use the provided AVBTool to configure traffic shaping for AVTP streams.
 3. Monitor the stream status and adjust settings as needed.
+
+## Integrating Code Quality Tools in the CI Pipeline
+
+To ensure code quality, integrate tools like static analyzers, linters, and code formatters into your CI pipeline.
+
+### Static Code Analysis with PVS-Studio
+
+PVS-Studio is a static code analyzer for C, C++, C#, and Java. It can be integrated into your CI pipeline to detect potential errors.
+
+Example Step:
+
+```yaml
+    - name: Run PVS-Studio Analysis
+      run: |
+        # Install PVS-Studio
+        choco install pvs-studio
+
+        # Run analysis
+        "C:\Program Files (x86)\PVS-Studio\PVS-Studio_Cmd.exe" \
+          --target "AVB_Windows.sln" \
+          --configuration "Release" \
+          --output "PVS-Studio.log"
+```
+
+### Code Formatting with Clang-Format
+
+Use Clang-Format to enforce consistent code style.
+
+Example Step:
+
+```yaml
+    - name: Check Code Formatting
+      run: |
+        choco install llvm
+
+        clang-format -i -style=file **/*.cpp **/*.h
+
+        git diff --exit-code
+```
+
+If there are formatting differences, the git diff command will exit with a non-zero status, causing the build to fail.
+
+## Setting Up Branch Protection Rules and Pull Request Reviews
+
+### Setting Up Branch Protection Rules
+
+- Go to your GitHub repository settings.
+- Under Branches, set up protection rules for main and develop branches.
+- Require status checks to pass before merging.
+  - Include checks like build success, unit tests passing, code analysis results.
+
+### Pull Request Reviews
+
+- Enforce code reviews for all pull requests.
+- Use GitHub CODEOWNERS file to specify code reviewers.
+
+CODEOWNERS Example (.github/CODEOWNERS):
+
+```
+# Define code owners
+*       @yourusername
+```

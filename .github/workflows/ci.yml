@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Visual Studio
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1
+
+    - name: Restore NuGet packages
+      run: nuget restore AVB_Windows.sln
+
+    - name: Build solution
+      run: msbuild AVB_Windows.sln /p:Configuration=Release
+
+    - name: Run Unit Tests
+      run: |
+        vstest.console.exe Path\To\Your\TestProject.dll
+
+    - name: Run PVS-Studio Analysis
+      run: |
+        # Install PVS-Studio
+        choco install pvs-studio
+
+        # Run analysis
+        "C:\Program Files (x86)\PVS-Studio\PVS-Studio_Cmd.exe" \
+          --target "AVB_Windows.sln" \
+          --configuration "Release" \
+          --output "PVS-Studio.log"
+
+    - name: Check Code Formatting
+      run: |
+        choco install llvm
+
+        clang-format -i -style=file **/*.cpp **/*.h
+
+        git diff --exit-code
