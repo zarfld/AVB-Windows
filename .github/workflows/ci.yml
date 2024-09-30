@@ -49,3 +49,29 @@ jobs:
         clang-format -i -style=file **/*.cpp **/*.h
 
         git diff --exit-code
+
+    - name: Build Tests
+      run: msbuild tests\UnitTests.vcxproj /p:Configuration=Release
+
+    - name: Run Tests
+      run: |
+        vstest.console.exe tests\Release\UnitTests.dll
+
+    - name: Run Tests with Coverage
+      run: |
+        vstest.console.exe tests\Release\UnitTests.dll /EnableCodeCoverage
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        files: '**/*.coveragexml'
+        fail_ci_if_error: true
+
+    - name: SonarCloud Scan
+      uses: sonarsource/sonarcloud-github-action@v1.10
+      with:
+        projectBaseDir: '.'
+        args: >
+          -Dsonar.organization=yourorganization
+          -Dsonar.projectKey=yourprojectkey
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}

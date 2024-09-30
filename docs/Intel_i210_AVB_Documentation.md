@@ -154,3 +154,13 @@ CODEOWNERS Example (.github/CODEOWNERS):
 # Define code owners
 *       @yourusername
 ```
+
+## Using Status Badges in the README.md
+
+Add status badges to your README.md to display the build status.
+
+Example Badge:
+
+```markdown
+![CI](https://github.com/yourusername/AVB-Windows-Intel-i210/actions/workflows/ci.yml/badge.svg)
+```
