@@ -15,6 +15,12 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    - name: Verify repository permissions
+      run: python scripts/verify_repo_permissions.py
+
+    - name: Verify repository existence
+      run: python scripts/verify_repo_existence.py
+
     - name: Checkout code
       uses: actions/checkout@v3
 
