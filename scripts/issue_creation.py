@@ -32,8 +32,12 @@ def main():
     title = "Build Failure on Commit SHA"
     
     # Read the saved errors and metadata file
-    with open("errors_and_metadata.json", "r") as file:
-        data = json.load(file)
+    try:
+        with open("errors_and_metadata.json", "r") as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        print("Error: 'errors_and_metadata.json' file not found.")
+        return
     
     errors = data["errors"]
     metadata = data["metadata"]
