@@ -4,9 +4,14 @@
 #include <ndis.h>
 #include "../AVTP/AVTP.h"
 #include "../gPTP/gPTP.h"
+#include "../AVDECC/AVDECC.h" // Include AVDECC header
 
 #define GPTP_EVENT_PORT 319
 #define GPTP_MULTICAST_ADDRESS "224.0.1.129"
+#define AVTP_PORT 1720
+#define AVTP_MULTICAST_ADDRESS "224.0.1.129"
+#define AVDECC_PORT 1720
+#define AVDECC_MULTICAST_ADDRESS "224.0.1.129"
 
 typedef struct _DEVICE_CONTEXT {
     WDFDEVICE Device;
@@ -194,8 +199,8 @@ AVTPThread(
     }
 
     serverAddr.sin_family = AF_INET;
-    serverAddr.sin_port = htons(1720); // AVTP port
-    inet_pton(AF_INET, "224.0.1.129", &serverAddr.sin_addr); // AVTP multicast address
+    serverAddr.sin_port = htons(AVTP_PORT); // AVTP port
+    inet_pton(AF_INET, AVTP_MULTICAST_ADDRESS, &serverAddr.sin_addr); // AVTP multicast address
 
     while (deviceContext->Running) {
         CaptureAVBFrames(sock, &serverAddr);
@@ -229,4 +234,86 @@ ProcessAVBFrames()
 {
     // Process the captured AVB frames
     KdPrint(("Processing AVB Frames...\n"));
+}
+
+VOID
+StartAVDECC(
+    _In_ PDEVICE_CONTEXT DeviceContext
+    )
+{
+    DeviceContext->Running = TRUE;
+    HANDLE threadHandle;
+    PsCreateSystemThread(&threadHandle, THREAD_ALL_ACCESS, NULL, NULL, NULL, AVDECCThread, DeviceContext);
+    ZwClose(threadHandle);
+}
+
+VOID
+StopAVDECC(
+    _In_ PDEVICE_CONTEXT DeviceContext
+    )
+{
+    DeviceContext->Running = FALSE;
+    KeSetEvent(&deviceContext->StopEvent, 0, FALSE);
+}
+
+VOID
+AVDECCThread(
+    _In_ PVOID Context
+    )
+{
+    PDEVICE_CONTEXT deviceContext = (PDEVICE_CONTEXT)Context;
+    SOCKET sock;
+    sockaddr_in serverAddr;
+    WSADATA wsaData;
+
+    WSAStartup(MAKEWORD(2, 2), &wsaData);
+    sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    if (sock == INVALID_SOCKET) {
+        KdPrint(("Socket creation failed with error: %d\n", WSAGetLastError()));
+        return;
+    }
+
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_port = htons(AVDECC_PORT); // AVDECC port
+    inet_pton(AF_INET, AVDECC_MULTICAST_ADDRESS, &serverAddr.sin_addr); // AVDECC multicast address
+
+    while (deviceContext->Running) {
+        DiscoverDevices(sock, &serverAddr);
+        ManageStreams();
+        KeWaitForSingleObject(&deviceContext->StopEvent, Executive, KernelMode, FALSE, NULL);
+    }
+
+    closesocket(sock);
+    WSACleanup();
+}
+
+VOID
+DiscoverDevices(
+    _In_ SOCKET Sock,
+    _In_ sockaddr_in* ServerAddr
+    )
+{
+    const char* discoverMessage = "DISCOVER";
+    int result = sendto(Sock, discoverMessage, strlen(discoverMessage), 0, (sockaddr*)ServerAddr, sizeof(*ServerAddr));
+    if (result == SOCKET_ERROR) {
+        KdPrint(("Send failed with error: %d\n", WSAGetLastError()));
+        return;
+    }
+
+    char buffer[1024];
+    int serverAddrSize = sizeof(*ServerAddr);
+    result = recvfrom(Sock, buffer, sizeof(buffer), 0, (sockaddr*)ServerAddr, &serverAddrSize);
+    if (result == SOCKET_ERROR) {
+        KdPrint(("Receive failed with error: %d\n", WSAGetLastError()));
+    } else {
+        buffer[result] = '\0';
+        KdPrint(("Discovered Device: %s\n", buffer));
+    }
+}
+
+VOID
+ManageStreams()
+{
+    // Implement stream management logic here
+    KdPrint(("Managing Streams...\n"));
 }

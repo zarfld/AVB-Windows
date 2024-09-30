@@ -49,3 +49,23 @@ jobs:
         clang-format -i -style=file **/*.cpp **/*.h
 
         git diff --exit-code
+
+    - name: Download Intel Tools
+      run: |
+        curl -o Intel_Ethernet_Controller_I210_Datasheet.pdf https://www.intel.com/content/www/us/en/products/sku/58954/intel-ethernet-controller-i210at/specifications.html
+        curl -o Intel_Ethernet_Adapter_Complete_Driver_Pack.zip https://downloadcenter.intel.com/product/36773/Intel-Ethernet-Adapters
+        curl -o Intel_System_Studio.exe https://www.intel.com/content/www/us/en/developer/tools/system-studio/overview.html
+        curl -o Intel_VTune_Profiler.exe https://www.intel.com/content/www/us/en/developer/tools/oneapi/vtune-profiler.html
+
+    - name: Run Intel Tools
+      run: |
+        # Run Intel System Studio
+        start /wait Intel_System_Studio.exe /S
+
+        # Run Intel VTune Profiler
+        start /wait Intel_VTune_Profiler.exe /S
+
+    - name: Validate AVB Implementation
+      run: |
+        # Run validation scripts using Intel tools
+        python validate_avb.py
