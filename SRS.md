@@ -24,6 +24,7 @@
    - 3.5 Performance Requirements
    - 3.6 Design Constraints
    - 3.7 Security Requirements
+   - 3.8 CI Pipeline Requirements
 
 4. **Appendices**
    - A. Glossary
@@ -248,6 +249,33 @@ The AVB Stack Implementation for Windows is an open-source project aimed at enab
 - **SR-1**: The system shall prevent unauthorized access to AVB device controls.
 - **SR-2**: The driver and applications shall run with the minimum required privileges.
 - **SR-3**: The system shall validate all network inputs to prevent buffer overflows and other common vulnerabilities.
+
+### 3.8 CI Pipeline Requirements
+
+#### 3.8.1 Automated Builds
+
+- **CI-1**: The CI pipeline shall automatically build the project whenever code is pushed to the repository.
+- **CI-2**: The CI pipeline shall support building the project on Windows environments.
+
+#### 3.8.2 Automated Testing
+
+- **CI-3**: The CI pipeline shall run unit tests to ensure new code does not break existing functionality.
+- **CI-4**: The CI pipeline shall provide test results and feedback on code changes.
+
+#### 3.8.3 Code Quality Analysis
+
+- **CI-5**: The CI pipeline shall integrate tools like linters and static code analyzers to enforce coding standards.
+- **CI-6**: The CI pipeline shall generate code quality reports and highlight issues.
+
+#### 3.8.4 Integration of Code Quality Tools
+
+- **CI-7**: The CI pipeline shall include steps for running PVS-Studio analysis to detect potential errors.
+- **CI-8**: The CI pipeline shall include steps for running Clang-Format to enforce consistent code style.
+
+#### 3.8.5 Enforcing Code Quality Standards
+
+- **CI-9**: The CI pipeline shall enforce code quality standards by failing builds with code quality issues.
+- **CI-10**: The CI pipeline shall support branch protection rules and pull request reviews to ensure code quality.
 
 ---
 

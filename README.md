@@ -64,3 +64,73 @@ To install the custom driver, follow these steps:
 
 ### Integration of AVTP and gPTP Implementations with the Windows Driver for Intel i210
 The current codebase includes AVTP and gPTP implementations in `AVTP/AVTP.cpp` and `gPTP/gPTP.cpp`, which are now integrated with the Windows driver for Intel i210. This integration ensures that AVTP frames are handled efficiently and gPTP synchronization is maintained accurately.
+
+## Setting Up GitHub Actions for CI
+
+### Benefits of Continuous Integration (CI)
+
+- **Automated Builds**: Automatically build your project whenever code is pushed.
+- **Automated Testing**: Run unit tests to ensure new code doesn't break existing functionality.
+- **Code Quality Analysis**: Integrate tools like linters and static code analyzers to enforce coding standards.
+- **Continuous Feedback**: Get immediate feedback on code changes, facilitating faster iteration.
+- **Collaboration**: Ensure that all team members are aware of the build and test status.
+
+### GitHub Actions Workflow
+
+To set up a CI pipeline using GitHub Actions, create a workflow file in the `.github/workflows/` directory. Here is an example configuration for a Visual Studio C++ project:
+
+```yaml
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Visual Studio
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1
+
+    - name: Restore NuGet packages
+      run: nuget restore AVB_Windows.sln
+
+    - name: Build solution
+      run: msbuild AVB_Windows.sln /p:Configuration=Release
+
+    - name: Run Unit Tests
+      run: |
+        vstest.console.exe Path\To\Your\TestProject.dll
+
+    - name: Run PVS-Studio Analysis
+      run: |
+        # Install PVS-Studio
+        choco install pvs-studio
+
+        # Run analysis
+        "C:\Program Files (x86)\PVS-Studio\PVS-Studio_Cmd.exe" \
+          --target "AVB_Windows.sln" \
+          --configuration "Release" \
+          --output "PVS-Studio.log"
+
+    - name: Check Code Formatting
+      run: |
+        choco install llvm
+
+        clang-format -i -style=file **/*.cpp **/*.h
+
+        git diff --exit-code
+```
+
+For more details, refer to the [ci.yml](.github/workflows/ci.yml) file in the repository.
