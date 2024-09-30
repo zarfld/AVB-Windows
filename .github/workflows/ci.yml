@@ -84,3 +84,12 @@ jobs:
       run: |
         # Update the README with new requirements and key insights
         python update_readme.py
+
+    - name: Run Error Detection
+      run: |
+        python scripts/error_detection.py
+
+    - name: Run Issue Creation
+      if: failure()
+      run: |
+        python scripts/issue_creation.py
