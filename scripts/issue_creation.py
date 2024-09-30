@@ -41,15 +41,16 @@ def main():
     
     errors = data["errors"]
     metadata = data["metadata"]
+    log_link = data.get("build_logs_link", "<link-to-logs>")
     
     body = f"""
     **Build Failure Details:**
-    - **Commit SHA**: <commit-sha>
+    - **Commit SHA**: {os.environ.get('COMMIT_SHA', '<commit-sha>')}
     - **Error Message**: {errors}
     - **Total Lines**: {metadata["total_lines"]}
     - **Error Count**: {metadata["error_count"]}
-    - **Build Logs**: <link-to-logs>
-    - **Timestamp**: <timestamp>
+    - **Build Logs**: {log_link}
+    - **Timestamp**: {os.environ.get('GITHUB_RUN_TIMESTAMP', '<timestamp>')}
     """
     labels = ["build-failure", "bug"]
 
