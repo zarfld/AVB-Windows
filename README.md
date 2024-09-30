@@ -64,3 +64,41 @@ To install the custom driver, follow these steps:
 
 ### Integration of AVTP and gPTP Implementations with the Windows Driver for Intel i210
 The current codebase includes AVTP and gPTP implementations in `AVTP/AVTP.cpp` and `gPTP/gPTP.cpp`, which are now integrated with the Windows driver for Intel i210. This integration ensures that AVTP frames are handled efficiently and gPTP synchronization is maintained accurately.
+
+### Detailed Instructions for Installing and Configuring the Custom AVB Driver on Windows
+
+1. Download the custom AVB driver package from the repository.
+2. Extract the package to a desired location.
+3. Open Device Manager and locate the Intel i210 NIC.
+4. Right-click on the device and select "Update driver".
+5. Choose "Browse my computer for drivers" and navigate to the extracted driver package.
+6. Follow the on-screen instructions to complete the installation.
+7. Restart your computer to apply the changes.
+
+### Examples for Configuring gPTP Synchronization and AVTP Streams
+
+#### Example 1: Configuring gPTP Synchronization
+
+1. Ensure the custom driver is installed and the Intel i210 NIC is properly configured.
+2. Download and run the gPTP daemon from the repository.
+3. Monitor the synchronization status using the provided tools.
+
+#### Example 2: Creating and Managing AVTP Streams
+
+1. Ensure the custom driver is installed and the Intel i210 NIC is properly configured.
+2. Use the provided AVBTool to create and manage AVTP streams.
+3. Monitor the stream status and adjust settings as needed.
+
+#### Example 3: Enumerating and Managing AVB Devices
+
+1. Ensure the custom driver is installed and the Intel i210 NIC is properly configured.
+2. Use the provided AVBTool to enumerate and manage AVB devices.
+3. Monitor the device status and adjust settings as needed.
+
+### Best Practices for Using AVB on Windows with Intel i210
+
+- Ensure all AVB devices on the network support gPTP for accurate time synchronization.
+- Use high-quality network cables and switches to minimize latency and packet loss.
+- Regularly monitor the network status and adjust configurations as needed.
+- Test the AVB setup in a controlled environment before deploying it in a production environment.
+- Keep the custom driver and AVBTool updated to the latest versions to ensure compatibility and performance.

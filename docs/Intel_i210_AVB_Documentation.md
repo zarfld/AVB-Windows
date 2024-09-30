@@ -92,3 +92,31 @@ These resources provide comprehensive information on how Intel Ethernet adapters
 1. Ensure the custom driver is installed and the Intel i210 NIC is properly configured.
 2. Use the provided AVBTool to configure traffic shaping for AVTP streams.
 3. Monitor the stream status and adjust settings as needed.
+
+## Examples for Configuring gPTP Synchronization and AVTP Streams
+
+### Example 1: Configuring gPTP Synchronization
+
+1. Ensure the custom driver is installed and the Intel i210 NIC is properly configured.
+2. Download and run the gPTP daemon from the repository.
+3. Monitor the synchronization status using the provided tools.
+
+### Example 2: Creating and Managing AVTP Streams
+
+1. Ensure the custom driver is installed and the Intel i210 NIC is properly configured.
+2. Use the provided AVBTool to create and manage AVTP streams.
+3. Monitor the stream status and adjust settings as needed.
+
+### Example 3: Enumerating and Managing AVB Devices
+
+1. Ensure the custom driver is installed and the Intel i210 NIC is properly configured.
+2. Use the provided AVBTool to enumerate and manage AVB devices.
+3. Monitor the device status and adjust settings as needed.
+
+## Best Practices for Using AVB on Windows with Intel i210
+
+- Ensure all AVB devices on the network support gPTP for accurate time synchronization.
+- Use high-quality network cables and switches to minimize latency and packet loss.
+- Regularly monitor the network status and adjust configurations as needed.
+- Test the AVB setup in a controlled environment before deploying it in a production environment.
+- Keep the custom driver and AVBTool updated to the latest versions to ensure compatibility and performance.
