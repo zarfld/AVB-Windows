@@ -1,4 +1,5 @@
 import os
+import json
 import requests
 from github import Github
 
@@ -29,11 +30,24 @@ def create_github_issue(repo_name, title, body, labels):
 def main():
     repo_name = "zarfld/AVB-Windows"
     title = "Build Failure on Commit SHA"
-    body = """
+    
+    # Read the saved errors and metadata file
+    try:
+        with open("errors_and_metadata.json", "r") as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        print("Error: 'errors_and_metadata.json' file not found.")
+        return
+    
+    errors = data["errors"]
+    metadata = data["metadata"]
+    
+    body = f"""
     **Build Failure Details:**
     - **Commit SHA**: <commit-sha>
-    - **Error Message**: <error-message>
-    - **Stack Trace**: <stack-trace>
+    - **Error Message**: {errors}
+    - **Total Lines**: {metadata["total_lines"]}
+    - **Error Count**: {metadata["error_count"]}
     - **Build Logs**: <link-to-logs>
     - **Timestamp**: <timestamp>
     """
