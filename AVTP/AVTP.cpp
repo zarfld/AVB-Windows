@@ -44,8 +44,8 @@ void AVTP::initializeSocket() {
     }
 
     serverAddr.sin_family = AF_INET;
-    serverAddr.sin_port = htons(1720); // AVTP port
-    inet_pton(AF_INET, "224.0.1.129", &serverAddr.sin_addr); // AVTP multicast address
+    serverAddr.sin_port = htons(1722); // AVTP port
+    inet_pton(AF_INET, "224.0.1.115", &serverAddr.sin_addr); // AVTP multicast address
 }
 
 void AVTP::closeSocket() {
