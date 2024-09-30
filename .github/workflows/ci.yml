@@ -31,7 +31,10 @@ jobs:
       run: pip install -r requirements.txt
 
     - name: Build solution
-      run: msbuild AVB_Windows.sln /p:Configuration=Release
+      run: |
+        msbuild AVB_Windows.sln /p:Configuration=Release
+        # Save the build logs to build.log
+        msbuild AVB_Windows.sln /p:Configuration=Release > build.log
 
     - name: Run Unit Tests
       run: |
