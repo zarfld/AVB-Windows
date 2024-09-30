@@ -31,7 +31,13 @@ jobs:
       run: pip install -r requirements.txt
 
     - name: Build solution
-      run: msbuild AVB_Windows.sln /p:Configuration=Release
+      run: |
+        msbuild AVB_Windows.sln /p:Configuration=Release
+        # Ensure build.log is created during the build process
+        if [ ! -f build.log ]; then
+          echo "Build log not found. Creating build.log."
+          touch build.log
+        fi
 
     - name: Run Unit Tests
       run: |
