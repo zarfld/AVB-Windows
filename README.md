@@ -279,3 +279,13 @@ For more details, refer to the [ci.yml](.github/workflows/ci.yml) file in the re
 - **Porting Open Source Code**: Adapting existing open-source AVB components to work on Windows.
 - **Performance Optimization**: Ensuring the AVB stack and driver are optimized for performance on Windows.
 - **Testing and Validation**: Building test environments to ensure compatibility and functionality with AVB networks and devices.
+
+## Verifying Repository Permissions and Existence
+
+### Check Repository Permissions
+
+Ensure that the repository permissions are correctly set up. The CI pipeline might be failing due to insufficient permissions to access the repository. Verify that the GitHub token used in the CI pipeline has the necessary permissions to access the repository. You can check the permissions in the `secrets` section of the repository settings.
+
+### Verify Repository Existence
+
+Ensure that the repository `zarfld/AVB-Windows` actually exists on GitHub. The error message "Repository not found" suggests that the repository might not exist or has been renamed or deleted. Verify the existence of the repository by visiting the URL `https://github.com/zarfld/AVB-Windows/` in a web browser.
