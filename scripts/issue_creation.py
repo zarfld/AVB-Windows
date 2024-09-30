@@ -28,7 +28,7 @@ def create_github_issue(repo_name, title, body, labels):
 
 def main():
     repo_name = "zarfld/AVB-Windows"
-    title = "Build Failure on Commit SHA"
+    title = "Build Failure Detected"
     body = """
     **Build Failure Details:**
     - **Commit SHA**: <commit-sha>
@@ -37,7 +37,7 @@ def main():
     - **Build Logs**: <link-to-logs>
     - **Timestamp**: <timestamp>
     """
-    labels = ["build-failure", "bug"]
+    labels = ["build-failure"]
 
     issue = create_github_issue(repo_name, title, body, labels)
     print(f"Issue created: {issue.html_url}")
