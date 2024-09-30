@@ -1,5 +1,7 @@
 # AVB Functionality on Windows 10 using Intel i210
 
+![CI](https://github.com/yourusername/AVB-Windows-Intel-i210/actions/workflows/ci.yml/badge.svg)
+
 This document provides detailed instructions on how to set up and use the AVB (Audio Video Bridging) functionality on Windows 10 using an Intel i210 NIC.
 
 ## Components
@@ -134,3 +136,24 @@ jobs:
 ```
 
 For more details, refer to the [ci.yml](.github/workflows/ci.yml) file in the repository.
+
+## Setting Up Branch Protection Rules and Pull Request Reviews
+
+### Setting Up Branch Protection Rules
+
+- Go to your GitHub repository settings.
+- Under Branches, set up protection rules for main and develop branches.
+- Require status checks to pass before merging.
+  - Include checks like build success, unit tests passing, code analysis results.
+
+### Pull Request Reviews
+
+- Enforce code reviews for all pull requests.
+- Use GitHub CODEOWNERS file to specify code reviewers.
+
+CODEOWNERS Example (.github/CODEOWNERS):
+
+```
+# Define code owners
+*       @yourusername
+```
