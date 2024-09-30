@@ -1,7 +1,21 @@
 {
-    "errors": [],
+    "errors": [
+        {
+            "line": "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.22621.0\\um\\ws2tcpip.h(790,9): error C2065: 'WSASetLastError': undeclared identifier [D:\\a\\AVB-Windows\\AVB-Windows\\GUI\\AVBTool.vcxproj]",
+            "line_number": 1
+        },
+        {
+            "line": "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.22621.0\\um\\ws2tcpip.h(794,12): error C2065: 'IP_MSFILTER': undeclared identifier [D:\\a\\AVB-Windows\\AVB-Windows\\GUI\\AVBTool.vcxproj]",
+            "line_number": 2
+        },
+        {
+            "line": "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.22621.0\\um\\ws2tcpip.h(794,12): fatal error C1003: error count exceeds 100; stopping compilation [D:\\a\\AVB-Windows\\AVB-Windows\\GUI\\AVBTool.vcxproj]",
+            "line_number": 3
+        }
+    ],
     "metadata": {
-        "total_lines": 0,
-        "error_count": 0
-    }
+        "total_lines": 3,
+        "error_count": 3
+    },
+    "build_logs_link": "<link-to-logs>"
 }

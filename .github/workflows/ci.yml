@@ -109,6 +109,12 @@ jobs:
         name: build-logs
         path: build.log
 
+    - name: Check for Missing Logs
+      run: |
+        if [ ! -f build.log ]; then
+          echo "No logs found. Skipping error-checking step."
+        fi
+
     - name: Run Issue Creation
       if: failure()
       env:
