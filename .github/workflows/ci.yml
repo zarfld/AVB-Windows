@@ -69,3 +69,18 @@ jobs:
       run: |
         # Run validation scripts using Intel tools
         python validate_avb.py
+
+    - name: Update SRS
+      run: |
+        # Update the SRS document with new requirements
+        python update_srs.py
+
+    - name: Update Documentation
+      run: |
+        # Update the documentation with new requirements and considerations
+        python update_docs.py
+
+    - name: Update README
+      run: |
+        # Update the README with new requirements and key insights
+        python update_readme.py

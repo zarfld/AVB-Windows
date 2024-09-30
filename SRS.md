@@ -30,6 +30,7 @@
    - A. Glossary
    - B. Analysis Models
    - C. Issues and TBDs
+   - D. Summary of Findings from References
 
 ---
 
@@ -144,6 +145,9 @@ The AVB Stack Implementation for Windows is an open-source project aimed at enab
 - **FR-4**: The system shall implement the AVTP stack for transmitting and receiving audio/video streams.
 - **FR-5**: The AVTP implementation shall support encapsulation and de-encapsulation of AVB streams according to IEEE 1722.
 - **FR-6**: The system shall handle stream identification, sequence numbers, and timestamps.
+- **FR-17**: The system shall support specific AVTP packet formats as defined in IEEE 1722.
+- **FR-18**: The system shall implement synchronization mechanisms for AVTP streams.
+- **FR-19**: The system shall support media clock recovery techniques for AVTP streams.
 
 #### 3.1.3 AVDECC (IEEE 1722.1) Controller
 
@@ -174,6 +178,9 @@ The AVB Stack Implementation for Windows is an open-source project aimed at enab
 - **NFR-1**: The system shall achieve time synchronization accuracy within the limits specified by IEEE 802.1AS.
 - **NFR-2**: The system shall handle AVTP streams with minimal latency and jitter appropriate for professional audio/video applications.
 - **NFR-3**: The driver and protocol stack shall be optimized for performance on Windows.
+- **NFR-9**: The system shall meet performance metrics as defined in the project documentation.
+- **NFR-10**: The system shall consider latency requirements for AVTP streams.
+- **NFR-11**: The system shall comply with relevant AVB standards and specifications.
 
 #### 3.2.2 Reliability
 
@@ -220,7 +227,7 @@ The AVB Stack Implementation for Windows is an open-source project aimed at enab
 #### 3.4.2 Audio/Video Streaming (AVTP)
 
 - **Feature Description**: Supports streaming of audio and video data over the network with minimal latency.
-- **Requirements Addressed**: FR-4, FR-5, FR-6
+- **Requirements Addressed**: FR-4, FR-5, FR-6, FR-17, FR-18, FR-19
 
 #### 3.4.3 Device Management (AVDECC)
 
@@ -237,6 +244,9 @@ The AVB Stack Implementation for Windows is an open-source project aimed at enab
 - **PR-1**: Time synchronization accuracy shall be within ±500 nanoseconds as per IEEE 802.1AS.
 - **PR-2**: The system shall support audio streaming at standard professional audio sample rates (e.g., 48 kHz, 96 kHz) with minimal latency.
 - **PR-3**: The system shall support multiple simultaneous AVTP streams without degradation of performance.
+- **PR-4**: The system shall meet performance metrics as defined in the project documentation.
+- **PR-5**: The system shall consider latency requirements for AVTP streams.
+- **PR-6**: The system shall comply with relevant AVB standards and specifications.
 
 ### 3.6 Design Constraints
 
@@ -300,6 +310,41 @@ The AVB Stack Implementation for Windows is an open-source project aimed at enab
 - **C-1**: Determination of licensing compatibility with OpenAvnu and avdecc-lib when ported to Windows.
 - **C-2**: Evaluation of the need for a GUI application based on user feedback.
 - **C-3**: Testing on various hardware configurations to ensure broad compatibility.
+
+### D. Summary of Findings from References
+
+#### D.1 Understanding IEEE 1722 - AVTP Explained
+
+- **URL**: [IEEE 1722 - AVTP Explained](https://www.ieee802.org/1/files/public/docs2009/avb-rboatright-p1722-explained-0903.pdf)
+- **Description**: An in-depth explanation of the IEEE 1722 standard, providing insights into the AVTP.
+- **Key Insights**:
+  - Detailed explanation of AVTP packet formats.
+  - Synchronization mechanisms for AVTP streams.
+  - Media clock recovery techniques.
+
+#### D.2 AVnu Alliance - Audio Video Transport Protocol (AVTP) Overview by Dave Olsen
+
+- **URL**: [AVTP Overview by Dave Olsen](https://avnu.org/wp-content/uploads/2014/05/AVnu-AAA2C_Audio-Video-Transport-Protocol-AVTP_Dave-Olsen.pdf)
+- **Description**: A presentation detailing the AVTP, its applications, and implementation considerations.
+- **Key Insights**:
+  - Applications of AVTP in professional audio/video environments.
+  - Implementation considerations for AVTP on different platforms.
+
+#### D.3 AVnu Alliance - IEEE 1722 Media on AVB Networks by Rob Silfvast
+
+- **URL**: [IEEE 1722 Media on AVB Networks](https://avnu.org/wp-content/uploads/2014/05/AVnu-AABAC_IEEE-1722-Media-on-AVB-Networks_Rob-Silfvast.pdf)
+- **Description**: Discusses the transport of media using IEEE 1722 over AVB networks, highlighting key aspects of implementation.
+- **Key Insights**:
+  - Transport of media using IEEE 1722 over AVB networks.
+  - Key aspects of implementing AVTP for media transport.
+
+#### D.4 ResearchGate: IEEE 1722 AVTP Figure
+
+- **URL**: [IEEE 1722 AVTP Diagram](https://www.researchgate.net/figure/IEEE-1722-Audio-Video-Transport-Protocol-AVTP_fig5_262323002)
+- **Description**: Provides visual diagrams and explanations of AVTP structures and packet formats.
+- **Key Insights**:
+  - Visual diagrams of AVTP structures.
+  - Explanations of AVTP packet formats.
 
 ---
 
