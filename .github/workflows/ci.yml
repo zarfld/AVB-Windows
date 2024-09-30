@@ -95,6 +95,10 @@ jobs:
       run: |
         python scripts/error_detection.py
 
+    - name: Save Errors and Metadata
+      run: |
+        python scripts/error_detection.py > errors_and_metadata.json
+
     - name: Install PyGithub
       run: pip install PyGithub
 
