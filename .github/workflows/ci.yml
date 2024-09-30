@@ -92,6 +92,9 @@ jobs:
       run: |
         python scripts/error_detection.py
 
+    - name: Install PyGithub
+      run: pip install PyGithub
+
     - name: Run Issue Creation
       if: failure()
       run: |
