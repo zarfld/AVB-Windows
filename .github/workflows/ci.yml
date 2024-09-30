@@ -103,6 +103,7 @@ jobs:
       run: pip install PyGithub
 
     - name: Upload Build Logs
+      if: failure()
       uses: actions/upload-artifact@v3
       with:
         name: build-logs
