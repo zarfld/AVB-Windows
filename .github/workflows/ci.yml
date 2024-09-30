@@ -89,6 +89,9 @@ jobs:
       run: |
         python scripts/error_detection.py
 
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
     - name: Run Issue Creation
       if: failure()
       run: |
