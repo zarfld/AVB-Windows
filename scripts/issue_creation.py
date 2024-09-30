@@ -1,6 +1,7 @@
 import os
 import requests
 from github import Github
+import sys
 
 def create_github_issue(repo_name, title, body, labels):
     token = os.getenv('GITHUB_TOKEN')
@@ -27,6 +28,10 @@ def create_github_issue(repo_name, title, body, labels):
     return issue
 
 def main():
+    if 'GITHUB_TOKEN' not in os.environ:
+        print("Error: GITHUB_TOKEN environment variable not set")
+        sys.exit(1)
+
     repo_name = "zarfld/AVB-Windows"
     title = "Build Failure on Commit SHA"
     body = """

@@ -95,7 +95,54 @@ jobs:
     - name: Install PyGithub
       run: pip install PyGithub
 
+    - name: Set GITHUB_TOKEN environment variable
+      run: echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+
     - name: Run Issue Creation
       if: failure()
       run: |
+        python scripts/issue_creation.py
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Visual Studio
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1
+
+    - name: Restore NuGet packages
+      run: nuget restore AVB_Windows.sln
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Build solution
+      run: msbuild AVB_Windows.sln /p:Configuration=Release
+
+    - name: Run Unit Tests
+      run: |
+        vstest.console.exe Path\To\Your\TestProject.dll
+
+    - name: Run PVS-Studio Analysis
+      run: |
+        # Install PVS-Studio
+        choco install pvs-studio
+
+    - name: Set GITHUB_TOKEN environment variable
+      if: failure()
         python scripts/issue_creation.py
