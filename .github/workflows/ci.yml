@@ -106,5 +106,7 @@ jobs:
       if: failure()
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COMMIT_SHA: ${{ github.sha }}
+        BUILD_LOGS_LINK: ${{ steps.upload_build_logs.outputs.url }}
       run: |
         python scripts/issue_creation.py
