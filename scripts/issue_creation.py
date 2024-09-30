@@ -3,7 +3,7 @@ import requests
 from github import Github
 
 def create_github_issue(repo_name, title, body, labels):
-    token = os.getenv('GITHUB_TOKEN')
+    token = os.environ.get('GITHUB_TOKEN')
     if not token:
         raise ValueError("GITHUB_TOKEN environment variable not set")
 

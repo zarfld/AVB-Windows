@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ main, develop ]
 
+permissions:
+  issues: write
+
 jobs:
   build:
 
@@ -97,5 +100,7 @@ jobs:
 
     - name: Run Issue Creation
       if: failure()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         python scripts/issue_creation.py
