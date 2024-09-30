@@ -276,3 +276,56 @@ Additionally, performance analysis tools like Intel® VTune™ Profiler can help
 6. **Implement and Test**: Begin coding, utilizing Intel's tools for debugging and performance analysis, and test your implementation in an AVB network environment.
 
 By utilizing these Intel-provided resources, you can significantly accelerate your development process and overcome some of the challenges associated with implementing AVB support on Windows using the Intel i210 network adapter.
+
+## Summary of Key Insights from References
+
+### Understanding IEEE 1722 - AVTP Explained
+
+- **URL**: [IEEE 1722 - AVTP Explained](https://www.ieee802.org/1/files/public/docs2009/avb-rboatright-p1722-explained-0903.pdf)
+- **Description**: An in-depth explanation of the IEEE 1722 standard, providing insights into the AVTP.
+- **Key Insights**:
+  - Detailed explanation of AVTP packet formats.
+  - Synchronization mechanisms for AVTP streams.
+  - Media clock recovery techniques.
+
+### AVnu Alliance - Audio Video Transport Protocol (AVTP) Overview by Dave Olsen
+
+- **URL**: [AVTP Overview by Dave Olsen](https://avnu.org/wp-content/uploads/2014/05/AVnu-AAA2C_Audio-Video-Transport-Protocol-AVTP_Dave-Olsen.pdf)
+- **Description**: A presentation detailing the AVTP, its applications, and implementation considerations.
+- **Key Insights**:
+  - Applications of AVTP in professional audio/video environments.
+  - Implementation considerations for AVTP on different platforms.
+
+### AVnu Alliance - IEEE 1722 Media on AVB Networks by Rob Silfvast
+
+- **URL**: [IEEE 1722 Media on AVB Networks](https://avnu.org/wp-content/uploads/2014/05/AVnu-AABAC_IEEE-1722-Media-on-AVB-Networks_Rob-Silfvast.pdf)
+- **Description**: Discusses the transport of media using IEEE 1722 over AVB networks, highlighting key aspects of implementation.
+- **Key Insights**:
+  - Transport of media using IEEE 1722 over AVB networks.
+  - Key aspects of implementing AVTP for media transport.
+
+### ResearchGate: IEEE 1722 AVTP Figure
+
+- **URL**: [IEEE 1722 AVTP Diagram](https://www.researchgate.net/figure/IEEE-1722-Audio-Video-Transport-Protocol-AVTP_fig5_262323002)
+- **Description**: Provides visual diagrams and explanations of AVTP structures and packet formats.
+- **Key Insights**:
+  - Visual diagrams of AVTP structures.
+  - Explanations of AVTP packet formats.
+
+## Critical Requirements and Challenges Identified
+
+### Critical Requirements
+
+- **AVTP Packet Formats**: The system must support specific AVTP packet formats as defined in IEEE 1722.
+- **Synchronization Mechanisms**: The system must implement synchronization mechanisms for AVTP streams.
+- **Media Clock Recovery**: The system must support media clock recovery techniques for AVTP streams.
+- **Performance Metrics**: The system must meet performance metrics as defined in the project documentation.
+- **Latency Considerations**: The system must consider latency requirements for AVTP streams.
+- **Compliance**: The system must comply with relevant AVB standards and specifications.
+
+### Challenges
+
+- **Driver Development**: Developing a custom driver for the Intel i210 NIC to support AVB features on Windows.
+- **Porting Open Source Code**: Adapting existing open-source AVB components to work on Windows.
+- **Performance Optimization**: Ensuring the AVB stack and driver are optimized for performance on Windows.
+- **Testing and Validation**: Building test environments to ensure compatibility and functionality with AVB networks and devices.
