@@ -23,11 +23,11 @@ def parse_logs(log_path):
                 metadata["error_count"] += 1
     return errors, metadata
 
-def save_errors_and_metadata(errors, metadata, output_path):
+def save_errors_and_metadata(errors, metadata, output_path, log_link):
     data = {
         "errors": errors,
         "metadata": metadata,
-        "build_logs_link": "<link-to-logs>"
+        "build_logs_link": log_link
     }
     with open(output_path, 'w') as output_file:
         json.dump(data, output_file, indent=4)
@@ -35,6 +35,7 @@ def save_errors_and_metadata(errors, metadata, output_path):
 def main():
     log_path = "build.log"
     output_path = "errors_and_metadata.json"
+    log_link = os.environ.get('BUILD_LOGS_LINK', '<link-to-logs>')
     if not check_for_logs(log_path):
         print("No logs found. Skipping error-checking step.")
         return
@@ -46,7 +47,7 @@ def main():
         print("Errors found in logs:")
         for error in errors:
             print(f"Line {error['line_number']}: {error['line']}")
-        save_errors_and_metadata(errors, metadata, output_path)
+        save_errors_and_metadata(errors, metadata, output_path, log_link)
         print(f"Errors and metadata saved to {output_path}")
 
 if __name__ == "__main__":
