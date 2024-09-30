@@ -64,3 +64,39 @@ To install the custom driver, follow these steps:
 
 ### Integration of AVTP and gPTP Implementations with the Windows Driver for Intel i210
 The current codebase includes AVTP and gPTP implementations in `AVTP/AVTP.cpp` and `gPTP/gPTP.cpp`, which are now integrated with the Windows driver for Intel i210. This integration ensures that AVTP frames are handled efficiently and gPTP synchronization is maintained accurately.
+
+## Setting Up the Development Environment with Visual Studio and WDK
+
+To set up the development environment for AVB on Windows, follow these steps:
+
+1. **Install Visual Studio**: Ensure you have Visual Studio 2019 or 2022 installed with the necessary components like C++ development tools and networking libraries.
+2. **Install Windows Driver Kit (WDK)**: Download and install the WDK for Visual Studio from [here](https://developer.microsoft.com/en-us/windows/hardware/windows-driver-kit). This is essential for working with network interface cards at the driver level.
+3. **Create a new project**:
+   - For user-space development, create a new Windows Desktop Application (C++) project.
+   - For kernel-mode drivers, create a Kernel Mode Driver (KMDF) project.
+
+## Porting and Integrating OpenAvnu Libraries
+
+To port and integrate the OpenAvnu libraries for gPTP and AVTP, follow these steps:
+
+1. **Port gPTP and AVTP libraries**:
+   - Download the gPTP and AVTP libraries from the OpenAvnu project.
+   - Refactor the code to work on Windows, using Windows-specific APIs like `QueryPerformanceCounter()` for timing and `Winsock` for low-level networking.
+   - Integrate the ported libraries into your Visual Studio project.
+2. **Modify the code**:
+   - Update the `gPTP/gPTP.cpp` and `AVTP/AVTP.cpp` files to ensure compatibility with Windows.
+   - Ensure the code uses appropriate Windows APIs and handles socket communication correctly.
+
+## Developing and Testing the Custom Intel i210 Driver
+
+To develop and test the custom Intel i210 driver for AVB, follow these steps:
+
+1. **Develop the driver**:
+   - Reference the Linux-based `igb_avb` driver for Intel i210 from SourceForge and port the necessary parts to Windows using WDK.
+   - Extend or build a custom Intel i210 driver to enable AVB functionality on Windows.
+   - Use the `Driver/i210AVBDriver.cpp` file as a starting point for your driver development.
+2. **Test the driver**:
+   - Set up a virtual AVB environment using AVB switches and endpoints to validate the driver and stack behavior.
+   - Use Visual Studio’s debugging tools and WDK integrated tools for kernel-level debugging.
+
+By following these steps, you can successfully prepare an AVB project for Visual Studio on Windows, targeting the Intel i210 NIC with AVB support.
