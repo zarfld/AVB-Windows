@@ -102,9 +102,18 @@ jobs:
     - name: Install PyGithub
       run: pip install PyGithub
 
+    - name: Upload Build Logs
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-logs
+        path: build.log
+
     - name: Run Issue Creation
       if: failure()
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COMMIT_SHA: ${{ github.sha }}
+        BUILD_LOGS_LINK: ${{ steps.upload_build_logs.outputs.url }}
       run: |
         python scripts/issue_creation.py
