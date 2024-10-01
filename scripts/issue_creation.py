@@ -55,7 +55,7 @@ def main():
     - **Error Message**: {error_messages}
     - **Total Lines**: {metadata["total_lines"]}
     - **Error Count**: {metadata["error_count"]}
-    - **Build Logs**: {log_link}
+    - **Build Logs**: {log_link if log_link != "<link-to-logs>" else "No build logs available"}
     - **Timestamp**: {os.environ.get('GITHUB_RUN_TIMESTAMP', '<timestamp>')}
     """
     labels = ["build-failure", "bug"]

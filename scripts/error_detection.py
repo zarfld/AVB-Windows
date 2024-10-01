@@ -6,6 +6,7 @@ def check_for_logs(log_path):
     if not os.path.exists(log_path):
         with open(log_path, 'w') as log_file:
             log_file.write("No build errors found.\n")
+        print("No logs found. Skipping error-checking step.")
     return os.path.exists(log_path)
 
 def parse_logs(log_path):
@@ -20,13 +21,24 @@ def parse_logs(log_path):
             if "error" in line.lower():
                 error_info = {
                     "line": line.strip(),
-                    "line_number": metadata["total_lines"]
+                    "line_number": metadata["total_lines"],
+                    "context": get_error_context(log_file, metadata["total_lines"])
                 }
                 errors.append(error_info)
                 metadata["error_count"] += 1
     return errors, metadata
 
+def get_error_context(log_file, error_line_number, context_lines=2):
+    log_file.seek(0)
+    lines = log_file.readlines()
+    start = max(0, error_line_number - context_lines - 1)
+    end = min(len(lines), error_line_number + context_lines)
+    return lines[start:end]
+
 def save_errors_and_metadata(errors, metadata, output_path, log_link):
+    if not errors:
+        print("No errors found in logs. Skipping error-checking step.")
+        return
     data = {
         "errors": errors,
         "metadata": metadata,
