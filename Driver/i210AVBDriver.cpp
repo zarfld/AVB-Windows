@@ -1,3 +1,5 @@
+#define WIN32_LEAN_AND_MEAN
+#include <winsock2.h>
 #include <ntddk.h>
 #include <wdf.h>
 #include <wdm.h>
