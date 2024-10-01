@@ -30,6 +30,9 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
+    - name: Clean solution
+      run: msbuild AVB_Windows.sln /t:Clean
+
     - name: Build solution
       run: msbuild AVB_Windows.sln /p:Configuration=Release > build.log 2>&1
 
@@ -38,6 +41,9 @@ jobs:
         if [ ! -f build.log ]; then
           echo "No build output captured." > build.log
         fi
+
+    - name: Rebuild solution
+      run: msbuild AVB_Windows.sln /t:Rebuild /p:Configuration=Release
 
     - name: Run Unit Tests
       run: |
