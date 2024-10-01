@@ -279,3 +279,28 @@ For more details, refer to the [ci.yml](.github/workflows/ci.yml) file in the re
 - **Porting Open Source Code**: Adapting existing open-source AVB components to work on Windows.
 - **Performance Optimization**: Ensuring the AVB stack and driver are optimized for performance on Windows.
 - **Testing and Validation**: Building test environments to ensure compatibility and functionality with AVB networks and devices.
+
+## Avoiding Redefinition and Linkage Issues with `winsock2.h`
+
+To avoid redefinition and linkage issues with functions from the `winsock2.h` header, it is important to include `WIN32_LEAN_AND_MEAN` in the project files. This reduces the number of header files included by the Windows headers, which helps prevent conflicts.
+
+### Steps to Include `WIN32_LEAN_AND_MEAN` in Project Files
+
+1. Open the `.vcxproj` file for your project.
+2. Locate the `<ItemDefinitionGroup>` section for each configuration (e.g., Debug|x64, Release|x64).
+3. Add `WIN32_LEAN_AND_MEAN` to the `<PreprocessorDefinitions>` section as shown below:
+
+```xml
+<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ClCompile>
+    <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+  </ClCompile>
+</ItemDefinitionGroup>
+<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <ClCompile>
+    <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+  </ClCompile>
+</ItemDefinitionGroup>
+```
+
+By following these steps, you can ensure that `WIN32_LEAN_AND_MEAN` is included in your project files, which will help avoid redefinition and linkage issues with functions from the `winsock2.h` header.
