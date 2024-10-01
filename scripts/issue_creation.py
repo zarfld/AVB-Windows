@@ -43,10 +43,16 @@ def main():
     metadata = data["metadata"]
     log_link = data.get("build_logs_link", "<link-to-logs>")
     
+    if not errors:
+        print("No errors found in logs. Skipping issue creation.")
+        return
+    
+    error_messages = "\n".join([f"Line {error['line_number']}: {error['line']}" for error in errors])
+    
     body = f"""
     **Build Failure Details:**
     - **Commit SHA**: {os.environ.get('COMMIT_SHA', '<commit-sha>')}
-    - **Error Message**: {errors}
+    - **Error Message**: {error_messages}
     - **Total Lines**: {metadata["total_lines"]}
     - **Error Count**: {metadata["error_count"]}
     - **Build Logs**: {log_link}
