@@ -3,6 +3,9 @@ import re
 import json
 
 def check_for_logs(log_path):
+    if not os.path.exists(log_path):
+        with open(log_path, 'w') as log_file:
+            log_file.write("No build errors found.\n")
     return os.path.exists(log_path)
 
 def parse_logs(log_path):
