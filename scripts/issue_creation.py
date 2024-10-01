@@ -60,8 +60,18 @@ def main():
     """
     labels = ["build-failure", "bug"]
 
+    # Link issues to specific CI pipeline stages using keywords in commit messages and PR descriptions
+    if "Closes" in os.environ.get('COMMIT_MESSAGE', ''):
+        body += "\n\n**Linked to CI Pipeline Stage**: Deployment"
+        labels.append("deployment")
+
     issue = create_github_issue(repo_name, title, body, labels)
     print(f"Issue created: {issue.html_url}")
+
+    # Automatically close issues when the CI pipeline successfully completes a deployment
+    if "Closes" in os.environ.get('COMMIT_MESSAGE', ''):
+        issue.edit(state="closed")
+        print(f"Issue closed: {issue.html_url}")
 
 if __name__ == "__main__":
     main()
