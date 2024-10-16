@@ -24,4 +24,5 @@ else
   exit 1
 fi
 
+# Log the output for troubleshooting
 echo "WDK is properly installed."
