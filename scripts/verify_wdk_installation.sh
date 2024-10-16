@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check if the windowsdriverkit10 package is installed
-if choco list --local-only | findstr /i "windowsdriverkit10""; then
+if choco list --local-only | findstr /i "windowsdriverkit10"; then
   echo "WDK package is installed."
 else
   echo "WDK package is not installed."
