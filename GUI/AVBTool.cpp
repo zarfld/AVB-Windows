@@ -56,13 +56,13 @@ void AVBTool::initializeWindow() {
     WNDCLASS wc = { 0 };
     wc.lpfnWndProc = WindowProc;
     wc.hInstance = hInstance;
-    wc.lpszClassName = "AVBToolClass";
+    wc.lpszClassName = TEXT("AVBToolClass");
     RegisterClass(&wc);
 
-    hwndMain = CreateWindowEx(0, "AVBToolClass", "AVB Tool", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 800, 600, NULL, NULL, hInstance, this);
-    hwndList = CreateWindowEx(0, WC_LISTVIEW, "", WS_CHILD | WS_VISIBLE | LVS_REPORT, 10, 10, 760, 400, hwndMain, NULL, hInstance, NULL);
-    hwndStartButton = CreateWindowEx(0, "BUTTON", "Start", WS_CHILD | WS_VISIBLE, 10, 420, 100, 30, hwndMain, (HMENU)1, hInstance, NULL);
-    hwndStopButton = CreateWindowEx(0, "BUTTON", "Stop", WS_CHILD | WS_VISIBLE, 120, 420, 100, 30, hwndMain, (HMENU)2, hInstance, NULL);
+    hwndMain = CreateWindowEx(0, TEXT("AVBToolClass"), TEXT("AVB Tool"), WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 800, 600, NULL, NULL, hInstance, this);
+    hwndList = CreateWindowEx(0, WC_LISTVIEW, TEXT(""), WS_CHILD | WS_VISIBLE | LVS_REPORT, 10, 10, 760, 400, hwndMain, NULL, hInstance, NULL);
+    hwndStartButton = CreateWindowEx(0, TEXT("BUTTON"), TEXT("Start"), WS_CHILD | WS_VISIBLE, 10, 420, 100, 30, hwndMain, (HMENU)1, hInstance, NULL);
+    hwndStopButton = CreateWindowEx(0, TEXT("BUTTON"), TEXT("Stop"), WS_CHILD | WS_VISIBLE, 120, 420, 100, 30, hwndMain, (HMENU)2, hInstance, NULL);
 
     ShowWindow(hwndMain, SW_SHOW);
 }
