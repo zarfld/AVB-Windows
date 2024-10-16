@@ -38,6 +38,9 @@ jobs:
     - name: Install Windows Driver Kit (WDK)
       run: choco install windowsdriverkit10 --source=https://chocolatey.org/api/v2/
 
+    - name: Set executable permissions for verify_wdk_installation.sh
+      run: chmod +x ./scripts/verify_wdk_installation.sh
+
     - name: Verify Windows Driver Kit (WDK) Installation
       run: |
         ./scripts/verify_wdk_installation.sh
