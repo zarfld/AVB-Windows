@@ -207,7 +207,7 @@ jobs:
       run: nuget restore AVB_Windows.sln
 
     - name: Install Windows Driver Kit (WDK)
-      run: Install-WindowsFeature -Name WDK
+      run: choco install windowsdriverkit10 --source=https://chocolatey.org/api/v2/
 
     - name: Set WDK environment variables
       run: |
