@@ -42,4 +42,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		WDK_IncludePath = C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0
+	EndGlobalSection
 EndGlobal
