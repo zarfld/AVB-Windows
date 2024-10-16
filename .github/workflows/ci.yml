@@ -40,12 +40,8 @@ jobs:
 
     - name: Verify Windows Driver Kit (WDK) Installation
       run: |
-        if choco list --local-only | findstr /i "windowsdriverkit10"; then
-          echo "WDK is installed."
-        else
-          echo "WDK is not installed."
-          exit 1
-        fi
+        ./scripts/verify_wdk_installation.sh
+      shell: bash
 
     - name: Set WDK environment variables
       run: |
