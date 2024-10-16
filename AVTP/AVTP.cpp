@@ -76,8 +76,8 @@ void AVTP::handleStream() {
 
 void AVTP::captureAVBFrames() {
     char buffer[2048];
-    int serverAddrSize = sizeof(serverAddr);
-    int result = recvfrom(sock, buffer, sizeof(buffer), 0, (sockaddr*)&serverAddr, &serverAddrSize);
+    int serverAddrSize = static_cast<int>(sizeof(serverAddr));
+    int result = recvfrom(sock, buffer, static_cast<int>(sizeof(buffer)), 0, (sockaddr*)&serverAddr, &serverAddrSize);
     if (result == SOCKET_ERROR) {
         std::cerr << "Receive failed with error: " << WSAGetLastError() << std::endl;
     } else {

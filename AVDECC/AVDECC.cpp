@@ -89,7 +89,7 @@ void AVDECC::manageStreams() {
 
 void AVDECC::discoverDevices() {
     const char* discoverMessage = "DISCOVER";
-    int result = sendto(sock, discoverMessage, strlen(discoverMessage), 0, (sockaddr*)&serverAddr, sizeof(serverAddr));
+    int result = sendto(sock, discoverMessage, static_cast<int>(strlen(discoverMessage)), 0, (sockaddr*)&serverAddr, sizeof(serverAddr));
     if (result == SOCKET_ERROR) {
         std::cerr << "Send failed with error: " << WSAGetLastError() << std::endl;
         return;
@@ -97,7 +97,7 @@ void AVDECC::discoverDevices() {
 
     char buffer[1024];
     int serverAddrSize = sizeof(serverAddr);
-    result = recvfrom(sock, buffer, sizeof(buffer), 0, (sockaddr*)&serverAddr, &serverAddrSize);
+    result = recvfrom(sock, buffer, static_cast<int>(sizeof(buffer)), 0, (sockaddr*)&serverAddr, &serverAddrSize);
     if (result == SOCKET_ERROR) {
         std::cerr << "Receive failed with error: " << WSAGetLastError() << std::endl;
     } else {
