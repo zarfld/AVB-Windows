@@ -190,6 +190,9 @@ jobs:
 
     runs-on: windows-latest
 
+    outputs:
+      url: ${{ steps.upload_build_logs.outputs.url }}
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -231,11 +234,13 @@ jobs:
 
     - name: Upload Build Logs
       if: failure()
+      id: upload_build_logs
       uses: actions/upload-artifact@v4
       with:
         name: build-logs
         path: build.log
         retention-days: 7
+        if-no-files-found: error
 
     - name: Run Issue Creation
       if: failure()
