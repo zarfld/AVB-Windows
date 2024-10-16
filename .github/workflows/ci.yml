@@ -117,6 +117,7 @@ jobs:
       with:
         name: build-logs
         path: build.log
+        retention-days: 7
 
     - name: Check for Missing Logs
       run: |
