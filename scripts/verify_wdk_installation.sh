@@ -1,19 +1,11 @@
 #!/bin/bash
 
-# Check if the windowsdriverkit10 package is installed
-if choco list --local-only | findstr /i "windowsdriverkit10"; then
-  echo "WDK package is installed."
-else
-  echo "WDK package is not installed."
-#  exit 1
-fi
-
 # Check if the WDK files are present in the correct installation path
 if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" ]; then
   echo "WDK files are present in the correct installation path."
 else
   echo "WDK files are not present in the correct installation path."
-#  exit 1
+  exit 1
 fi
 
 # Check for the presence of ntddk.h in the correct installation path
@@ -21,15 +13,15 @@ if [ -f "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km\ntddk.h"
   echo "ntddk.h is present in the correct installation path."
 else
   echo "ntddk.h is not present in the correct installation path."
-#  exit 1
+  exit 1
 fi
 
-# Use the 'where' command to locate 'wdksetup.exe'
-if where wdksetup.exe; then
-  echo "wdksetup.exe is located."
+# Check if the WDK_IncludePath environment variable is set
+if [ -z "$WDK_IncludePath" ]; then
+  echo "WDK_IncludePath environment variable is not set."
+  exit 1
 else
-  echo "wdksetup.exe is not located."
-#  exit 1
+  echo "WDK_IncludePath is set to: $WDK_IncludePath"
 fi
 
 # Log the output for troubleshooting
@@ -40,3 +32,11 @@ echo "Debugging information for Driver/i210AVBDriver.cpp:"
 echo "Path: $(realpath Driver/i210AVBDriver.cpp)"
 echo "Files in directory:"
 ls -l Driver/
+
+# Add logging to confirm the presence of wdksetup.exe
+if [ -f "C:\Program Files (x86)\Windows Kits\10\bin\10.0.22621.0\x64\wdksetup.exe" ]; then
+  echo "wdksetup.exe is present in the correct installation path."
+else
+  echo "wdksetup.exe is not present in the correct installation path."
+  exit 1
+fi
