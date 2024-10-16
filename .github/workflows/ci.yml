@@ -145,7 +145,6 @@ jobs:
       run: |
         if [ ! -f build.log ]; then
           echo "No logs found. Skipping error-checking step."
-        fi
 
     - name: Run Issue Creation
       if: failure()
