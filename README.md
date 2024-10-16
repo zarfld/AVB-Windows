@@ -187,8 +187,10 @@ permissions:
 
 jobs:
   build:
-
     runs-on: windows-latest
+
+    outputs:
+      url: ${{ steps.upload_build_logs.outputs.url }}
 
     steps:
     - name: Checkout code

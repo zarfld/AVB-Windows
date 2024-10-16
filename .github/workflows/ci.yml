@@ -16,6 +16,9 @@ jobs:
 
     runs-on: windows-latest
 
+    outputs:
+      url: ${{ steps.upload_build_logs.outputs.url }}
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -120,9 +123,6 @@ jobs:
         name: build-logs
         path: build.log
         retention-days: 7
-        if-no-files-found: error
-      outputs:
-        url: ${{ steps.upload_build_logs.outputs.url }}
 
     - name: Check for Missing Logs
       run: |
