@@ -16,6 +16,14 @@ else
 #  exit 1
 fi
 
+# Check for the presence of ntddk.h in the correct installation path
+if [ -f "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km\ntddk.h" ]; then
+  echo "ntddk.h is present in the correct installation path."
+else
+  echo "ntddk.h is not present in the correct installation path."
+#  exit 1
+fi
+
 # Use the 'where' command to locate 'wdksetup.exe'
 if where wdksetup.exe; then
   echo "wdksetup.exe is located."
@@ -26,3 +34,9 @@ fi
 
 # Log the output for troubleshooting
 echo "WDK is properly installed."
+
+# Provide debugging information on the path and files for Driver/i210AVBDriver.cpp
+echo "Debugging information for Driver/i210AVBDriver.cpp:"
+echo "Path: $(realpath Driver/i210AVBDriver.cpp)"
+echo "Files in directory:"
+ls -l Driver/
