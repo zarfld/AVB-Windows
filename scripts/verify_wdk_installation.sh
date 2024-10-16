@@ -11,6 +11,14 @@ else
   exit 1
 fi
 
+# Check if the WDK_IncludePath\km directory is present
+if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km" ]; then
+  echo "WDK_IncludePath\km directory is present."
+else
+  echo "WDK_IncludePath\km directory is not present."
+  exit 1
+fi
+
 # Check for the presence of ntddk.h in the correct installation path
 if [ -f "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km\ntddk.h" ]; then
   echo "ntddk.h is present in the correct installation path."
