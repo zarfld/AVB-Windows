@@ -180,6 +180,11 @@ on:
   pull_request:
     branches: [ main, develop ]
 
+permissions:
+  actions: read
+  contents: read
+  issues: write
+
 jobs:
   build:
 
@@ -223,6 +228,23 @@ jobs:
         clang-format -i -style=file **/*.cpp **/*.h
 
         git diff --exit-code
+
+    - name: Upload Build Logs
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-logs
+        path: build.log
+        retention-days: 7
+
+    - name: Run Issue Creation
+      if: failure()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COMMIT_SHA: ${{ github.sha }}
+        BUILD_LOGS_LINK: ${{ steps.upload_build_logs.outputs.url }}
+      run: |
+        python scripts/issue_creation.py
 ```
 
 For more details, refer to the [ci.yml](.github/workflows/ci.yml) file in the repository.
