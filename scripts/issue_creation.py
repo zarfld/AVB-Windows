@@ -27,6 +27,13 @@ def create_github_issue(repo_name, title, body, labels):
     )
     return issue
 
+def verify_build_logs_link(log_link):
+    try:
+        response = requests.head(log_link)
+        return response.status_code == 200
+    except requests.RequestException:
+        return False
+
 def main():
     repo_name = "zarfld/AVB-Windows"
     title = "Build Failure on Commit SHA"
@@ -49,13 +56,18 @@ def main():
     
     error_messages = "\n".join([f"Line {error['line_number']}: {error['line']}" for error in errors])
     
+    if verify_build_logs_link(log_link):
+        build_logs_message = f"**Build Logs**: {log_link}"
+    else:
+        build_logs_message = "**Build Logs**: No build logs available or link is inaccessible"
+    
     body = f"""
     **Build Failure Details:**
     - **Commit SHA**: {os.environ.get('COMMIT_SHA', '<commit-sha>')}
     - **Error Message**: {error_messages}
     - **Total Lines**: {metadata["total_lines"]}
     - **Error Count**: {metadata["error_count"]}
-    - **Build Logs**: {log_link if log_link != "<link-to-logs>" else "No build logs available"}
+    - {build_logs_message}
     - **Timestamp**: {os.environ.get('GITHUB_RUN_TIMESTAMP', '<timestamp>')}
     """
     labels = ["build-failure", "bug"]
