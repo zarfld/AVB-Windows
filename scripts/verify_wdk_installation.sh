@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Set the WDK_IncludePath environment variable
+export WDK_IncludePath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0"
+
 # Check if the WDK files are present in the correct installation path
 if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" ]; then
   echo "WDK files are present in the correct installation path."

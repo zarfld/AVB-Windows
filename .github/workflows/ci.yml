@@ -227,3 +227,11 @@ jobs:
         if [ "$monitoring_tool" == "Datadog" ]; then
           echo "Integrating Datadog for monitoring and feedback"
           # Add logic to integrate Datadog
+
+    - name: Set WDK environment variables
+      run: |
+        echo "WDK_IncludePath=C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" >> $GITHUB_ENV
+
+    - name: Log WDK environment variable
+      run: |
+        echo "WDK_IncludePath is set to: $WDK_IncludePath"
