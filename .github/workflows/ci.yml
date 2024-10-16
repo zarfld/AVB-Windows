@@ -120,6 +120,9 @@ jobs:
         name: build-logs
         path: build.log
         retention-days: 7
+        if-no-files-found: error
+      outputs:
+        url: ${{ steps.upload_build_logs.outputs.url }}
 
     - name: Check for Missing Logs
       run: |

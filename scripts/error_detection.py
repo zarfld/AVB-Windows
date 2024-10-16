@@ -2,6 +2,7 @@ import os
 import re
 import json
 from github import Github
+import requests
 
 def check_for_logs(log_path):
     if not os.path.exists(log_path):
@@ -55,6 +56,13 @@ def update_issue_labels(issue, labels):
             issue_labels.append(label)
     issue.edit(labels=issue_labels)
 
+def verify_build_logs_link(log_link):
+    try:
+        response = requests.head(log_link)
+        return response.status_code == 200
+    except requests.RequestException:
+        return False
+
 def main():
     log_path = "build.log"
     output_path = "errors_and_metadata.json"
@@ -96,9 +104,13 @@ def main():
             labels = ["build-failure", "failed CI"]
         else:
             labels = ["build-failure", "passed CI"]
+        if verify_build_logs_link(log_link):
+            build_logs_message = f"Build logs: {log_link}"
+        else:
+            build_logs_message = "Build logs: No build logs available or link is inaccessible"
         repo.create_issue(
             title=issue_title,
-            body=f"Build logs: {log_link}",
+            body=build_logs_message,
             labels=labels
         )
 
