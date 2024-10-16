@@ -35,6 +35,13 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
+    - name: Install Windows Driver Kit (WDK)
+      run: choco install windows-driver-kit
+
+    - name: Set WDK environment variables
+      run: |
+        echo "WDK_IncludePath=C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" >> $GITHUB_ENV
+
     - name: Clean solution
       run: msbuild AVB_Windows.sln /t:Clean
 
