@@ -108,14 +108,14 @@ void AVBTool::stopSynchronization() {
 void AVBTool::synchronize() {
     while (running) {
         const char* syncMessage = "SYNC";
-        int result = sendto(sock, syncMessage, strlen(syncMessage), 0, (sockaddr*)&serverAddr, sizeof(serverAddr));
+        int result = sendto(sock, syncMessage, static_cast<int>(strlen(syncMessage)), 0, (sockaddr*)&serverAddr, sizeof(serverAddr));
         if (result == SOCKET_ERROR) {
             std::cerr << "Send failed with error: " << WSAGetLastError() << std::endl;
         }
 
         char buffer[1024];
         int serverAddrSize = sizeof(serverAddr);
-        result = recvfrom(sock, buffer, sizeof(buffer), 0, (sockaddr*)&serverAddr, &serverAddrSize);
+        result = recvfrom(sock, buffer, static_cast<int>(sizeof(buffer)), 0, (sockaddr*)&serverAddr, &serverAddrSize);
         if (result == SOCKET_ERROR) {
             std::cerr << "Receive failed with error: " << WSAGetLastError() << std::endl;
         } else {
@@ -130,7 +130,7 @@ void AVBTool::synchronize() {
 void AVBTool::discoverDevices() {
     while (running) {
         const char* discoverMessage = "DISCOVER";
-        int result = sendto(sock, discoverMessage, strlen(discoverMessage), 0, (sockaddr*)&serverAddr, sizeof(serverAddr));
+        int result = sendto(sock, discoverMessage, static_cast<int>(strlen(discoverMessage)), 0, (sockaddr*)&serverAddr, sizeof(serverAddr));
         if (result == SOCKET_ERROR) {
             std::cerr << "Send failed with error: " << WSAGetLastError() << std::endl;
             return;
@@ -138,7 +138,7 @@ void AVBTool::discoverDevices() {
 
         char buffer[1024];
         int serverAddrSize = sizeof(serverAddr);
-        result = recvfrom(sock, buffer, sizeof(buffer), 0, (sockaddr*)&serverAddr, &serverAddrSize);
+        result = recvfrom(sock, buffer, static_cast<int>(sizeof(buffer)), 0, (sockaddr*)&serverAddr, &serverAddrSize);
         if (result == SOCKET_ERROR) {
             std::cerr << "Receive failed with error: " << WSAGetLastError() << std::endl;
         } else {
