@@ -401,25 +401,9 @@ jobs:
       run: pip install PyGithub
 
     - name: Check for Log File Existence
+      id: check_log_file_existence
       run: |
-        if [ ! -f build.log ]; then
-          echo "No build.log found."
-        fi
-        if [ ! -f install_dependencies.log ]; then
-          echo "No install_dependencies.log found."
-        fi
-        if [ ! -f install_windows_sdk.log ]; then
-          echo "No install_windows_sdk.log found."
-        fi
-        if [ ! -f install_windows_driver_kit.log ]; then
-          echo "No install_windows_driver_kit.log found."
-        fi
-        if [ ! -f install_kmdf_build_tools.log ]; then
-          echo "No install_kmdf_build_tools.log found."
-        fi
-        if [ ! -f C:\ProgramData\chocolatey\logs\chocolatey.log ]; then
-          echo "No C:\ProgramData\chocolatey\logs\chocolatey.log found."
-        fi
+        python scripts/error_detection.py --check-logs
 
     - name: Upload Build Logs
       if: failure()
@@ -739,7 +723,7 @@ jobs:
     - name: Continuous Deployment Labels and Issue Auto-Close
       run: |
         deployment_status="success"
-        if [ "$deployment_status" == "success" ]; then
+        if [ "$deployment_status" == "success"; then
           echo "Deployment successful. Auto-closing issues."
           # Add logic to auto-close issues
         fi
