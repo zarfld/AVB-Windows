@@ -44,8 +44,8 @@ jobs:
     - name: Install Windows Driver Kit (WDK)
       run: choco install windowsdriverkit10 --source=https://chocolatey.org/api/v2/
 
-    - name: Install WindowsKernelModeDriver build tools
-      run: choco install windowskernelmodedriver --source=https://chocolatey.org/api/v2/
+    - name: Install KMDF build tools
+      run: choco install kmdf
 
     - name: Set executable permissions for verify_wdk_installation.sh
       run: chmod +x ./scripts/verify_wdk_installation.sh
@@ -223,7 +223,7 @@ jobs:
     - name: Continuous Deployment Labels and Issue Auto-Close
       run: |
         deployment_status="success"
-        if [ "$deployment_status" == "success" ]; then
+        if [ "$deployment_status" == "success"; then
           echo "Deployment successful. Auto-closing issues."
           # Add logic to auto-close issues
 
