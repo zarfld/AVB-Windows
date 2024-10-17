@@ -159,14 +159,26 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build-logs
-        path: build.log  install_dependencies.log install_windows_sdk.log install_windows_driver_kit.log install_kmdf_build_tools.log
+        path: build.log install_dependencies.log install_windows_sdk.log install_windows_driver_kit.log install_kmdf_build_tools.log
         retention-days: 7
         if-no-files-found: error
 
     - name: Check for Missing Logs
       run: |
-        if [ ! -f build.log ] && [ ! -f install_dependencies.log ] && [ ! -f install_windows_sdk.log ] && [ ! -f install_windows_driver_kit.log ] && [ ! -f install_kmdf_build_tools.log ]; then
-          echo "No logs found. Skipping error-checking step."
+        if [ ! -f build.log ]; then
+          echo "No build.log found. Skipping error-checking step."
+        fi
+        if [ ! -f install_dependencies.log ]; then
+          echo "No install_dependencies.log found. Skipping error-checking step."
+        fi
+        if [ ! -f install_windows_sdk.log ]; then
+          echo "No install_windows_sdk.log found. Skipping error-checking step."
+        fi
+        if [ ! -f install_windows_driver_kit.log ]; then
+          echo "No install_windows_driver_kit.log found. Skipping error-checking step."
+        fi
+        if [ ! -f install_kmdf_build_tools.log ]; then
+          echo "No install_kmdf_build_tools.log found. Skipping error-checking step."
         fi
 
     - name: Run Issue Creation
@@ -394,14 +406,66 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build-logs
-        path: build.log install_dependencies.log install_windows_sdk.log install_windows_driver_kit.log install_kmdf_build_tools.log
+        path: build.log
         retention-days: 7
-        if-no-files-found: error
+        if: ${{ steps.check_build_log.outputs.exists == 'true' }}
+
+    - name: Upload Install Dependencies Log
+      if: failure()
+      id: upload_install_dependencies_log
+      uses: actions/upload-artifact@v4
+      with:
+        name: install_dependencies-log
+        path: install_dependencies.log
+        retention-days: 7
+        if: ${{ steps.check_install_dependencies_log.outputs.exists == 'true' }}
+
+    - name: Upload Install Windows SDK Log
+      if: failure()
+      id: upload_install_windows_sdk_log
+      uses: actions/upload-artifact@v4
+      with:
+        name: install_windows_sdk-log
+        path: install_windows_sdk.log
+        retention-days: 7
+        if: ${{ steps.check_install_windows_sdk_log.outputs.exists == 'true' }}
+
+    - name: Upload Install Windows Driver Kit Log
+      if: failure()
+      id: upload_install_windows_driver_kit_log
+      uses: actions/upload-artifact@v4
+      with:
+        name: install_windows_driver_kit-log
+        path: install_windows_driver_kit.log
+        retention-days: 7
+        if: ${{ steps.check_install_windows_driver_kit_log.outputs.exists == 'true' }}
+
+    - name: Upload Install KMDF Build Tools Log
+      if: failure()
+      id: upload_install_kmdf_build_tools_log
+      uses: actions/upload-artifact@v4
+      with:
+        name: install_kmdf_build_tools-log
+        path: install_kmdf_build_tools.log
+        retention-days: 7
+        if: ${{ steps.check_install_kmdf_build_tools_log.outputs.exists == 'true' }}
 
     - name: Check for Missing Logs
       run: |
-        if [ ! -f build.log ] && [ ! -f install_dependencies.log ] && [ ! -f install_windows_sdk.log ] && [ ! -f install_windows_driver_kit.log ] && [ ! -f install_kmdf_build_tools.log ]; then
-          echo "No logs found. Skipping error-checking step."
+        if [ ! -f build.log ]; then
+          echo "No build.log found. Skipping error-checking step."
+        fi
+        if [ ! -f install_dependencies.log ]; then
+          echo "No install_dependencies.log found. Skipping error-checking step."
+        fi
+        if [ ! -f install_windows_sdk.log ]; then
+          echo "No install_windows_sdk.log found. Skipping error-checking step."
+        fi
+        if [ ! -f install_windows_driver_kit.log ]; then
+          echo "No install_windows_driver_kit.log found. Skipping error-checking step."
+        fi
+        if [ ! -f install_kmdf_build_tools.log ]; then
+          echo "No install_kmdf_build_tools.log found. Skipping error-checking step."
         fi
 
     - name: Run Issue Creation
@@ -629,14 +693,66 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build-logs
-        path: build.log install_dependencies.log install_windows_sdk.log install_windows_driver_kit.log install_kmdf_build_tools.log
+        path: build.log
         retention-days: 7
-        if-no-files-found: error
+        if: ${{ steps.check_build_log.outputs.exists == 'true' }}
+
+    - name: Upload Install Dependencies Log
+      if: failure()
+      id: upload_install_dependencies_log
+      uses: actions/upload-artifact@v4
+      with:
+        name: install_dependencies-log
+        path: install_dependencies.log
+        retention-days: 7
+        if: ${{ steps.check_install_dependencies_log.outputs.exists == 'true' }}
+
+    - name: Upload Install Windows SDK Log
+      if: failure()
+      id: upload_install_windows_sdk_log
+      uses: actions/upload-artifact@v4
+      with:
+        name: install_windows_sdk-log
+        path: install_windows_sdk.log
+        retention-days: 7
+        if: ${{ steps.check_install_windows_sdk_log.outputs.exists == 'true' }}
+
+    - name: Upload Install Windows Driver Kit Log
+      if: failure()
+      id: upload_install_windows_driver_kit_log
+      uses: actions/upload-artifact@v4
+      with:
+        name: install_windows_driver_kit-log
+        path: install_windows_driver_kit.log
+        retention-days: 7
+        if: ${{ steps.check_install_windows_driver_kit_log.outputs.exists == 'true' }}
+
+    - name: Upload Install KMDF Build Tools Log
+      if: failure()
+      id: upload_install_kmdf_build_tools_log
+      uses: actions/upload-artifact@v4
+      with:
+        name: install_kmdf_build_tools-log
+        path: install_kmdf_build_tools.log
+        retention-days: 7
+        if: ${{ steps.check_install_kmdf_build_tools_log.outputs.exists == 'true' }}
 
     - name: Check for Missing Logs
       run: |
-        if [ ! -f build.log ] && [ ! -f install_dependencies.log ] && [ ! -f install_windows_sdk.log ] && [ ! -f install_windows_driver_kit.log ] && [ ! -f install_kmdf_build_tools.log ]; then
-          echo "No logs found. Skipping error-checking step."
+        if [ ! -f build.log ]; then
+          echo "No build.log found. Skipping error-checking step."
+        fi
+        if [ ! -f install_dependencies.log ]; then
+          echo "No install_dependencies.log found. Skipping error-checking step."
+        fi
+        if [ ! -f install_windows_sdk.log ]; then
+          echo "No install_windows_sdk.log found. Skipping error-checking step."
+        fi
+        if [ ! -f install_windows_driver_kit.log ]; then
+          echo "No install_windows_driver_kit.log found. Skipping error-checking step."
+        fi
+        if [ ! -f install_kmdf_build_tools.log ]; then
+          echo "No install_kmdf_build_tools.log found. Skipping error-checking step."
         fi
 
     - name: Run Issue Creation

@@ -5,14 +5,15 @@ from github import Github
 import requests
 
 def check_for_logs(log_paths):
-    all_logs_exist = True
+    existing_logs = []
     for log_path in log_paths:
-        if not os.path.exists(log_path):
+        if os.path.exists(log_path):
+            existing_logs.append(log_path)
+        else:
             with open(log_path, 'w') as log_file:
                 log_file.write("No build errors found.\n")
             print(f"No logs found for {log_path}. Skipping error-checking step.")
-            all_logs_exist = False
-    return all_logs_exist
+    return existing_logs
 
 def parse_logs(log_paths):
     errors = []
@@ -77,11 +78,12 @@ def main():
     ]
     output_path = "errors_and_metadata.json"
     log_link = os.environ.get('BUILD_LOGS_LINK', '<link-to-logs>')
-    if not check_for_logs(log_paths):
+    existing_logs = check_for_logs(log_paths)
+    if not existing_logs:
         print("No logs found. Skipping error-checking step.")
         return
 
-    errors, metadata = parse_logs(log_paths)
+    errors, metadata = parse_logs(existing_logs)
     if not errors:
         print("No errors found in logs.")
     else:
