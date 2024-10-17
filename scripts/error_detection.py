@@ -4,30 +4,34 @@ import json
 from github import Github
 import requests
 
-def check_for_logs(log_path):
-    if not os.path.exists(log_path):
-        with open(log_path, 'w') as log_file:
-            log_file.write("No build errors found.\n")
-        print("No logs found. Skipping error-checking step.")
-    return os.path.exists(log_path)
+def check_for_logs(log_paths):
+    all_logs_exist = True
+    for log_path in log_paths:
+        if not os.path.exists(log_path):
+            with open(log_path, 'w') as log_file:
+                log_file.write("No build errors found.\n")
+            print(f"No logs found for {log_path}. Skipping error-checking step.")
+            all_logs_exist = False
+    return all_logs_exist
 
-def parse_logs(log_path):
+def parse_logs(log_paths):
     errors = []
     metadata = {
         "total_lines": 0,
         "error_count": 0
     }
-    with open(log_path, 'r') as log_file:
-        for line in log_file:
-            metadata["total_lines"] += 1
-            if "error" in line.lower():
-                error_info = {
-                    "line": line.strip(),
-                    "line_number": metadata["total_lines"],
-                    "context": get_error_context(log_file, metadata["total_lines"])
-                }
-                errors.append(error_info)
-                metadata["error_count"] += 1
+    for log_path in log_paths:
+        with open(log_path, 'r') as log_file:
+            for line in log_file:
+                metadata["total_lines"] += 1
+                if "error" in line.lower():
+                    error_info = {
+                        "line": line.strip(),
+                        "line_number": metadata["total_lines"],
+                        "context": get_error_context(log_file, metadata["total_lines"])
+                    }
+                    errors.append(error_info)
+                    metadata["error_count"] += 1
     return errors, metadata
 
 def get_error_context(log_file, error_line_number, context_lines=2):
@@ -64,14 +68,20 @@ def verify_build_logs_link(log_link):
         return False
 
 def main():
-    log_path = "build.log"
+    log_paths = [
+        "build.log",
+        "install_dependencies.log",
+        "install_windows_sdk.log",
+        "install_windows_driver_kit.log",
+        "install_kmdf_build_tools.log"
+    ]
     output_path = "errors_and_metadata.json"
     log_link = os.environ.get('BUILD_LOGS_LINK', '<link-to-logs>')
-    if not check_for_logs(log_path):
+    if not check_for_logs(log_paths):
         print("No logs found. Skipping error-checking step.")
         return
 
-    errors, metadata = parse_logs(log_path)
+    errors, metadata = parse_logs(log_paths)
     if not errors:
         print("No errors found in logs.")
     else:

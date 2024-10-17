@@ -300,13 +300,13 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build-logs
-        path: build.log
+        path: *.log
         retention-days: 7
         if-no-files-found: error
 
     - name: Check for Missing Logs
       run: |
-        if [ ! -f build.log ]; then
+        if [ ! -f build.log ] && [ ! -f install_dependencies.log ] && [ ! -f install_windows_sdk.log ] && [ ! -f install_windows_driver_kit.log ] && [ ! -f install_kmdf_build_tools.log ]; then
           echo "No logs found. Skipping error-checking step."
         fi
 
@@ -384,7 +384,7 @@ jobs:
     - name: Integrate Monitoring and Feedback Tools
       run: |
         monitoring_tool="Datadog"
-        if [ "$monitoring_tool" == "Datadog" ]; then
+        if [ "$monitoring_tool" == "Datadog"; then
           echo "Integrating Datadog for monitoring and feedback"
           # Add logic to integrate Datadog
         fi
@@ -486,3 +486,19 @@ To install the WindowsKernelModeDriver build tools using Chocolatey, follow thes
    ```
 
 This command installs the WindowsKernelModeDriver build tools from the Chocolatey package repository.
+
+### Accessing and Interpreting Installation Logs
+
+To access and interpret the installation logs generated during the CI pipeline, follow these steps:
+
+1. **Accessing Logs**:
+   - The logs from each installation step are uploaded as artifacts in the GitHub Actions workflow.
+   - Navigate to the "Actions" tab in your GitHub repository.
+   - Select the workflow run you are interested in.
+   - Download the "build-logs" artifact, which contains all the log files.
+
+2. **Interpreting Logs**:
+   - Each log file is named descriptively based on the installation step, e.g., `install_dependencies.log`, `install_windows_sdk.log`.
+   - Open the log file corresponding to the installation step you want to review.
+   - Look for any error messages or warnings in the log file to identify issues during the installation process.
+   - Use the log file to troubleshoot and resolve any problems encountered during the installation steps.

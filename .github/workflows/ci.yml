@@ -35,16 +35,16 @@ jobs:
       run: nuget restore AVB_Windows.sln
 
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: pip install -r requirements.txt > install_dependencies.log 2>&1
 
     - name: Install Windows SDK 7.1
-      run: choco install windows-sdk-7.1 --source=https://chocolatey.org/api/v2/
+      run: choco install windows-sdk-7.1 --source=https://chocolatey.org/api/v2/ > install_windows_sdk.log 2>&1
 
     - name: Install Windows Driver Kit (WDK) 7.1.0
-      run: choco install windowsdriverkit7.1 --source=https://chocolatey.org/api/v2/
+      run: choco install windowsdriverkit7.1 --source=https://chocolatey.org/api/v2/ > install_windows_driver_kit.log 2>&1
 
     - name: Install KMDF build tools
-      run: choco install kmdf
+      run: choco install kmdf > install_kmdf_build_tools.log 2>&1
 
     - name: Set executable permissions for verify_wdk_installation.sh
       run: chmod +x ./scripts/verify_wdk_installation.sh
@@ -159,14 +159,15 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build-logs
-        path: build.log
+        path: build.log  install_dependencies.log install_windows_sdk.log install_windows_driver_kit.log install_kmdf_build_tools.log
         retention-days: 7
         if-no-files-found: error
 
     - name: Check for Missing Logs
       run: |
-        if [ ! -f build.log ]; then
+        if [ ! -f build.log ] && [ ! -f install_dependencies.log ] && [ ! -f install_windows_sdk.log ] && [ ! -f install_windows_driver_kit.log ] && [ ! -f install_kmdf_build_tools.log ]; then
           echo "No logs found. Skipping error-checking step."
+        fi
 
     - name: Run Issue Creation
       if: failure()
@@ -191,12 +192,14 @@ jobs:
         if [ "$issue_status" == "in progress" ]; then
           echo "Triggering CI pipeline for issue progress"
           # Add logic to trigger CI pipeline
+        fi
 
     - name: CI Pipeline Alerts for Failed Builds
       run: |
         if [ -f build.log ]; then
           echo "Build failed. Sending alerts."
           # Add logic to send alerts via Slack, email, or GitHub notifications
+        fi
 
     - name: Use Separate Labels for Environments
       run: |
@@ -210,6 +213,7 @@ jobs:
         elif [ "$environment" == "production" ]; then
           echo "Labeling as 'in production'"
           # Add logic to label issues as 'in production'
+        fi
 
     - name: Enforce Branch Protection Rules
       run: |
@@ -218,13 +222,15 @@ jobs:
         if [ -z "$protection_rules" ]; then
           echo "Enforcing branch protection rules"
           # Add logic to enforce branch protection rules
+        fi
 
     - name: Continuous Deployment Labels and Issue Auto-Close
       run: |
         deployment_status="success"
-        if [ "$deployment_status" == "success"; then
+        if [ "$deployment_status" == "success" ]; then
           echo "Deployment successful. Auto-closing issues."
           # Add logic to auto-close issues
+        fi
 
     - name: Enforce Issue Templates and CI Requirements
       run: |
@@ -232,11 +238,12 @@ jobs:
         if [ -f .github/ISSUE_TEMPLATE/$issue_template ]; then
           echo "Enforcing issue templates"
           # Add logic to enforce issue templates
+        fi
 
     - name: Integrate Monitoring and Feedback Tools
       run: |
         monitoring_tool="Datadog"
-        if [ "$monitoring_tool" == "Datadog" ]; then
+        if [ "$monitoring_tool" == "Datadog"; then
           echo "Integrating Datadog for monitoring and feedback"
           # Add logic to integrate Datadog
 
@@ -263,16 +270,16 @@ jobs:
       run: nuget restore AVB_Windows.sln
 
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: pip install -r requirements.txt > install_dependencies.log 2>&1
 
     - name: Install Windows SDK
-      run: choco install windows-sdk-10.1 --source=https://chocolatey.org/api/v2/
+      run: choco install windows-sdk-10.1 --source=https://chocolatey.org/api/v2/ > install_windows_sdk.log 2>&1
 
     - name: Install Windows Driver Kit (WDK)
-      run: choco install windowsdriverkit10 --source=https://chocolatey.org/api/v2/
+      run: choco install windowsdriverkit10 --source=https://chocolatey.org/api/v2/ > install_windows_driver_kit.log 2>&1
 
     - name: Install KMDF build tools
-      run: choco install kmdf
+      run: choco install kmdf > install_kmdf_build_tools.log 2>&1
 
     - name: Set executable permissions for verify_wdk_installation.sh
       run: chmod +x ./scripts/verify_wdk_installation.sh
@@ -387,14 +394,15 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build-logs
-        path: build.log
+        path: build.log install_dependencies.log install_windows_sdk.log install_windows_driver_kit.log install_kmdf_build_tools.log
         retention-days: 7
         if-no-files-found: error
 
     - name: Check for Missing Logs
       run: |
-        if [ ! -f build.log ]; then
+        if [ ! -f build.log ] && [ ! -f install_dependencies.log ] && [ ! -f install_windows_sdk.log ] && [ ! -f install_windows_driver_kit.log ] && [ ! -f install_kmdf_build_tools.log ]; then
           echo "No logs found. Skipping error-checking step."
+        fi
 
     - name: Run Issue Creation
       if: failure()
@@ -419,12 +427,14 @@ jobs:
         if [ "$issue_status" == "in progress" ]; then
           echo "Triggering CI pipeline for issue progress"
           # Add logic to trigger CI pipeline
+        fi
 
     - name: CI Pipeline Alerts for Failed Builds
       run: |
         if [ -f build.log ]; then
           echo "Build failed. Sending alerts."
           # Add logic to send alerts via Slack, email, or GitHub notifications
+        fi
 
     - name: Use Separate Labels for Environments
       run: |
@@ -438,6 +448,7 @@ jobs:
         elif [ "$environment" == "production" ]; then
           echo "Labeling as 'in production'"
           # Add logic to label issues as 'in production'
+        fi
 
     - name: Enforce Branch Protection Rules
       run: |
@@ -446,13 +457,15 @@ jobs:
         if [ -z "$protection_rules" ]; then
           echo "Enforcing branch protection rules"
           # Add logic to enforce branch protection rules
+        fi
 
     - name: Continuous Deployment Labels and Issue Auto-Close
       run: |
         deployment_status="success"
-        if [ "$deployment_status" == "success"; then
+        if [ "$deployment_status" == "success" ]; then
           echo "Deployment successful. Auto-closing issues."
           # Add logic to auto-close issues
+        fi
 
     - name: Enforce Issue Templates and CI Requirements
       run: |
@@ -460,11 +473,12 @@ jobs:
         if [ -f .github/ISSUE_TEMPLATE/$issue_template ]; then
           echo "Enforcing issue templates"
           # Add logic to enforce issue templates
+        fi
 
     - name: Integrate Monitoring and Feedback Tools
       run: |
         monitoring_tool="Datadog"
-        if [ "$monitoring_tool" == "Datadog" ]; then
+        if [ "$monitoring_tool" == "Datadog"; then
           echo "Integrating Datadog for monitoring and feedback"
           # Add logic to integrate Datadog
 
@@ -491,16 +505,16 @@ jobs:
       run: nuget restore AVB_Windows.sln
 
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: pip install -r requirements.txt > install_dependencies.log 2>&1
 
     - name: Install Windows SDK
-      run: choco install windows-sdk-10.1 --source=https://chocolatey.org/api/v2/
+      run: choco install windows-sdk-10.1 --source=https://chocolatey.org/api/v2/ > install_windows_sdk.log 2>&1
 
     - name: Install Windows Driver Kit (WDK)
-      run: choco install windowsdriverkit10 --source=https://chocolatey.org/api/v2/
+      run: choco install windowsdriverkit10 --source=https://chocolatey.org/api/v2/ > install_windows_driver_kit.log 2>&1
 
     - name: Install KMDF build tools
-      run: choco install kmdf
+      run: choco install kmdf > install_kmdf_build_tools.log 2>&1
 
     - name: Set executable permissions for verify_wdk_installation.sh
       run: chmod +x ./scripts/verify_wdk_installation.sh
@@ -615,14 +629,15 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build-logs
-        path: build.log
+        path: build.log install_dependencies.log install_windows_sdk.log install_windows_driver_kit.log install_kmdf_build_tools.log
         retention-days: 7
         if-no-files-found: error
 
     - name: Check for Missing Logs
       run: |
-        if [ ! -f build.log ]; then
+        if [ ! -f build.log ] && [ ! -f install_dependencies.log ] && [ ! -f install_windows_sdk.log ] && [ ! -f install_windows_driver_kit.log ] && [ ! -f install_kmdf_build_tools.log ]; then
           echo "No logs found. Skipping error-checking step."
+        fi
 
     - name: Run Issue Creation
       if: failure()
@@ -647,12 +662,14 @@ jobs:
         if [ "$issue_status" == "in progress" ]; then
           echo "Triggering CI pipeline for issue progress"
           # Add logic to trigger CI pipeline
+        fi
 
     - name: CI Pipeline Alerts for Failed Builds
       run: |
         if [ -f build.log ]; then
           echo "Build failed. Sending alerts."
           # Add logic to send alerts via Slack, email, or GitHub notifications
+        fi
 
     - name: Use Separate Labels for Environments
       run: |
@@ -666,6 +683,7 @@ jobs:
         elif [ "$environment" == "production" ]; then
           echo "Labeling as 'in production'"
           # Add logic to label issues as 'in production'
+        fi
 
     - name: Enforce Branch Protection Rules
       run: |
@@ -674,13 +692,15 @@ jobs:
         if [ -z "$protection_rules" ]; then
           echo "Enforcing branch protection rules"
           # Add logic to enforce branch protection rules
+        fi
 
     - name: Continuous Deployment Labels and Issue Auto-Close
       run: |
         deployment_status="success"
-        if [ "$deployment_status" == "success"; then
+        if [ "$deployment_status" == "success" ]; then
           echo "Deployment successful. Auto-closing issues."
           # Add logic to auto-close issues
+        fi
 
     - name: Enforce Issue Templates and CI Requirements
       run: |
@@ -688,10 +708,11 @@ jobs:
         if [ -f .github/ISSUE_TEMPLATE/$issue_template ]; then
           echo "Enforcing issue templates"
           # Add logic to enforce issue templates
+        fi
 
     - name: Integrate Monitoring and Feedback Tools
       run: |
         monitoring_tool="Datadog"
-        if [ "$monitoring_tool" == "Datadog" ]; then
+        if [ "$monitoring_tool" == "Datadog"; then
           echo "Integrating Datadog for monitoring and feedback"
           # Add logic to integrate Datadog
