@@ -35,3 +35,11 @@ echo "Debugging information for Driver/i210AVBDriver.cpp:"
 echo "Path: $(realpath Driver/i210AVBDriver.cpp)"
 echo "Files in directory:"
 ls -l Driver/
+
+# Check if the Windows SDK is installed and compatible with the WDK
+if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" ]; then
+  echo "Windows SDK is properly installed."
+else
+  echo "Windows SDK is not properly installed."
+  exit 1
+fi
