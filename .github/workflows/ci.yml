@@ -400,6 +400,27 @@ jobs:
     - name: Install PyGithub
       run: pip install PyGithub
 
+    - name: Check for Log File Existence
+      run: |
+        if [ ! -f build.log ]; then
+          echo "No build.log found."
+        fi
+        if [ ! -f install_dependencies.log ]; then
+          echo "No install_dependencies.log found."
+        fi
+        if [ ! -f install_windows_sdk.log ]; then
+          echo "No install_windows_sdk.log found."
+        fi
+        if [ ! -f install_windows_driver_kit.log ]; then
+          echo "No install_windows_driver_kit.log found."
+        fi
+        if [ ! -f install_kmdf_build_tools.log ]; then
+          echo "No install_kmdf_build_tools.log found."
+        fi
+        if [ ! -f C:\ProgramData\chocolatey\logs\chocolatey.log ]; then
+          echo "No C:\ProgramData\chocolatey\logs\chocolatey.log found."
+        fi
+
     - name: Upload Build Logs
       if: failure()
       id: upload_build_logs
@@ -409,24 +430,6 @@ jobs:
         path: build.log install_dependencies.log install_windows_sdk.log install_windows_driver_kit.log install_kmdf_build_tools.log C:\ProgramData\chocolatey\logs\chocolatey.log
         retention-days: 7
         if-no-files-found: error
-
-    - name: Check for Missing Logs
-      run: |
-        if [ ! -f build.log ]; then
-          echo "No build.log found. Skipping error-checking step."
-        fi
-        if [ ! -f install_dependencies.log ]; then
-          echo "No install_dependencies.log found. Skipping error-checking step."
-        fi
-        if [ ! -f install_windows_sdk.log ]; then
-          echo "No install_windows_sdk.log found. Skipping error-checking step."
-        fi
-        if [ ! -f install_windows_driver_kit.log ]; then
-          echo "No install_windows_driver_kit.log found. Skipping error-checking step."
-        fi
-        if [ ! -f install_kmdf_build_tools.log ]; then
-          echo "No install_kmdf_build_tools.log found. Skipping error-checking step."
-        fi
 
     - name: Run Issue Creation
       if: failure()
@@ -647,6 +650,27 @@ jobs:
     - name: Install PyGithub
       run: pip install PyGithub
 
+    - name: Check for Log File Existence
+      run: |
+        if [ ! -f build.log ]; then
+          echo "No build.log found."
+        fi
+        if [ ! -f install_dependencies.log ]; then
+          echo "No install_dependencies.log found."
+        fi
+        if [ ! -f install_windows_sdk.log ]; then
+          echo "No install_windows_sdk.log found."
+        fi
+        if [ ! -f install_windows_driver_kit.log ]; then
+          echo "No install_windows_driver_kit.log found."
+        fi
+        if [ ! -f install_kmdf_build_tools.log ]; then
+          echo "No install_kmdf_build_tools.log found."
+        fi
+        if [ ! -f C:\ProgramData\chocolatey\logs\chocolatey.log ]; then
+          echo "No C:\ProgramData\chocolatey\logs\chocolatey.log found."
+        fi
+
     - name: Upload Build Logs
       if: failure()
       id: upload_build_logs
@@ -656,24 +680,6 @@ jobs:
         path: build.log install_dependencies.log install_windows_sdk.log install_windows_driver_kit.log install_kmdf_build_tools.log C:\ProgramData\chocolatey\logs\chocolatey.log
         retention-days: 7
         if-no-files-found: error
-
-    - name: Check for Missing Logs
-      run: |
-        if [ ! -f build.log ]; then
-          echo "No build.log found. Skipping error-checking step."
-        fi
-        if [ ! -f install_dependencies.log ]; then
-          echo "No install_dependencies.log found. Skipping error-checking step."
-        fi
-        if [ ! -f install_windows_sdk.log ]; then
-          echo "No install_windows_sdk.log found. Skipping error-checking step."
-        fi
-        if [ ! -f install_windows_driver_kit.log ]; then
-          echo "No install_windows_driver_kit.log found. Skipping error-checking step."
-        fi
-        if [ ! -f install_kmdf_build_tools.log ]; then
-          echo "No install_kmdf_build_tools.log found. Skipping error-checking step."
-        fi
 
     - name: Run Issue Creation
       if: failure()

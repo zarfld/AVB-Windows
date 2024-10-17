@@ -67,6 +67,13 @@ def verify_build_logs_link(log_link):
     except requests.RequestException:
         return False
 
+def check_log_file_existence(log_path):
+    return os.path.exists(log_path)
+
+def create_dynamic_path_string(log_paths):
+    existing_logs = [log_path for log_path in log_paths if check_log_file_existence(log_path)]
+    return " ".join(existing_logs)
+
 def main():
     log_paths = [
         "build.log",
