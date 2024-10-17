@@ -412,7 +412,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build-logs
-        path: ${{ steps.check_log_file_existence.outputs.path }}
+        path: build.log install_dependencies.log install_windows_sdk.log install_windows_driver_kit.log install_kmdf_build_tools.log C:\ProgramData\chocolatey\logs\chocolatey.log
         retention-days: 7
         if-no-files-found: error
 
