@@ -43,3 +43,11 @@ else
   echo "Windows SDK is not properly installed."
   exit 1
 fi
+
+# Check for the presence of C:\ProgramData\chocolatey\logs\chocolatey.log
+if [ -f "C:\ProgramData\chocolatey\logs\chocolatey.log" ]; then
+  echo "C:\ProgramData\chocolatey\logs\chocolatey.log is present."
+else
+  echo "C:\ProgramData\chocolatey\logs\chocolatey.log is not present."
+  exit 1
+fi
