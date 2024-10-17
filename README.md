@@ -474,3 +474,15 @@ After installing the Windows SDK, it is important to verify that it is properly 
   ```
 
 This step ensures that the Windows SDK is installed correctly and is compatible with the WDK.
+
+### Installing the WindowsKernelModeDriver build tools using Chocolatey
+
+To install the WindowsKernelModeDriver build tools using Chocolatey, follow these steps:
+
+1. Open a command prompt with administrative privileges.
+2. Run the following command to install the WindowsKernelModeDriver build tools:
+   ```sh
+   choco install kmdf
+   ```
+
+This command installs the WindowsKernelModeDriver build tools from the Chocolatey package repository.
