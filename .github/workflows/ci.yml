@@ -401,6 +401,7 @@ jobs:
       run: pip install PyGithub
 
     - name: Check for Log File Existence
+      if: failure()
       id: check_log_file_existence
       run: |
         python scripts/error_detection.py --check-logs
