@@ -49,6 +49,16 @@ jobs:
         ./scripts/verify_wdk_installation.sh
       shell: bash
 
+    - name: Verify WDK_IncludePath Environment Variable
+      run: |
+        if [ -z "$WDK_IncludePath" ]; then
+          echo "WDK_IncludePath environment variable is not set."
+          exit 1
+        else
+          echo "WDK_IncludePath is set to: $WDK_IncludePath"
+        fi
+      shell: bash
+
     - name: Clean solution
       run: msbuild AVB_Windows.sln /t:Clean
 
