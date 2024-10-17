@@ -57,8 +57,7 @@ def save_errors_and_metadata(errors, metadata, output_path, log_link):
 def update_issue_labels(issue, labels):
     issue_labels = [label.name for label in issue.labels]
     for label in labels:
-        if label not in issue_labels:
-            issue_labels.append(label)
+        if label not in issue_labels, issue_labels.append(label)
     issue.edit(labels=issue_labels)
 
 def verify_build_logs_link(log_link):
@@ -74,7 +73,8 @@ def main():
         "install_dependencies.log",
         "install_windows_sdk.log",
         "install_windows_driver_kit.log",
-        "install_kmdf_build_tools.log"
+        "install_kmdf_build_tools.log",
+        "C:\ProgramData\chocolatey\logs\chocolatey.log"
     ]
     output_path = "errors_and_metadata.json"
     log_link = os.environ.get('BUILD_LOGS_LINK', '<link-to-logs>')
