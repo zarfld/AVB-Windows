@@ -159,7 +159,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build-logs
-        path: *.log
+        path: build.log  install_dependencies.log install_windows_sdk.log install_windows_driver_kit.log install_kmdf_build_tools.log
         retention-days: 7
         if-no-files-found: error
 
