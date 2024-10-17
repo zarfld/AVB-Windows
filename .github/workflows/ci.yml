@@ -167,6 +167,7 @@ jobs:
       run: |
         if [ ! -f build.log ] && [ ! -f install_dependencies.log ] && [ ! -f install_windows_sdk.log ] && [ ! -f install_windows_driver_kit.log ] && [ ! -f install_kmdf_build_tools.log ]; then
           echo "No logs found. Skipping error-checking step."
+        fi
 
     - name: Run Issue Creation
       if: failure()
@@ -191,12 +192,14 @@ jobs:
         if [ "$issue_status" == "in progress" ]; then
           echo "Triggering CI pipeline for issue progress"
           # Add logic to trigger CI pipeline
+        fi
 
     - name: CI Pipeline Alerts for Failed Builds
       run: |
         if [ -f build.log ]; then
           echo "Build failed. Sending alerts."
           # Add logic to send alerts via Slack, email, or GitHub notifications
+        fi
 
     - name: Use Separate Labels for Environments
       run: |
@@ -210,6 +213,7 @@ jobs:
         elif [ "$environment" == "production" ]; then
           echo "Labeling as 'in production'"
           # Add logic to label issues as 'in production'
+        fi
 
     - name: Enforce Branch Protection Rules
       run: |
@@ -218,13 +222,15 @@ jobs:
         if [ -z "$protection_rules" ]; then
           echo "Enforcing branch protection rules"
           # Add logic to enforce branch protection rules
+        fi
 
     - name: Continuous Deployment Labels and Issue Auto-Close
       run: |
         deployment_status="success"
-        if [ "$deployment_status" == "success"; then
+        if [ "$deployment_status" == "success" ]; then
           echo "Deployment successful. Auto-closing issues."
           # Add logic to auto-close issues
+        fi
 
     - name: Enforce Issue Templates and CI Requirements
       run: |
@@ -232,11 +238,12 @@ jobs:
         if [ -f .github/ISSUE_TEMPLATE/$issue_template ]; then
           echo "Enforcing issue templates"
           # Add logic to enforce issue templates
+        fi
 
     - name: Integrate Monitoring and Feedback Tools
       run: |
         monitoring_tool="Datadog"
-        if [ "$monitoring_tool" == "Datadog" ]; then
+        if [ "$monitoring_tool" == "Datadog"; then
           echo "Integrating Datadog for monitoring and feedback"
           # Add logic to integrate Datadog
 
@@ -395,6 +402,7 @@ jobs:
       run: |
         if [ ! -f build.log ] && [ ! -f install_dependencies.log ] && [ ! -f install_windows_sdk.log ] && [ ! -f install_windows_driver_kit.log ] && [ ! -f install_kmdf_build_tools.log ]; then
           echo "No logs found. Skipping error-checking step."
+        fi
 
     - name: Run Issue Creation
       if: failure()
@@ -419,12 +427,14 @@ jobs:
         if [ "$issue_status" == "in progress" ]; then
           echo "Triggering CI pipeline for issue progress"
           # Add logic to trigger CI pipeline
+        fi
 
     - name: CI Pipeline Alerts for Failed Builds
       run: |
         if [ -f build.log ]; then
           echo "Build failed. Sending alerts."
           # Add logic to send alerts via Slack, email, or GitHub notifications
+        fi
 
     - name: Use Separate Labels for Environments
       run: |
@@ -438,6 +448,7 @@ jobs:
         elif [ "$environment" == "production" ]; then
           echo "Labeling as 'in production'"
           # Add logic to label issues as 'in production'
+        fi
 
     - name: Enforce Branch Protection Rules
       run: |
@@ -446,13 +457,15 @@ jobs:
         if [ -z "$protection_rules" ]; then
           echo "Enforcing branch protection rules"
           # Add logic to enforce branch protection rules
+        fi
 
     - name: Continuous Deployment Labels and Issue Auto-Close
       run: |
         deployment_status="success"
-        if [ "$deployment_status" == "success"; then
+        if [ "$deployment_status" == "success" ]; then
           echo "Deployment successful. Auto-closing issues."
           # Add logic to auto-close issues
+        fi
 
     - name: Enforce Issue Templates and CI Requirements
       run: |
@@ -460,11 +473,12 @@ jobs:
         if [ -f .github/ISSUE_TEMPLATE/$issue_template ]; then
           echo "Enforcing issue templates"
           # Add logic to enforce issue templates
+        fi
 
     - name: Integrate Monitoring and Feedback Tools
       run: |
         monitoring_tool="Datadog"
-        if [ "$monitoring_tool" == "Datadog" ]; then
+        if [ "$monitoring_tool" == "Datadog"; then
           echo "Integrating Datadog for monitoring and feedback"
           # Add logic to integrate Datadog
 
@@ -623,6 +637,7 @@ jobs:
       run: |
         if [ ! -f build.log ] && [ ! -f install_dependencies.log ] && [ ! -f install_windows_sdk.log ] && [ ! -f install_windows_driver_kit.log ] && [ ! -f install_kmdf_build_tools.log ]; then
           echo "No logs found. Skipping error-checking step."
+        fi
 
     - name: Run Issue Creation
       if: failure()
@@ -647,40 +662,45 @@ jobs:
         if [ "$issue_status" == "in progress" ]; then
           echo "Triggering CI pipeline for issue progress"
           # Add logic to trigger CI pipeline
+        fi
 
     - name: CI Pipeline Alerts for Failed Builds
       run: |
         if [ -f build.log ]; then
           echo "Build failed. Sending alerts."
           # Add logic to send alerts via Slack, email, or GitHub notifications
+        fi
 
     - name: Use Separate Labels for Environments
       run: |
         environment="development"
-        if [ "$environment" == "development"; then
+        if [ "$environment" == "development" ]; then
           echo "Labeling as 'in development'"
           # Add logic to label issues as 'in development'
-        elif [ "$environment" == "staging"; then
+        elif [ "$environment" == "staging" ]; then
           echo "Labeling as 'in staging'"
           # Add logic to label issues as 'in staging'
-        elif [ "$environment" == "production"; then
+        elif [ "$environment" == "production" ]; then
           echo "Labeling as 'in production'"
           # Add logic to label issues as 'in production'
+        fi
 
     - name: Enforce Branch Protection Rules
       run: |
         branch="main"
         protection_rules=$(gh api -X GET /repos/${{ github.repository }}/branches/$branch/protection)
-        if [ -z "$protection_rules"; then
+        if [ -z "$protection_rules" ]; then
           echo "Enforcing branch protection rules"
           # Add logic to enforce branch protection rules
+        fi
 
     - name: Continuous Deployment Labels and Issue Auto-Close
       run: |
         deployment_status="success"
-        if [ "$deployment_status" == "success"; then
+        if [ "$deployment_status" == "success" ]; then
           echo "Deployment successful. Auto-closing issues."
           # Add logic to auto-close issues
+        fi
 
     - name: Enforce Issue Templates and CI Requirements
       run: |
@@ -688,6 +708,7 @@ jobs:
         if [ -f .github/ISSUE_TEMPLATE/$issue_template ]; then
           echo "Enforcing issue templates"
           # Add logic to enforce issue templates
+        fi
 
     - name: Integrate Monitoring and Feedback Tools
       run: |
