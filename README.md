@@ -444,3 +444,33 @@ For more details, refer to the [ci.yml](.github/workflows/ci.yml) file in the re
 - **Porting Open Source Code**: Adapting existing open-source AVB components to work on Windows.
 - **Performance Optimization**: Ensuring the AVB stack and driver are optimized for performance on Windows.
 - **Testing and Validation**: Building test environments to ensure compatibility and functionality with AVB networks and devices.
+
+### Installing the Windows SDK using Chocolatey
+
+To install the Windows SDK using Chocolatey, follow these steps:
+
+1. Open a command prompt with administrative privileges.
+2. Run the following command to install the Windows SDK:
+   ```sh
+   choco install windows-sdk-10.1 --source=https://chocolatey.org/api/v2/
+   ```
+
+This command installs the Windows SDK version 10.1 from the Chocolatey package repository.
+
+### Verifying the Windows SDK Installation
+
+After installing the Windows SDK, it is important to verify that it is properly installed. You can add a step in your CI pipeline to check the installation:
+
+* Add a step to verify the Windows SDK installation in the `.github/workflows/ci.yml` file:
+  ```yaml
+  - name: Verify Windows SDK Installation
+    run: |
+      if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" ]; then
+        echo "Windows SDK is properly installed."
+      else
+        echo "Windows SDK is not properly installed."
+        exit 1
+      fi
+  ```
+
+This step ensures that the Windows SDK is installed correctly and is compatible with the WDK.
