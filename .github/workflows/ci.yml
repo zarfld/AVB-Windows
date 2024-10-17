@@ -44,6 +44,9 @@ jobs:
     - name: Install Windows Driver Kit (WDK)
       run: choco install windowsdriverkit10 --source=https://chocolatey.org/api/v2/
 
+    - name: Install WindowsKernelModeDriver build tools
+      run: choco install windowskernelmodedriver --source=https://chocolatey.org/api/v2/
+
     - name: Set executable permissions for verify_wdk_installation.sh
       run: chmod +x ./scripts/verify_wdk_installation.sh
 
@@ -58,6 +61,15 @@ jobs:
           echo "Windows SDK is properly installed."
         else
           echo "Windows SDK is not properly installed."
+          exit 1
+        fi
+
+    - name: Verify WindowsKernelModeDriver build tools Installation
+      run: |
+        if choco list --local-only | findstr /C:"windowskernelmodedriver"; then
+          echo "WindowsKernelModeDriver build tools are properly installed."
+        else
+          echo "WindowsKernelModeDriver build tools are not properly installed."
           exit 1
         fi
 
