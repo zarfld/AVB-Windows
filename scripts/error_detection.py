@@ -22,17 +22,18 @@ def parse_logs(log_paths):
         "error_count": 0
     }
     for log_path in log_paths:
-        with open(log_path, 'r') as log_file:
-            for line in log_file:
-                metadata["total_lines"] += 1
-                if "error" in line.lower():
-                    error_info = {
-                        "line": line.strip(),
-                        "line_number": metadata["total_lines"],
-                        "context": get_error_context(log_file, metadata["total_lines"])
-                    }
-                    errors.append(error_info)
-                    metadata["error_count"] += 1
+        if os.path.exists(log_path):
+            with open(log_path, 'r') as log_file:
+                for line in log_file:
+                    metadata["total_lines"] += 1
+                    if "error" in line.lower():
+                        error_info = {
+                            "line": line.strip(),
+                            "line_number": metadata["total_lines"],
+                            "context": get_error_context(log_file, metadata["total_lines"])
+                        }
+                        errors.append(error_info)
+                        metadata["error_count"] += 1
     return errors, metadata
 
 def get_error_context(log_file, error_line_number, context_lines=2):
@@ -57,7 +58,8 @@ def save_errors_and_metadata(errors, metadata, output_path, log_link):
 def update_issue_labels(issue, labels):
     issue_labels = [label.name for label in issue.labels]
     for label in labels:
-        if label not in issue_labels, issue_labels.append(label)
+        if label not in issue_labels:
+            issue_labels.append(label)
     issue.edit(labels=issue_labels)
 
 def verify_build_logs_link(log_link):
@@ -100,7 +102,6 @@ def main():
         save_errors_and_metadata(errors, metadata, output_path, log_link)
         print(f"Errors and metadata saved to {output_path}")
 
-    # Automate status updates using labels based on CI pipeline progress
     token = os.environ.get('GITHUB_TOKEN')
     if not token:
         raise ValueError("GITHUB_TOKEN environment variable not set")

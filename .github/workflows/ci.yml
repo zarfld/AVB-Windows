@@ -412,9 +412,36 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build-logs
-        path: ${{ steps.check_log_file_existence.outputs.path }}
+        path: build.log install_dependencies.log install_windows_sdk.log install_windows_driver_kit.log install_kmdf_build_tools.log C:\ProgramData\chocolatey\logs\chocolatey.log
         retention-days: 7
         if-no-files-found: error
+
+    - name: Check for Log File Existence
+      run: |
+        if [ ! -f build.log ]; then
+          echo "No build.log found."
+          echo "No build errors found." > build.log
+        fi
+        if [ ! -f install_dependencies.log ]; then
+          echo "No install_dependencies.log found."
+          echo "No build errors found." > install_dependencies.log
+        fi
+        if [ ! -f install_windows_sdk.log ]; then
+          echo "No install_windows_sdk.log found."
+          echo "No build errors found." > install_windows_sdk.log
+        fi
+        if [ ! -f install_windows_driver_kit.log ]; then
+          echo "No install_windows_driver_kit.log found."
+          echo "No build errors found." > install_windows_driver_kit.log
+        fi
+        if [ ! -f install_kmdf_build_tools.log ]; then
+          echo "No install_kmdf_build_tools.log found."
+          echo "No build errors found." > install_kmdf_build_tools.log
+        fi
+        if [ ! -f C:\ProgramData\chocolatey\logs\chocolatey.log ]; then
+          echo "No C:\ProgramData\chocolatey\logs\chocolatey.log found."
+          echo "No build errors found." > C:\ProgramData\chocolatey\logs\chocolatey.log
+        fi
 
     - name: Run Issue Creation
       if: failure()
@@ -639,21 +666,27 @@ jobs:
       run: |
         if [ ! -f build.log ]; then
           echo "No build.log found."
+          echo "No build errors found." > build.log
         fi
         if [ ! -f install_dependencies.log ]; then
           echo "No install_dependencies.log found."
+          echo "No build errors found." > install_dependencies.log
         fi
         if [ ! -f install_windows_sdk.log ]; then
           echo "No install_windows_sdk.log found."
+          echo "No build errors found." > install_windows_sdk.log
         fi
         if [ ! -f install_windows_driver_kit.log ]; then
           echo "No install_windows_driver_kit.log found."
+          echo "No build errors found." > install_windows_driver_kit.log
         fi
         if [ ! -f install_kmdf_build_tools.log ]; then
           echo "No install_kmdf_build_tools.log found."
+          echo "No build errors found." > install_kmdf_build_tools.log
         fi
         if [ ! -f C:\ProgramData\chocolatey\logs\chocolatey.log ]; then
           echo "No C:\ProgramData\chocolatey\logs\chocolatey.log found."
+          echo "No build errors found." > C:\ProgramData\chocolatey\logs\chocolatey.log
         fi
 
     - name: Upload Build Logs
@@ -724,7 +757,7 @@ jobs:
     - name: Continuous Deployment Labels and Issue Auto-Close
       run: |
         deployment_status="success"
-        if [ "$deployment_status" == "success"; then
+        if [ "$deployment_status" == "success" ]; then
           echo "Deployment successful. Auto-closing issues."
           # Add logic to auto-close issues
         fi
