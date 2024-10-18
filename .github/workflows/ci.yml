@@ -47,6 +47,16 @@ jobs:
       continue-on-error: true
       run: choco install kmdf --version=1.31 > install_kmdf_build_tools.log 2>&1
 
+    - name: Install KB2999226
+      continue-on-error: true
+      run: choco install kb2999226 > install_kb2999226.log 2>&1
+
+    - name: Install KB2999226 dependencies
+      continue-on-error: true
+      run: |
+        choco install kb2919355 --version=1.0.20160915
+        choco install chocolatey-windowsupdate.extension --version=1.0.2
+
     - name: Set executable permissions for verify_wdk_installation.sh
       continue-on-error: true
       run: chmod +x ./scripts/verify_wdk_installation.sh
@@ -330,6 +340,14 @@ jobs:
     - name: Install KMDF build tools
       continue-on-error: true
       run: choco install kmdf --version=1.33 > install_kmdf_build_tools.log 2>&1
+
+    - name: Install KB2999226
+      run: choco install kb2999226 > install_kb2999226.log 2>&1
+
+    - name: Install KB2999226 dependencies
+      run: |
+        choco install kb2919355 --version=1.0.20160915
+        choco install chocolatey-windowsupdate.extension --version=1.0.2
 
     - name: Set executable permissions for verify_wdk_installation.sh
       run: chmod +x ./scripts/verify_wdk_installation.sh

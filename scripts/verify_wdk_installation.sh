@@ -85,3 +85,26 @@ else
   echo "No matching versions of WDK and SDK installed via Chocolatey."
   exit 1
 fi
+
+# Check for the dependency KB2999226
+if choco list --local-only | grep -q "kb2999226"; then
+  echo "Dependency KB2999226 is installed via Chocolatey."
+else
+  echo "Dependency KB2999226 is not installed via Chocolatey."
+  exit 1
+fi
+
+# Check for the dependencies of KB2999226
+if choco list --local-only | grep -q "kb2919355"; then
+  echo "Dependency kb2919355 is installed via Chocolatey."
+else
+  echo "Dependency kb2919355 is not installed via Chocolatey."
+  exit 1
+fi
+
+if choco list --local-only | grep -q "chocolatey-windowsupdate.extension"; then
+  echo "Dependency chocolatey-windowsupdate.extension is installed via Chocolatey."
+else
+  echo "Dependency chocolatey-windowsupdate.extension is not installed via Chocolatey."
+  exit 1
+fi
