@@ -12,7 +12,7 @@ else
 fi
 
 # Check for the presence of ntddk.h in the correct installation path
-if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km\ntddk.h" ]; then
+if [ -f "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km\ntddk.h" ]; then
   echo "ntddk.h is present in the correct installation path."
 else
   echo "ntddk.h is not present in the correct installation path."
