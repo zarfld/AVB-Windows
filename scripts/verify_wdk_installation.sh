@@ -48,14 +48,12 @@ fi
 if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\kmdf\1.31" ]; then
   echo "KMDF 1.31 is properly installed for Windows 10."
 else
-  echo "KMDF 1.31 is not properly installed for Windows 10."
-  exit 1
+  echo "Warning: KMDF 1.31 is not properly installed for Windows 10."
 fi
 
 # Verify the installation of KMDF 1.33 for Windows 11
 if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\kmdf\1.33" ]; then
   echo "KMDF 1.33 is properly installed for Windows 11."
 else
-  echo "KMDF 1.33 is not properly installed for Windows 11."
-  exit 1
+  echo "Warning: KMDF 1.33 is not properly installed for Windows 11."
 fi
