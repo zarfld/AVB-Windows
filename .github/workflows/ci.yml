@@ -60,22 +60,14 @@ jobs:
     - name: Verify Windows SDK Installation
       continue-on-error: true
       run: |
-        if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" ]; then
-          echo "Windows SDK is properly installed."
-        else
-          echo "Windows SDK is not properly installed."
-          exit 1
-        fi
+        ./scripts/verify_windows_sdk_installation.sh
+      shell: bash
 
     - name: Verify WindowsKernelModeDriver build tools Installation
       continue-on-error: true
       run: |
-        if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" ]; then
-          echo "Windows SDK is properly installed."
-        else
-          echo "Windows SDK is not properly installed."
-          exit 1
-        fi
+        ./scripts/verify_kmdf_installation.sh
+      shell: bash
 
     - name: Clean solution
       run: msbuild AVB_Windows.sln /t:Clean
@@ -351,22 +343,14 @@ jobs:
     - name: Verify Windows SDK Installation
       continue-on-error: true
       run: |
-        if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" ]; then
-          echo "Windows SDK is properly installed."
-        else
-          echo "Windows SDK is not properly installed."
-          exit 1
-        fi
+        ./scripts/verify_windows_sdk_installation.sh
+      shell: bash
 
     - name: Verify WindowsKernelModeDriver build tools Installation
       continue-on-error: true
       run: |
-        if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" ]; then
-          echo "Windows SDK is properly installed."
-        else
-          echo "Windows SDK is not properly installed."
-          exit 1
-        fi
+        ./scripts/verify_kmdf_installation.sh
+      shell: bash
 
     - name: Clean solution
       run: msbuild AVB_Windows.sln /t:Clean
