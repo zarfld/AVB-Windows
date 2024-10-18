@@ -43,3 +43,10 @@ else
   echo "Windows SDK is not properly installed."
   exit 1
 fi
+
+# Check if KMDF 1.31 is installed
+if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km\wdf" ]; then
+  echo "KMDF 1.31 is properly installed."
+else
+  echo "KMDF 1.31 is not properly installed. Continuing without KMDF."
+fi
