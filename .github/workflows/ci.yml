@@ -54,8 +54,9 @@ jobs:
     - name: Install KB2999226 dependencies
       continue-on-error: true
       run: |
-        choco install kb2919355 --version=1.0.20160915
-        choco install chocolatey-windowsupdate.extension --version=1.0.2
+        choco install kb2919355
+        choco install chocolatey-windowsupdate.extension
+        choco install kb2919442
 
     - name: Set executable permissions for verify_wdk_installation.sh
       continue-on-error: true
