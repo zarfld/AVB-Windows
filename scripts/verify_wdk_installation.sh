@@ -57,3 +57,31 @@ if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\kmdf\1.33" 
 else
   echo "Warning: KMDF 1.33 is not properly installed for Windows 11."
 fi
+
+# Check for specific versions of WDK installed via Chocolatey
+if choco list --local-only | grep -q "windowsdriverkit10 10.0.19041.685"; then
+  echo "WDK version 10.0.19041.685 is installed via Chocolatey."
+elif choco list --local-only | grep -q "windowsdriverkit10 10.0.17763"; then
+  echo "WDK version 10.0.17763 is installed via Chocolatey."
+elif choco list --local-only | grep -q "windowsdriverkit10 10.0.17134"; then
+  echo "WDK version 10.0.17134 is installed via Chocolatey."
+elif choco list --local-only | grep -q "windowsdriverkit10 10.0.10586"; then
+  echo "WDK version 10.0.10586 is installed via Chocolatey."
+else
+  echo "No matching WDK version installed via Chocolatey."
+  exit 1
+fi
+
+# Ensure matching versions of WDK and SDK
+if choco list --local-only | grep -q "windows-sdk-10.1 10.1.18362.1" && choco list --local-only | grep -q "windowsdriverkit10 10.0.19041.685"; then
+  echo "Matching versions of WDK and SDK are installed via Chocolatey."
+elif choco list --local-only | grep -q "windows-sdk-10.1 10.1.17763.1" && choco list --local-only | grep -q "windowsdriverkit10 10.0.17763"; then
+  echo "Matching versions of WDK and SDK are installed via Chocolatey."
+elif choco list --local-only | grep -q "windows-sdk-10.1 10.1.17134.12" && choco list --local-only | grep -q "windowsdriverkit10 10.0.17134"; then
+  echo "Matching versions of WDK and SDK are installed via Chocolatey."
+elif choco list --local-only | grep -q "windows-sdk-10.1 10.1.10586.15" && choco list --local-only | grep -q "windowsdriverkit10 10.0.10586"; then
+  echo "Matching versions of WDK and SDK are installed via Chocolatey."
+else
+  echo "No matching versions of WDK and SDK installed via Chocolatey."
+  exit 1
+fi
