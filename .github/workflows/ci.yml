@@ -57,12 +57,12 @@ jobs:
 
     - name: Verify Windows SDK Installation
       run: |
-        if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" ]; then
+        if (Test-Path "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0") {
           echo "Windows SDK is properly installed."
-        else
+        } else {
           echo "Windows SDK is not properly installed."
           exit 1
-        fi
+        }
 
     - name: Verify WindowsKernelModeDriver build tools Installation
       run: |
@@ -345,12 +345,12 @@ jobs:
 
     - name: Verify Windows SDK Installation
       run: |
-        if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" ]; then
+        if (Test-Path "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0") {
           echo "Windows SDK is properly installed."
-        else
+        } else {
           echo "Windows SDK is not properly installed."
           exit 1
-        fi
+        }
 
     - name: Verify WindowsKernelModeDriver build tools Installation
       run: |
