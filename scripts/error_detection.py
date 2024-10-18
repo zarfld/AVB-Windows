@@ -57,7 +57,7 @@ def save_errors_and_metadata(errors, metadata, output_path, log_link):
 def update_issue_labels(issue, labels):
     issue_labels = [label.name for label in issue.labels]
     for label in labels:
-        if label not in issue_labels, issue_labels.append(label)
+        if label not in issue_labels: issue_labels.append(label)
     issue.edit(labels=issue_labels)
 
 def verify_build_logs_link(log_link):
