@@ -87,7 +87,7 @@ def main():
         "install_windows_sdk.log",
         "install_windows_driver_kit.log",
         "install_kmdf_build_tools.log",
-        "C:\ProgramData\chocolatey\logs\chocolatey.log"
+        "C:\\ProgramData\\chocolatey\\logs\\chocolatey.log"
     ]
     output_path = "errors_and_metadata.json"
     log_link = os.environ.get('BUILD_LOGS_LINK', '<link-to-logs>')
@@ -136,6 +136,9 @@ def main():
             body=build_logs_message,
             labels=labels
         )
+
+    dynamic_path_string = create_dynamic_path_string(log_paths)
+    print(f"Dynamic path string: {dynamic_path_string}")
 
 if __name__ == "__main__":
     main()
