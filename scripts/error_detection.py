@@ -57,7 +57,7 @@ def save_errors_and_metadata(errors, metadata, output_path, log_link):
 def update_issue_labels(issue, labels):
     issue_labels = [label.name for label in issue.labels]
     for label in labels:
-        if label not in issue_labels, issue_labels.append(label)
+        if label not in issue_labels: issue_labels.append(label)
     issue.edit(labels=issue_labels)
 
 def verify_build_logs_link(log_link):
@@ -73,6 +73,12 @@ def check_log_file_existence(log_path):
 def create_dynamic_path_string(log_paths):
     existing_logs = [log_path for log_path in log_paths if check_log_file_existence(log_path)]
     return " ".join(existing_logs)
+
+def get_github_token():
+    token = os.environ.get('GITHUB_TOKEN')
+    if not token:
+        raise ValueError("GITHUB_TOKEN environment variable not set")
+    return token
 
 def main():
     log_paths = [
@@ -101,9 +107,7 @@ def main():
         print(f"Errors and metadata saved to {output_path}")
 
     # Automate status updates using labels based on CI pipeline progress
-    token = os.environ.get('GITHUB_TOKEN')
-    if not token:
-        raise ValueError("GITHUB_TOKEN environment variable not set")
+    token = get_github_token()
 
     g = Github(token)
     repo_name = "zarfld/AVB-Windows"
