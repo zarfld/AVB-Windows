@@ -38,14 +38,25 @@ jobs:
       run: pip install -r requirements.txt > install_dependencies.log 2>&1
 
     - name: Install Windows SDK
-      run: choco install windows-sdk-10.1 --source=https://chocolatey.org/api/v2/ > install_windows_sdk.log 2>&1
+      run: choco install windows-sdk-10.1 --version=10.1.18362.1 --source=https://chocolatey.org/api/v2/ > install_windows_sdk.log 2>&1
 
     - name: Install Windows Driver Kit (WDK)
-      run: choco install windowsdriverkit10 --source=https://chocolatey.org/api/v2/ > install_windows_driver_kit.log 2>&1
+      run: choco install windowsdriverkit10 --version=10.0.19041.685 --source=https://chocolatey.org/api/v2/ > install_windows_driver_kit.log 2>&1
 
     - name: Install KMDF build tools
       continue-on-error: true
       run: choco install kmdf --version=1.31 > install_kmdf_build_tools.log 2>&1
+
+    - name: Install KB2999226
+      continue-on-error: true
+      run: choco install kb2999226 > install_kb2999226.log 2>&1
+
+    - name: Install KB2999226 dependencies
+      continue-on-error: true
+      run: |
+        choco install kb2919355
+        choco install chocolatey-windowsupdate.extension
+        choco install kb2919442
 
     - name: Set executable permissions for verify_wdk_installation.sh
       continue-on-error: true
@@ -322,14 +333,22 @@ jobs:
       run: pip install -r requirements.txt > install_dependencies.log 2>&1
 
     - name: Install Windows SDK
-      run: choco install windows-sdk-10.1 --source=https://chocolatey.org/api/v2/ > install_windows_sdk.log 2>&1
+      run: choco install windows-sdk-10.1 --version=10.1.18362.1 --source=https://chocolatey.org/api/v2/ > install_windows_sdk.log 2>&1
 
     - name: Install Windows Driver Kit (WDK)
-      run: choco install windowsdriverkit10 --source=https://chocolatey.org/api/v2/ > install_windows_driver_kit.log 2>&1
+      run: choco install windowsdriverkit10 --version=10.0.19041.685 --source=https://chocolatey.org/api/v2/ > install_windows_driver_kit.log 2>&1
 
     - name: Install KMDF build tools
       continue-on-error: true
       run: choco install kmdf --version=1.33 > install_kmdf_build_tools.log 2>&1
+
+    - name: Install KB2999226
+      run: choco install kb2999226 > install_kb2999226.log 2>&1
+
+    - name: Install KB2999226 dependencies
+      run: |
+        choco install kb2919355 --version=1.0.20160915
+        choco install chocolatey-windowsupdate.extension --version=1.0.2
 
     - name: Set executable permissions for verify_wdk_installation.sh
       run: chmod +x ./scripts/verify_wdk_installation.sh
