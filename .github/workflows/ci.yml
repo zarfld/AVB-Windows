@@ -402,6 +402,8 @@ jobs:
 
     - name: Check for Log File Existence
       if: failure()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       id: check_log_file_existence
       run: |
         python scripts/error_detection.py --check-logs
