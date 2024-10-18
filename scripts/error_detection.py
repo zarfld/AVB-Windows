@@ -10,8 +10,6 @@ def check_for_logs(log_paths):
         if os.path.exists(log_path):
             existing_logs.append(log_path)
         else:
-            with open(log_path, 'w') as log_file:
-                log_file.write("No build errors found.\n")
             print(f"No logs found for {log_path}. Skipping error-checking step.")
     return existing_logs
 
