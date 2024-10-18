@@ -368,7 +368,7 @@ jobs:
     - name: Continuous Deployment Labels and Issue Auto-Close
       run: |
         deployment_status="success"
-        if [ "$deployment_status" == "success" ]; then
+        if [ "$deployment_status" == "success"; then
           echo "Deployment successful. Auto-closing issues."
           # Add logic to auto-close issues
         fi
