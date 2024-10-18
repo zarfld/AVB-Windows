@@ -44,6 +44,7 @@ jobs:
       run: choco install windowsdriverkit10 --source=https://chocolatey.org/api/v2/ > install_windows_driver_kit.log 2>&1
 
     - name: Install KMDF build tools
+      continue-on-error: true
       run: choco install kmdf --version=1.31 > install_kmdf_build_tools.log 2>&1
 
     - name: Set executable permissions for verify_wdk_installation.sh
@@ -331,6 +332,7 @@ jobs:
       run: choco install windowsdriverkit10 --source=https://chocolatey.org/api/v2/ > install_windows_driver_kit.log 2>&1
 
     - name: Install KMDF build tools
+      continue-on-error: true
       run: choco install kmdf --version=1.33 > install_kmdf_build_tools.log 2>&1
 
     - name: Set executable permissions for verify_wdk_installation.sh
