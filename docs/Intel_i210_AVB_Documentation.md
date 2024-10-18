@@ -134,6 +134,25 @@ Example Step:
 
 If there are formatting differences, the git diff command will exit with a non-zero status, causing the build to fail.
 
+### Updating the CI Pipeline for KMDF Versions
+
+To ensure compatibility with the appropriate Windows versions, update the CI pipeline to use KMDF 1.31 for Windows 10 and KMDF 1.33 for Windows 11. Follow these steps:
+
+1. **Update the `build-windows-7` Job**:
+   - Modify the `build-windows-7` job in the `.github/workflows/ci.yml` file to target Windows 10 and Windows 11 instead of Windows 7.
+   - Ensure that the `WDK_IncludePath` environment variable is set correctly for each Windows version.
+
+2. **Modify the `build-windows-10` Job**:
+   - Specify the correct KMDF version (KMDF 1.31) for Windows 10 in the `.github/workflows/ci.yml` file.
+
+3. **Modify the `build-windows-11` Job**:
+   - Specify the correct KMDF version (KMDF 1.33) for Windows 11 in the `.github/workflows/ci.yml` file.
+
+4. **Verify KMDF Installation**:
+   - Update the `scripts/verify_wdk_installation.sh` script to verify the installation of KMDF 1.31 for Windows 10 and KMDF 1.33 for Windows 11.
+
+By following these steps, you can ensure that the CI pipeline is updated to use the correct KMDF versions for Windows 10 and Windows 11, ensuring compatibility and successful builds.
+
 ## Setting Up Branch Protection Rules and Pull Request Reviews
 
 ### Setting Up Branch Protection Rules
