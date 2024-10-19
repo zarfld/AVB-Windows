@@ -72,6 +72,16 @@ jobs:
         ./scripts/verify_kmdf_installation.sh
       shell: bash
 
+    - name: Check GitHub Actions Permissions
+      run: |
+        echo "Checking GitHub Actions permissions..."
+        if [ -z "${{ github.token }}" ]; then
+          echo "GitHub Actions token is not set. Please check repository settings."
+          exit 1
+        else
+          echo "GitHub Actions token is set."
+        fi
+
     - name: Clean solution
       run: msbuild AVB_Windows.sln /t:Clean
 
@@ -367,6 +377,16 @@ jobs:
       run: |
         ./scripts/verify_kmdf_installation.sh
       shell: bash
+
+    - name: Check GitHub Actions Permissions
+      run: |
+        echo "Checking GitHub Actions permissions..."
+        if [ -z "${{ github.token }}" ]; then
+          echo "GitHub Actions token is not set. Please check repository settings."
+          exit 1
+        else
+          echo "GitHub Actions token is set."
+        fi
 
     - name: Clean solution
       run: msbuild AVB_Windows.sln /t:Clean

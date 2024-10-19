@@ -521,3 +521,16 @@ To ensure compatibility with the appropriate Windows versions, update the CI pip
    - Update the `scripts/verify_wdk_installation.sh` script to verify the installation of KMDF 1.31 for Windows 10 and KMDF 1.33 for Windows 11.
 
 By following these steps, you can ensure that the CI pipeline is updated to use the correct KMDF versions for Windows 10 and Windows 11, ensuring compatibility and successful builds.
+
+### Setting Up GitHub Actions Permissions
+
+To ensure that the CI pipeline runs jobs as expected, it is important to set up GitHub Actions permissions in the repository settings. Follow these steps:
+
+1. Navigate to the repository on GitHub.
+2. Click on the "Settings" tab.
+3. In the left sidebar, click on "Actions".
+4. Under "Actions permissions", ensure that "Allow all actions and reusable workflows" is selected.
+5. Under "Workflow permissions", select "Read and write permissions".
+6. Click "Save" to apply the changes.
+
+By setting up the appropriate permissions, you ensure that the CI pipeline has the necessary access to run jobs and interact with the repository.
