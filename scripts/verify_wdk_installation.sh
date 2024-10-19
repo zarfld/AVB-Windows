@@ -38,7 +38,9 @@ ls -l Driver/
 
 # Check if the Windows SDK is installed and compatible with the WDK
 if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" ]; then
-  echo "Windows SDK is properly installed."
+  echo "Windows SDK 10 is properly installed."
+elif [ -d "C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.18362.1" ]; then
+  echo "Windows SDK 10.1 is properly installed."
 else
   echo "Windows SDK is not properly installed."
   exit 1
@@ -57,3 +59,6 @@ if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\kmdf\1.33" 
 else
   echo "Warning: KMDF 1.33 is not properly installed for Windows 11."
 fi
+
+# Log the output for troubleshooting
+echo "WDK installation verification completed."

@@ -16,7 +16,7 @@ jobs:
     runs-on: windows-2022
 
     env:
-      WDK_IncludePath: C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0
+      WDK_IncludePath: C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0;C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.18362.1
 
     outputs:
       url: ${{ steps.upload_build_logs.outputs.url }}
@@ -38,7 +38,10 @@ jobs:
       run: pip install -r requirements.txt > install_dependencies.log 2>&1
 
     - name: Install Windows SDK
-      run: choco install windows-sdk-10.1 --source=https://chocolatey.org/api/v2/ > install_windows_sdk.log 2>&1
+      run: choco install windows-sdk-10 --source=https://chocolatey.org/api/v2/ > install_windows_sdk.log 2>&1
+
+    - name: Install Windows SDK 10.1
+      run: choco install windows-sdk-10.1 --source=https://chocolatey.org/api/v2/ > install_windows_sdk_10.1.log 2>&1
 
     - name: Install Windows Driver Kit (WDK)
       run: choco install windowsdriverkit10 --source=https://chocolatey.org/api/v2/ > install_windows_driver_kit.log 2>&1
@@ -188,6 +191,16 @@ jobs:
         retention-days: 7
         if-no-files-found: error
 
+    - name: Upload Install Windows SDK 10.1 Logs
+      if: failure()
+      id: upload_install_windows_sdk_10.1_logs
+      uses: actions/upload-artifact@v4
+      with:
+        name: install-windows-sdk-10.1-logs
+        path: install_windows_sdk_10.1.log
+        retention-days: 7
+        if-no-files-found: error
+
     - name: Upload Install Windows Driver Kit Logs
       if: failure()
       id: upload_install_windows_driver_kit_logs
@@ -300,7 +313,7 @@ jobs:
     runs-on: windows-latest
 
     env:
-      WDK_IncludePath: C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0
+      WDK_IncludePath: C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0;C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.18362.1
 
     outputs:
       url: ${{ steps.upload_build_logs.outputs.url }}
@@ -322,7 +335,10 @@ jobs:
       run: pip install -r requirements.txt > install_dependencies.log 2>&1
 
     - name: Install Windows SDK
-      run: choco install windows-sdk-10.1 --source=https://chocolatey.org/api/v2/ > install_windows_sdk.log 2>&1
+      run: choco install windows-sdk-10 --source=https://chocolatey.org/api/v2/ > install_windows_sdk.log 2>&1
+
+    - name: Install Windows SDK 10.1
+      run: choco install windows-sdk-10.1 --source=https://chocolatey.org/api/v2/ > install_windows_sdk_10.1.log 2>&1
 
     - name: Install Windows Driver Kit (WDK)
       run: choco install windowsdriverkit10 --source=https://chocolatey.org/api/v2/ > install_windows_driver_kit.log 2>&1
@@ -481,6 +497,16 @@ jobs:
       with:
         name: install-windows-sdk-logs
         path: install_windows_sdk.log
+        retention-days: 7
+        if-no-files-found: error
+
+    - name: Upload Install Windows SDK 10.1 Logs
+      if: failure()
+      id: upload_install_windows_sdk_10.1_logs
+      uses: actions/upload-artifact@v4
+      with:
+        name: install-windows-sdk-10.1-logs
+        path: install_windows_sdk_10.1.log
         retention-days: 7
         if-no-files-found: error
 
