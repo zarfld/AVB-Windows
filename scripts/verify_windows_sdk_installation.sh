@@ -13,6 +13,8 @@ elif [ -d "C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.15063.468" ]; t
   echo "Windows SDK files are present in the correct installation path. (10.1.15063.468)"
 elif [ -d "C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.10586.15" ]; then
   echo "Windows SDK files are present in the correct installation path. (10.1.10586.15)"
+elif [ -d "C:\Program Files (x86)\Windows Kits\11\Include\11.0.22000.0" ]; then
+  echo "Windows SDK files are present in the correct installation path. (11.0.22000.0)"
 else
   echo "Windows SDK files are not present in the correct installation path."
   exit 1
