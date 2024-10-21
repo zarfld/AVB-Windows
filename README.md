@@ -354,7 +354,6 @@ jobs:
         elif [ "$environment" == "production" ]; then
           echo "Labeling as 'in production'"
           # Add logic to label issues as 'in production'
-        fi
 
     - name: Enforce Branch Protection Rules
       run: |
@@ -371,7 +370,6 @@ jobs:
         if [ "$deployment_status" == "success"; then
           echo "Deployment successful. Auto-closing issues."
           # Add logic to auto-close issues
-        fi
 
     - name: Enforce Issue Templates and CI Requirements
       run: |
@@ -379,7 +377,6 @@ jobs:
         if [ -f .github/ISSUE_TEMPLATE/$issue_template ]; then
           echo "Enforcing issue templates"
           # Add logic to enforce issue templates
-        fi
 
     - name: Integrate Monitoring and Feedback Tools
       run: |
@@ -387,7 +384,6 @@ jobs:
         if [ "$monitoring_tool" == "Datadog"; then
           echo "Integrating Datadog for monitoring and feedback"
           # Add logic to integrate Datadog
-        fi
 ```
 
 For more details, refer to the [ci.yml](.github/workflows/ci.yml) file in the repository.
@@ -470,7 +466,6 @@ After installing the Windows SDK, it is important to verify that it is properly 
       else
         echo "Windows SDK is not properly installed."
         exit 1
-      fi
   ```
 
 This step ensures that the Windows SDK is installed correctly and is compatible with the WDK.
