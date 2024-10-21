@@ -529,3 +529,101 @@ To ensure that the CI pipeline runs jobs as expected, it is important to set up 
 6. Click "Save" to apply the changes.
 
 By setting up the appropriate permissions, you ensure that the CI pipeline has the necessary access to run jobs and interact with the repository.
+
+### Installing the Windows SDK using Chocolatey
+
+To install the Windows SDK using Chocolatey, follow these steps:
+
+1. Open a command prompt with administrative privileges.
+2. Run the following command to install the Windows SDK:
+   ```sh
+   choco install windows-sdk-10.1 --source=https://chocolatey.org/api/v2/
+   ```
+
+This command installs the Windows SDK version 10.1 from the Chocolatey package repository.
+
+### Verifying the Windows SDK Installation
+
+After installing the Windows SDK, it is important to verify that it is properly installed. You can add a step in your CI pipeline to check the installation:
+
+* Add a step to verify the Windows SDK installation in the `.github/workflows/ci.yml` file:
+  ```yaml
+  - name: Verify Windows SDK Installation
+    run: |
+      if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" ]; then
+        echo "Windows SDK is properly installed."
+      else
+        echo "Windows SDK is not properly installed."
+        exit 1
+  ```
+
+This step ensures that the Windows SDK is installed correctly and is compatible with the WDK.
+
+### Installing the WindowsKernelModeDriver build tools using Chocolatey
+
+To install the WindowsKernelModeDriver build tools using Chocolatey, follow these steps:
+
+1. Open a command prompt with administrative privileges.
+2. Run the following command to install the WindowsKernelModeDriver build tools:
+   ```sh
+   choco install kmdf
+   ```
+
+This command installs the WindowsKernelModeDriver build tools from the Chocolatey package repository.
+
+### Accessing and Interpreting Installation Logs
+
+To access and interpret the installation logs generated during the CI pipeline, follow these steps:
+
+1. **Accessing Logs**:
+   - The logs from each installation step are uploaded as artifacts in the GitHub Actions workflow.
+   - Navigate to the "Actions" tab in your GitHub repository.
+   - Select the workflow run you are interested in.
+   - Download the "build-logs" artifact, which contains all the log files.
+
+2. **Interpreting Logs**:
+   - Each log file is named descriptively based on the installation step, e.g., `install_dependencies.log`, `install_windows_sdk.log`.
+   - Open the log file corresponding to the installation step you want to review.
+   - Look for any error messages or warnings in the log file to identify issues during the installation process.
+   - Use the log file to troubleshoot and resolve any problems encountered during the installation steps.
+
+### Updating the CI Pipeline for KMDF Versions
+
+To ensure compatibility with the appropriate Windows versions, update the CI pipeline to use KMDF 1.31 for Windows 10 and KMDF 1.33 for Windows 11. Follow these steps:
+
+1. **Update the `build-windows-7` Job**:
+   - Modify the `build-windows-7` job in the `.github/workflows/ci.yml` file to target Windows 10 and Windows 11 instead of Windows 7.
+   - Ensure that the `WDK_IncludePath` environment variable is set correctly for each Windows version.
+
+2. **Modify the `build-windows-10` Job**:
+   - Specify the correct KMDF version (KMDF 1.31) for Windows 10 in the `.github/workflows/ci.yml` file.
+
+3. **Modify the `build-windows-11` Job**:
+   - Specify the correct KMDF version (KMDF 1.33) for Windows 11 in the `.github/workflows/ci.yml` file.
+
+4. **Verify KMDF Installation**:
+   - Update the `scripts/verify_wdk_installation.sh` script to verify the installation of KMDF 1.31 for Windows 10 and KMDF 1.33 for Windows 11.
+
+By following these steps, you can ensure that the CI pipeline is updated to use the correct KMDF versions for Windows 10 and Windows 11, ensuring compatibility and successful builds.
+
+### Setting Up GitHub Actions Permissions
+
+To ensure that the CI pipeline runs jobs as expected, it is important to set up GitHub Actions permissions in the repository settings. Follow these steps:
+
+1. Navigate to the repository on GitHub.
+2. Click on the "Settings" tab.
+3. In the left sidebar, click on "Actions".
+4. Under "Actions permissions", ensure that "Allow all actions and reusable workflows" is selected.
+5. Under "Workflow permissions", select "Read and write permissions".
+6. Click "Save" to apply the changes.
+
+By setting up the appropriate permissions, you ensure that the CI pipeline has the necessary access to run jobs and interact with the repository.
+
+### Environment Variables
+
+The following environment variables are used in the CI pipeline:
+
+- `WDK_IncludePath`: Specifies the include paths for the Windows Driver Kit (WDK).
+- `NUGET`: Specifies the path to the NuGet executable.
+
+Ensure that these environment variables are set correctly in the CI pipeline configuration.
