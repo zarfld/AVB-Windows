@@ -37,8 +37,11 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt > install_dependencies.log 2>&1
 
-    - name: Install Windows SDK
-      run: choco install windows-sdk-10.1 --source=https://chocolatey.org/api/v2/ > install_windows_sdk.log 2>&1
+    - name: Install Windows SDK 10.1
+      run: choco install windows-sdk-10.1 --source=https://chocolatey.org/api/v2/ > install_windows_sdk_10.1.log 2>&1
+
+    - name: Install Windows SDK 10
+      run: choco install windows-sdk-10 --source=https://chocolatey.org/api/v2/ > install_windows_sdk_10.log 2>&1
 
     - name: Install Windows Driver Kit (WDK)
       run: choco install windowsdriverkit10 --source=https://chocolatey.org/api/v2/ > install_windows_driver_kit.log 2>&1

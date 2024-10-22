@@ -353,7 +353,6 @@ jobs:
           # Add logic to label issues as 'in staging'
         elif [ "$environment" == "production" ]; then
           echo "Labeling as 'in production'"
-          # Add logic to label issues as 'in production'
 
     - name: Enforce Branch Protection Rules
       run: |
@@ -450,8 +449,11 @@ To install the Windows SDK using Chocolatey, follow these steps:
    ```sh
    choco install windows-sdk-10.1 --source=https://chocolatey.org/api/v2/
    ```
+   ```sh
+   choco install windows-sdk-10 --source=https://chocolatey.org/api/v2/
+   ```
 
-This command installs the Windows SDK version 10.1 from the Chocolatey package repository.
+This command installs the Windows SDK version 10.1 and Windows SDK version 10 from the Chocolatey package repository.
 
 ### Verifying the Windows SDK Installation
 
@@ -462,7 +464,9 @@ After installing the Windows SDK, it is important to verify that it is properly 
   - name: Verify Windows SDK Installation
     run: |
       if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" ]; then
-        echo "Windows SDK is properly installed."
+        echo "Windows SDK 10 is properly installed."
+      elif [ -d "C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.18362.1" ]; then
+        echo "Windows SDK 10.1 is properly installed."
       else
         echo "Windows SDK is not properly installed."
         exit 1
