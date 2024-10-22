@@ -175,7 +175,7 @@ jobs:
       id: upload_build_logs
       uses: actions/upload-artifact@v4
       with:
-        name: build-logs
+        name: build-logs-${{ github.job }}-${{ github.run_id }}
         path: build.log
         retention-days: 7
         if-no-files-found: error
@@ -185,7 +185,7 @@ jobs:
       id: upload_install_dependencies_logs
       uses: actions/upload-artifact@v4
       with:
-        name: install-dependencies-logs
+        name: install-dependencies-logs-${{ github.job }}-${{ github.run_id }}
         path: install_dependencies.log
         retention-days: 7
         if-no-files-found: error
@@ -195,7 +195,7 @@ jobs:
       id: upload_install_windows_sdk_logs
       uses: actions/upload-artifact@v4
       with:
-        name: install-windows-sdk-logs
+        name: install-windows-sdk-logs-${{ github.job }}-${{ github.run_id }}
         path: install_windows_sdk.log
         retention-days: 7
         if-no-files-found: error
@@ -205,7 +205,7 @@ jobs:
       id: upload_install_windows_driver_kit_logs
       uses: actions/upload-artifact@v4
       with:
-        name: install-windows-driver-kit-logs
+        name: install-windows-driver-kit-logs-${{ github.job }}-${{ github.run_id }}
         path: install_windows_driver_kit.log
         retention-days: 7
         if-no-files-found: error
@@ -215,7 +215,7 @@ jobs:
       id: upload_install_kmdf_build_tools_logs
       uses: actions/upload-artifact@v4
       with:
-        name: install-kmdf-build-tools-logs
+        name: install-kmdf-build-tools-logs-${{ github.job }}-${{ github.run_id }}
         path: install_kmdf_build_tools.log
         retention-days: 7
         if-no-files-found: error
@@ -225,7 +225,7 @@ jobs:
       id: upload_chocolatey_logs
       uses: actions/upload-artifact@v4
       with:
-        name: chocolatey-logs
+        name: chocolatey-logs-${{ github.job }}-${{ github.run_id }}
         path: C:\ProgramData\chocolatey\logs\chocolatey.log
         retention-days: 7
         if-no-files-found: error
@@ -485,7 +485,7 @@ jobs:
       id: upload_build_logs
       uses: actions/upload-artifact@v4
       with:
-        name: build-logs
+        name: build-logs-${{ github.job }}-${{ github.run_id }}
         path: build.log
         retention-days: 7
         if-no-files-found: error
@@ -495,7 +495,7 @@ jobs:
       id: upload_install_dependencies_logs
       uses: actions/upload-artifact@v4
       with:
-        name: install-dependencies-logs
+        name: install-dependencies-logs-${{ github.job }}-${{ github.run_id }}
         path: install_dependencies.log
         retention-days: 7
         if-no-files-found: error
@@ -505,7 +505,7 @@ jobs:
       id: upload_install_windows_sdk_logs
       uses: actions/upload-artifact@v4
       with:
-        name: install-windows-sdk-logs
+        name: install-windows-sdk-logs-${{ github.job }}-${{ github.run_id }}
         path: install_windows_sdk.log
         retention-days: 7
         if-no-files-found: error
@@ -515,7 +515,7 @@ jobs:
       id: upload_install_windows_driver_kit_logs
       uses: actions/upload-artifact@v4
       with:
-        name: install-windows-driver-kit-logs
+        name: install-windows-driver-kit-logs-${{ github.job }}-${{ github.run_id }}
         path: install_windows_driver_kit.log
         retention-days: 7
         if-no-files-found: error
@@ -525,7 +525,7 @@ jobs:
       id: upload_install_kmdf_build_tools_logs
       uses: actions/upload-artifact@v4
       with:
-        name: install-kmdf-build-tools-logs
+        name: install-kmdf-build-tools-logs-${{ github.job }}-${{ github.run_id }}
         path: install_kmdf_build_tools.log
         retention-days: 7
         if-no-files-found: error
@@ -535,7 +535,7 @@ jobs:
       id: upload_chocolatey_logs
       uses: actions/upload-artifact@v4
       with:
-        name: chocolatey-logs
+        name: chocolatey-logs-${{ github.job }}-${{ github.run_id }}
         path: C:\ProgramData\chocolatey\logs\chocolatey.log
         retention-days: 7
         if-no-files-found: error
