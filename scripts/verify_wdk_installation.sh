@@ -3,6 +3,9 @@
 # Set the WDK_IncludePath environment variable
 export WDK_IncludePath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km;C:\Program Files (x86)\Windows Kits\11\Include\11.0.22000.0;C:\Program Files (x86)\Windows Kits\11\Include\11.0.22000.0\km"
 
+# Set the SDK_IncludePath environment variable
+export SDK_IncludePath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\winrt;C:\Program Files (x86)\Windows Kits\11\Include\11.0.22000.0\km"
+
 # Check if the WDK files are present in the correct installation path for Windows 10
 if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" ]; then
   echo "WDK files are present in the correct installation path for Windows 10.(10.0.22621.0)"
@@ -37,6 +40,13 @@ if [ -z "$WDK_IncludePath" ]; then
 
 else
   echo "WDK_IncludePath is set to: $WDK_IncludePath"
+fi
+
+# Check if the SDK_IncludePath environment variable is set
+if [ -z "$SDK_IncludePath" ]; then
+  echo "SDK_IncludePath environment variable is not set."
+else
+  echo "SDK_IncludePath is set to: $SDK_IncludePath"
 fi
 
 # Log the output for troubleshooting

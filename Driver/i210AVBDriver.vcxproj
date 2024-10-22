@@ -36,7 +36,7 @@
     <PostBuildEvent>
       <Command>copy "$(OutDir)$(TargetName).exe" "$(SolutionDir)build.log"</Command>
     </PostBuildEvent>
-    <AdditionalIncludeDirectories>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)include;$(SolutionDir)Driver\include;$(SolutionDir)Driver\ntddk;$(WDK_IncludePath);$(WDK_IncludePath)\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    <AdditionalIncludeDirectories>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)include;$(SolutionDir)Driver\include;$(SolutionDir)Driver\ntddk;$(WDK_IncludePath);$(WDK_IncludePath)\km;$(SDK_IncludePath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Driver</ConfigurationType>
@@ -51,7 +51,7 @@
     <PostBuildEvent>
       <Command>copy "$(OutDir)$(TargetName).exe" "$(SolutionDir)build.log"</Command>
     </PostBuildEvent>
-    <AdditionalIncludeDirectories>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)include;$(SolutionDir)Driver\include;$(SolutionDir)Driver\ntddk;$(WDK_IncludePath);$(WDK_IncludePath)\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    <AdditionalIncludeDirectories>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)include;$(SolutionDir)Driver\include;$(SolutionDir)Driver\ntddk;$(WDK_IncludePath);$(WDK_IncludePath)\km;$(SDK_IncludePath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'" Label="Configuration">
     <ConfigurationType>Driver</ConfigurationType>
@@ -65,7 +65,7 @@
     <PostBuildEvent>
       <Command>copy "$(OutDir)$(TargetName).exe" "$(SolutionDir)build.log"</Command>
     </PostBuildEvent>
-    <AdditionalIncludeDirectories>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)include;$(SolutionDir)Driver\include;$(SolutionDir)Driver\ntddk;$(WDK_IncludePath);$(WDK_IncludePath)\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    <AdditionalIncludeDirectories>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)include;$(SolutionDir)Driver\include;$(SolutionDir)Driver\ntddk;$(WDK_IncludePath);$(WDK_IncludePath)\km;$(SDK_IncludePath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'" Label="Configuration">
     <ConfigurationType>Driver</ConfigurationType>
@@ -80,7 +80,7 @@
     <PostBuildEvent>
       <Command>copy "$(OutDir)$(TargetName).exe" "$(SolutionDir)build.log"</Command>
     </PostBuildEvent>
-    <AdditionalIncludeDirectories>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)include;$(SolutionDir)Driver\include;$(SolutionDir)Driver\ntddk;$(WDK_IncludePath);$(WDK_IncludePath)\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    <AdditionalIncludeDirectories>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)include;$(SolutionDir)Driver\include;$(SolutionDir)Driver\ntddk;$(WDK_IncludePath);$(WDK_IncludePath)\km;$(SDK_IncludePath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
