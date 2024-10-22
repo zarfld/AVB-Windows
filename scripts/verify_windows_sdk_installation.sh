@@ -20,5 +20,12 @@ else
   exit 1
 fi
 
+# Check if the SDK_IncludePath environment variable is set
+if [ -z "$SDK_IncludePath" ]; then
+  echo "SDK_IncludePath environment variable is not set."
+else
+  echo "SDK_IncludePath is set to: $SDK_IncludePath"
+fi
+
 # Log the output for troubleshooting
 echo "Windows SDK installation verification completed."

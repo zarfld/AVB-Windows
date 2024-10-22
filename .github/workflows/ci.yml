@@ -17,6 +17,7 @@ jobs:
 
     env:
       WDK_IncludePath: C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km;C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.18362.1;C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.18362.1\km
+      SDK_IncludePath: C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\winrt
 
     outputs:
       url: ${{ steps.upload_build_logs.outputs.url }}
@@ -50,7 +51,6 @@ jobs:
       run: pip install -r requirements.txt > install_dependencies.log 2>&1
 
     - name: Upload Install Dependencies Logs
-      if: failure()
       id: upload_install_dependencies_logs
       uses: actions/upload-artifact@v4
       with:
@@ -62,17 +62,43 @@ jobs:
     - name: Install Windows SDK 10.1
       run: choco install windows-sdk-10.1 --source=https://chocolatey.org/api/v2/ > install_windows_sdk_10.1.log 2>&1
 
+    - name: Upload Install Windows SDK10.1 Logs
+      id: upload_install_windows_sdk_logs
+      uses: actions/upload-artifact@v4
+      with:
+        name: install-windows-sdk10.1-logs-${{ github.job }}-${{ github.run_id }}
+        path: install_windows_sdk.log
+        retention-days: 7
+        if-no-files-found: error
+
+    - name: Upload SDK10.1 Chocolatey Logs
+      id: upload_chocolatey_logs
+      uses: actions/upload-artifact@v4
+      with:
+        name: chocolatey-sdk10.1-logs-${{ github.job }}-${{ github.run_id }}
+        path: C:\ProgramData\chocolatey\logs\chocolatey.log
+        retention-days: 7
+        if-no-files-found: error
+
     - name: Install Windows SDK 10
       continue-on-error: true
       run: choco install windows-sdk-10 --source=https://chocolatey.org/api/v2/ > install_windows_sdk_10.log 2>&1
 
-    - name: Upload Install Windows SDK Logs
-      if: failure()
+    - name: Upload Install Windows SDK10 Logs
       id: upload_install_windows_sdk_logs
       uses: actions/upload-artifact@v4
       with:
-        name: install-windows-sdk-logs-${{ github.job }}-${{ github.run_id }}
+        name: install-windows-sdk10-logs-${{ github.job }}-${{ github.run_id }}
         path: install_windows_sdk.log
+        retention-days: 7
+        if-no-files-found: error
+
+    - name: Upload SDK10 Chocolatey Logs
+      id: upload_chocolatey_logs
+      uses: actions/upload-artifact@v4
+      with:
+        name: chocolatey-sdk10-logs-${{ github.job }}-${{ github.run_id }}
+        path: C:\ProgramData\chocolatey\logs\chocolatey.log
         retention-days: 7
         if-no-files-found: error
 
@@ -86,7 +112,16 @@ jobs:
       run: choco install windowsdriverkit10 --source=https://chocolatey.org/api/v2/ > install_windows_driver_kit.log 2>&1
 
     - name: Upload Install Windows Driver Kit Logs
-      if: failure()
+    
+    - name: Upload WDK Chocolatey Logs
+      id: upload_chocolatey_logs
+      uses: actions/upload-artifact@v4
+      with:
+        name: chocolatey-wdk10-logs-${{ github.job }}-${{ github.run_id }}
+        path: C:\ProgramData\chocolatey\logs\chocolatey.log
+        retention-days: 7
+        if-no-files-found: error
+
       id: upload_install_windows_driver_kit_logs
       uses: actions/upload-artifact@v4
       with:
@@ -108,6 +143,25 @@ jobs:
     - name: Install KMDF build tools
       continue-on-error: true
       run: choco install kmdf --version=1.31 > install_kmdf_build_tools.log 2>&1
+
+    - name: Upload KMDF Chocolatey Logs
+      if: failure()
+      id: upload_chocolatey_logs
+      uses: actions/upload-artifact@v4
+      with:
+        name: chocolatey-KMDF-logs-${{ github.job }}-${{ github.run_id }}
+        path: C:\ProgramData\chocolatey\logs\chocolatey.log
+        retention-days: 7
+        if-no-files-found: error
+
+    - name: Upload Install KMDF Build Tools Logs
+      id: upload_install_kmdf_build_tools_logs
+      uses: actions/upload-artifact@v4
+      with:
+        name: install-kmdf-build-tools-logs-${{ github.job }}-${{ github.run_id }}
+        path: install_kmdf_build_tools.log
+        retention-days: 7
+        if-no-files-found: error
 
     - name: Verify WindowsKernelModeDriver build tools Installation
       continue-on-error: true
@@ -215,26 +269,6 @@ jobs:
         if-no-files-found: error
 
 
-    - name: Upload Install KMDF Build Tools Logs
-      if: failure()
-      id: upload_install_kmdf_build_tools_logs
-      uses: actions/upload-artifact@v4
-      with:
-        name: install-kmdf-build-tools-logs-${{ github.job }}-${{ github.run_id }}
-        path: install_kmdf_build_tools.log
-        retention-days: 7
-        if-no-files-found: error
-
-    - name: Upload Chocolatey Logs
-      if: failure()
-      id: upload_chocolatey_logs
-      uses: actions/upload-artifact@v4
-      with:
-        name: chocolatey-logs-${{ github.job }}-${{ github.run_id }}
-        path: C:\ProgramData\chocolatey\logs\chocolatey.log
-        retention-days: 7
-        if-no-files-found: error
-
     - name: Run Issue Creation
       if: failure()
       env:
@@ -318,6 +352,7 @@ jobs:
 
     env:
       WDK_IncludePath: C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km;C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.18362.1;C:\Program Files (x86)\Windows Kits\11\Include\11.0.22000.0\km;C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.18362.1\km
+      SDK_IncludePath: C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0;C:\Program Files (x86)\Windows Kits\11\Include\11.0.22000.0\km
 
     outputs:
       url: ${{ steps.upload_build_logs.outputs.url }}
