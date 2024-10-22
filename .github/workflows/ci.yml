@@ -16,7 +16,7 @@ jobs:
     runs-on: windows-2022
 
     env:
-      WDK_IncludePath: C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km;C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.18362.1
+      WDK_IncludePath: C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km;C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.18362.1;C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.18362.1\km
 
     outputs:
       url: ${{ steps.upload_build_logs.outputs.url }}
