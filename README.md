@@ -351,7 +351,7 @@ jobs:
         elif [ "$environment" == "staging" ]; then
           echo "Labeling as 'in staging'"
           # Add logic to label issues as 'in staging'
-        elif [ "$environment" == "production" ]; then
+        elif [ "$environment" == "production"; then
           echo "Labeling as 'in production'"
 
     - name: Enforce Branch Protection Rules
