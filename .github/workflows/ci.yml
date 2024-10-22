@@ -16,7 +16,7 @@ jobs:
     runs-on: windows-2022
 
     env:
-      WDK_IncludePath: C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0;C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.18362.1
+      WDK_IncludePath: C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km;C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.18362.1;C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.18362.1\km
 
     outputs:
       url: ${{ steps.upload_build_logs.outputs.url }}
@@ -34,45 +34,6 @@ jobs:
     - name: Restore NuGet packages
       run: nuget restore AVB_Windows.sln
 
-    - name: Install dependencies
-      run: pip install -r requirements.txt > install_dependencies.log 2>&1
-
-    - name: Install Windows SDK 10.1
-      run: choco install windows-sdk-10.1 --source=https://chocolatey.org/api/v2/ > install_windows_sdk_10.1.log 2>&1
-
-    - name: Install Windows SDK 10
-      continue-on-error: true
-      run: choco install windows-sdk-10 --source=https://chocolatey.org/api/v2/ > install_windows_sdk_10.log 2>&1
-
-    - name: Install Windows Driver Kit (WDK)
-      run: choco install windowsdriverkit10 --source=https://chocolatey.org/api/v2/ > install_windows_driver_kit.log 2>&1
-
-    - name: Install KMDF build tools
-      continue-on-error: true
-      run: choco install kmdf --version=1.31 > install_kmdf_build_tools.log 2>&1
-
-    - name: Set executable permissions for verify_wdk_installation.sh
-      continue-on-error: true
-      run: chmod +x ./scripts/verify_wdk_installation.sh
-
-    - name: Verify Windows Driver Kit (WDK) Installation
-      continue-on-error: true
-      run: |
-        ./scripts/verify_wdk_installation.sh
-      shell: bash
-
-    - name: Verify Windows SDK Installation
-      continue-on-error: true
-      run: |
-        ./scripts/verify_windows_sdk_installation.sh
-      shell: bash
-
-    - name: Verify WindowsKernelModeDriver build tools Installation
-      continue-on-error: true
-      run: |
-        ./scripts/verify_kmdf_installation.sh
-      shell: bash
-
     - name: Check GitHub Actions Permissions
       run: |
         echo "Checking GitHub Actions permissions..."
@@ -84,6 +45,75 @@ jobs:
         }
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt > install_dependencies.log 2>&1
+
+    - name: Upload Install Dependencies Logs
+      if: failure()
+      id: upload_install_dependencies_logs
+      uses: actions/upload-artifact@v4
+      with:
+        name: install-dependencies-logs-${{ github.job }}-${{ github.run_id }}
+        path: install_dependencies.log
+        retention-days: 7
+        if-no-files-found: error
+
+    - name: Install Windows SDK 10.1
+      run: choco install windows-sdk-10.1 --source=https://chocolatey.org/api/v2/ > install_windows_sdk_10.1.log 2>&1
+
+    - name: Install Windows SDK 10
+      continue-on-error: true
+      run: choco install windows-sdk-10 --source=https://chocolatey.org/api/v2/ > install_windows_sdk_10.log 2>&1
+
+    - name: Upload Install Windows SDK Logs
+      if: failure()
+      id: upload_install_windows_sdk_logs
+      uses: actions/upload-artifact@v4
+      with:
+        name: install-windows-sdk-logs-${{ github.job }}-${{ github.run_id }}
+        path: install_windows_sdk.log
+        retention-days: 7
+        if-no-files-found: error
+
+    - name: Verify Windows SDK Installation
+      continue-on-error: true
+      run: |
+        ./scripts/verify_windows_sdk_installation.sh
+      shell: bash
+
+    - name: Install Windows Driver Kit (WDK)
+      run: choco install windowsdriverkit10 --source=https://chocolatey.org/api/v2/ > install_windows_driver_kit.log 2>&1
+
+    - name: Upload Install Windows Driver Kit Logs
+      if: failure()
+      id: upload_install_windows_driver_kit_logs
+      uses: actions/upload-artifact@v4
+      with:
+        name: install-windows-driver-kit-logs-${{ github.job }}-${{ github.run_id }}
+        path: install_windows_driver_kit.log
+        retention-days: 7
+        if-no-files-found: error
+
+    - name: Set executable permissions for verify_wdk_installation.sh
+      continue-on-error: true
+      run: chmod +x ./scripts/verify_wdk_installation.sh
+
+    - name: Verify Windows Driver Kit (WDK) Installation
+      continue-on-error: true
+      run: |
+        ./scripts/verify_wdk_installation.sh
+      shell: bash
+
+    - name: Install KMDF build tools
+      continue-on-error: true
+      run: choco install kmdf --version=1.31 > install_kmdf_build_tools.log 2>&1
+
+    - name: Verify WindowsKernelModeDriver build tools Installation
+      continue-on-error: true
+      run: |
+        ./scripts/verify_kmdf_installation.sh
+      shell: bash
 
     - name: Clean solution
       run: msbuild AVB_Windows.sln /t:Clean
@@ -184,35 +214,6 @@ jobs:
         retention-days: 7
         if-no-files-found: error
 
-    - name: Upload Install Dependencies Logs
-      if: failure()
-      id: upload_install_dependencies_logs
-      uses: actions/upload-artifact@v4
-      with:
-        name: install-dependencies-logs-${{ github.job }}-${{ github.run_id }}
-        path: install_dependencies.log
-        retention-days: 7
-        if-no-files-found: error
-
-    - name: Upload Install Windows SDK Logs
-      if: failure()
-      id: upload_install_windows_sdk_logs
-      uses: actions/upload-artifact@v4
-      with:
-        name: install-windows-sdk-logs-${{ github.job }}-${{ github.run_id }}
-        path: install_windows_sdk.log
-        retention-days: 7
-        if-no-files-found: error
-
-    - name: Upload Install Windows Driver Kit Logs
-      if: failure()
-      id: upload_install_windows_driver_kit_logs
-      uses: actions/upload-artifact@v4
-      with:
-        name: install-windows-driver-kit-logs-${{ github.job }}-${{ github.run_id }}
-        path: install_windows_driver_kit.log
-        retention-days: 7
-        if-no-files-found: error
 
     - name: Upload Install KMDF Build Tools Logs
       if: failure()
@@ -316,7 +317,7 @@ jobs:
     runs-on: windows-latest
 
     env:
-      WDK_IncludePath: C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0;C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.18362.1;C:\Program Files (x86)\Windows Kits\11\Include\11.0.22000.0
+      WDK_IncludePath: C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km;C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.18362.1;C:\Program Files (x86)\Windows Kits\11\Include\11.0.22000.0\km;C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.18362.1\km
 
     outputs:
       url: ${{ steps.upload_build_logs.outputs.url }}
