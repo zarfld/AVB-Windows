@@ -78,6 +78,8 @@ jobs:
         } else {
           echo "GitHub Actions token is set."
         }
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Clean solution
       run: msbuild AVB_Windows.sln /t:Clean
@@ -371,6 +373,8 @@ jobs:
         } else {
           echo "GitHub Actions token is set."
         }
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Clean solution
       run: msbuild AVB_Windows.sln /t:Clean
@@ -454,6 +458,8 @@ jobs:
       run: pip install PyGithub
 
     - name: Check for Log File Existence
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         if [ ! -f build.log ]; then
           echo "No build.log found."
