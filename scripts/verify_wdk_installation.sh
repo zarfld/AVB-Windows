@@ -5,30 +5,30 @@ export WDK_IncludePath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.2262
 
 # Check if the WDK files are present in the correct installation path for Windows 10
 if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" ]; then
-  echo "WDK files are present in the correct installation path for Windows 10."
+  echo "WDK files are present in the correct installation path for Windows 10.(10.0.22621.0)"
 else
-  echo "WDK files are not present in the correct installation path for Windows 10."
+  echo "WDK files are not present in the correct installation path for Windows 10.(10.0.22621.0)"
 fi
 
 # Check if the WDK files are present in the correct installation path for Windows 11
 if [ -d "C:\Program Files (x86)\Windows Kits\11\Include\11.0.22000.0" ]; then
-  echo "WDK files are present in the correct installation path for Windows 11."
+  echo "WDK files are present in the correct installation path for Windows 11.(11.0.22000.0)"
 else
-  echo "WDK files are not present in the correct installation path for Windows 11."
+  echo "WDK files are not present in the correct installation path for Windows 11.(11.0.22000.0)"
 fi
 
 # Check for the presence of ntddk.h in the correct installation path for Windows 10
 if [ -f "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km\ntddk.h" ]; then
-  echo "ntddk.h is present in the correct installation path for Windows 10."
+  echo "ntddk.h is present in the correct installation path for Windows 10.(10.0.22621.0\km)"
 else
-  echo "ntddk.h is not present in the correct installation path for Windows 10."
+  echo "ntddk.h is not present in the correct installation path for Windows 10.(10.0.22621.0\km)"
 fi
 
 # Check for the presence of ntddk.h in the correct installation path for Windows 11
 if [ -f "C:\Program Files (x86)\Windows Kits\11\Include\11.0.22000.0\km\ntddk.h" ]; then
-  echo "ntddk.h is present in the correct installation path for Windows 11."
+  echo "ntddk.h is present in the correct installation path for Windows 11.(11.0.22000.0\km)"
 else
-  echo "ntddk.h is not present in the correct installation path for Windows 11."
+  echo "ntddk.h is not present in the correct installation path for Windows 11.(11.0.22000.0\km)"
 fi
 
 # Check if the WDK_IncludePath environment variable is set
