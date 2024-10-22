@@ -11,6 +11,9 @@ def check_for_logs(log_paths):
             existing_logs.append(log_path)
         else:
             print(f"No logs found for {log_path}. Skipping error-checking step.")
+    if not os.environ.get('GITHUB_TOKEN'):
+        print("GITHUB_TOKEN environment variable is not set. Please check repository settings.")
+        return []
     return existing_logs
 
 def parse_logs(log_paths):
@@ -31,6 +34,9 @@ def parse_logs(log_paths):
                     }
                     errors.append(error_info)
                     metadata["error_count"] += 1
+    if not os.environ.get('GITHUB_TOKEN'):
+        print("GITHUB_TOKEN environment variable is not set. Please check repository settings.")
+        return [], metadata
     return errors, metadata
 
 def get_error_context(log_file, error_line_number, context_lines=2):
@@ -47,7 +53,8 @@ def save_errors_and_metadata(errors, metadata, output_path, log_link):
     data = {
         "errors": errors,
         "metadata": metadata,
-        "build_logs_link": log_link
+        "build_logs_link": log_link,
+        "github_token_status": "set" if os.environ.get('GITHUB_TOKEN') else "not set"
     }
     with open(output_path, 'w') as output_file:
         json.dump(data, output_file, indent=4)
