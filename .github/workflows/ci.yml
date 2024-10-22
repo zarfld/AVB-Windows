@@ -112,21 +112,20 @@ jobs:
       run: choco install windowsdriverkit10 --source=https://chocolatey.org/api/v2/ > install_windows_driver_kit.log 2>&1
 
     - name: Upload Install Windows Driver Kit Logs
-    
+      id: upload_install_windows_driver_kit_logs
+      uses: actions/upload-artifact@v4
+      with:
+        name: install-windows-driver-kit-logs-${{ github.job }}-${{ github.run_id }}
+        path: install_windows_driver_kit.log
+        retention-days: 7
+        if-no-files-found: error
+
     - name: Upload WDK Chocolatey Logs
       id: upload_chocolatey_logs
       uses: actions/upload-artifact@v4
       with:
         name: chocolatey-wdk10-logs-${{ github.job }}-${{ github.run_id }}
         path: C:\ProgramData\chocolatey\logs\chocolatey.log
-        retention-days: 7
-        if-no-files-found: error
-
-      id: upload_install_windows_driver_kit_logs
-      uses: actions/upload-artifact@v4
-      with:
-        name: install-windows-driver-kit-logs-${{ github.job }}-${{ github.run_id }}
-        path: install_windows_driver_kit.log
         retention-days: 7
         if-no-files-found: error
 
