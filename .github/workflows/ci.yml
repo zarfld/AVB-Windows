@@ -121,7 +121,7 @@ jobs:
         if-no-files-found: error
 
     - name: Upload WDK Chocolatey Logs
-      id: upload_chocolatey_logs
+      id: upload_chocolatey_wdk_logs
       uses: actions/upload-artifact@v4
       with:
         name: chocolatey-wdk10-logs-${{ github.job }}-${{ github.run_id }}
