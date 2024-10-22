@@ -58,6 +58,7 @@ jobs:
         path: install_dependencies.log
         retention-days: 7
         if-no-files-found: error
+      continue-on-error: true
 
     - name: Install Windows SDK 10.1
       run: choco install windows-sdk-10.1 --source=https://chocolatey.org/api/v2/ > install_windows_sdk_10.1.log 2>&1
@@ -70,6 +71,7 @@ jobs:
         path: install_windows_sdk.log
         retention-days: 7
         if-no-files-found: error
+      continue-on-error: true
 
     - name: Upload SDK10.1 Chocolatey Logs
       id: upload_chocolatey_logs
@@ -79,6 +81,7 @@ jobs:
         path: C:\ProgramData\chocolatey\logs\chocolatey.log
         retention-days: 7
         if-no-files-found: error
+      continue-on-error: true
 
     - name: Install Windows SDK 10
       continue-on-error: true
@@ -92,6 +95,7 @@ jobs:
         path: install_windows_sdk.log
         retention-days: 7
         if-no-files-found: error
+      continue-on-error: true
 
     - name: Upload SDK10 Chocolatey Logs
       id: upload_chocolatey_sdk10_logs
@@ -101,6 +105,7 @@ jobs:
         path: C:\ProgramData\chocolatey\logs\chocolatey.log
         retention-days: 7
         if-no-files-found: error
+      continue-on-error: true
 
     - name: Verify Windows SDK Installation
       continue-on-error: true
@@ -119,6 +124,7 @@ jobs:
         path: install_windows_driver_kit.log
         retention-days: 7
         if-no-files-found: error
+      continue-on-error: true
 
     - name: Upload WDK Chocolatey Logs
       id: upload_chocolatey_wdk_logs
@@ -128,6 +134,7 @@ jobs:
         path: C:\ProgramData\chocolatey\logs\chocolatey.log
         retention-days: 7
         if-no-files-found: error
+      continue-on-error: true
 
     - name: Set executable permissions for verify_wdk_installation.sh
       continue-on-error: true
@@ -152,6 +159,7 @@ jobs:
         path: C:\ProgramData\chocolatey\logs\chocolatey.log
         retention-days: 7
         if-no-files-found: error
+      continue-on-error: true
 
     - name: Upload Install KMDF Build Tools Logs
       id: upload_install_kmdf_build_tools_logs
@@ -161,6 +169,7 @@ jobs:
         path: install_kmdf_build_tools.log
         retention-days: 7
         if-no-files-found: error
+      continue-on-error: true
 
     - name: Verify WindowsKernelModeDriver build tools Installation
       continue-on-error: true
@@ -266,6 +275,7 @@ jobs:
         path: build.log
         retention-days: 7
         if-no-files-found: error
+      continue-on-error: true
 
 
     - name: Run Issue Creation
@@ -528,6 +538,7 @@ jobs:
         path: build.log
         retention-days: 7
         if-no-files-found: error
+      continue-on-error: true
 
     - name: Upload Install Dependencies Logs
       if: failure()
@@ -538,6 +549,7 @@ jobs:
         path: install_dependencies.log
         retention-days: 7
         if-no-files-found: error
+      continue-on-error: true
 
     - name: Upload Install Windows SDK Logs
       if: failure()
@@ -548,6 +560,7 @@ jobs:
         path: install_windows_sdk.log
         retention-days: 7
         if-no-files-found: error
+      continue-on-error: true
 
     - name: Upload Install Windows Driver Kit Logs
       if: failure()
@@ -558,6 +571,7 @@ jobs:
         path: install_windows_driver_kit.log
         retention-days: 7
         if-no-files-found: error
+      continue-on-error: true
 
     - name: Upload Install KMDF Build Tools Logs
       if: failure()
@@ -568,6 +582,7 @@ jobs:
         path: install_kmdf_build_tools.log
         retention-days: 7
         if-no-files-found: error
+      continue-on-error: true
 
     - name: Upload Chocolatey Logs
       if: failure()
@@ -578,6 +593,7 @@ jobs:
         path: C:\ProgramData\chocolatey\logs\chocolatey.log
         retention-days: 7
         if-no-files-found: error
+      continue-on-error: true
 
     - name: Run Issue Creation
       if: failure()
