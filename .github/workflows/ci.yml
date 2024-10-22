@@ -315,7 +315,7 @@ jobs:
         if [ "$environment" == "development" ]; then
           echo "Labeling as 'in development'"
           # Add logic to label issues as 'in development'
-        elif [ "$environment" == "staging" ]; then
+        elif [ "$environment" == "staging"; then
           echo "Labeling as 'in staging'"
           # Add logic to label issues as 'in staging'
         elif [ "$environment" == "production"; then
