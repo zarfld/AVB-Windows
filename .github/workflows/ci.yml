@@ -145,7 +145,7 @@ jobs:
 
     - name: Upload KMDF Chocolatey Logs
       if: failure()
-      id: upload_chocolatey_logs
+      id: upload_chocolatey_kmdf_logs
       uses: actions/upload-artifact@v4
       with:
         name: chocolatey-KMDF-logs-${{ github.job }}-${{ github.run_id }}
