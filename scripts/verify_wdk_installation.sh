@@ -85,3 +85,10 @@ fi
 
 # Log the output for troubleshooting
 echo "WDK installation verification completed."
+
+# Verify the installation of the WDK Visual Studio extension
+if [ -d "C:\Program Files (x86)\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\WDK" ]; then
+  echo "WDK Visual Studio extension is properly installed."
+else
+  echo "WDK Visual Studio extension is not properly installed."
+fi

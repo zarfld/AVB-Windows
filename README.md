@@ -548,3 +548,69 @@ The step "Upload Install Windows Driver Kit Logs" in `.github/workflows/ci.yml` 
 
 ### Inclusion of the `uses` Key in the "Upload Install Windows Driver Kit Logs" Step
 The "Upload Install Windows Driver Kit Logs" step now includes a `uses` key with `actions/upload-artifact@v4`, along with a `with` section specifying `name`, `path`, `retention-days`, and `if-no-files-found`.
+
+### Detailed Steps for Installing Visual Studio 2022 with Required Components
+
+To install Visual Studio 2022 with the required components for developing and building the AVB stack, follow these steps:
+
+1. **Download Visual Studio 2022**:
+   - Visit the [Visual Studio 2022 download page](https://visualstudio.microsoft.com/vs/).
+   - Download the installer for Visual Studio 2022 (Community, Professional, or Enterprise edition).
+
+2. **Run the Installer**:
+   - Launch the Visual Studio Installer.
+   - Select the "Desktop development with C++" workload.
+
+3. **Select Individual Components**:
+   - In the "Individual components" tab, select the following components:
+     - MSVC v143 - VS 2022 C++ x64/x86 Spectre-mitigated libraries (Latest)
+     - C++ ATL for latest v143 build tools with Spectre Mitigations (x86 & x64)
+     - C++ MFC for latest v143 build tools with Spectre Mitigations (x86 & x64)
+
+4. **Install Visual Studio**:
+   - Click "Install" to begin the installation process.
+   - Wait for the installation to complete.
+
+5. **Verify Installation**:
+   - Open Visual Studio 2022.
+   - Create a new C++ project to ensure that the required components are installed correctly.
+
+### Instructions for Installing the Windows SDK 10.0.26100.1742
+
+To install the Windows SDK version 10.0.26100.1742, follow these steps:
+
+1. **Download the Windows SDK**:
+   - Visit the [Windows SDK download page](https://developer.microsoft.com/en-us/windows/downloads/windows-10-sdk/).
+   - Download the installer for Windows SDK version 10.0.26100.1742.
+
+2. **Run the Installer**:
+   - Launch the Windows SDK installer.
+   - Follow the on-screen instructions to complete the installation.
+
+3. **Verify Installation**:
+   - Open a command prompt and run the following command to verify the installation:
+     ```sh
+     dir "C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.1742"
+     ```
+   - Ensure that the directory exists and contains the necessary files.
+
+### Installation of WDK 10.0.26100.1882 and Its Visual Studio Extension
+
+To install the Windows Driver Kit (WDK) version 10.0.26100.1882 and its Visual Studio extension, follow these steps:
+
+1. **Download the WDK**:
+   - Visit the [WDK download page](https://learn.microsoft.com/en-us/windows-hardware/drivers/download-the-wdk).
+   - Download the installer for WDK version 10.0.26100.1882.
+
+2. **Run the Installer**:
+   - Launch the WDK installer.
+   - Follow the on-screen instructions to complete the installation.
+
+3. **Verify Installation**:
+   - Open Visual Studio 2022.
+   - Create a new driver project to ensure that the WDK Visual Studio extension is installed correctly.
+
+4. **Set Environment Variables**:
+   - Ensure that the `WDK_IncludePath` environment variable is set correctly in your CI configuration.
+
+By following these steps, you can ensure that Visual Studio 2022, the Windows SDK, and the WDK are installed correctly with the required components for developing and building the AVB stack.

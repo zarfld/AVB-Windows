@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Check if the Windows SDK files are present in the correct installation path
-if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" ]; then
+if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.1742" ]; then
+  echo "Windows SDK files are present in the correct installation path. (10.0.26100.1742)"
+elif [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" ]; then
   echo "Windows SDK files are present in the correct installation path. (10.0.22621.0)"
 elif [ -d "C:\Program Files (x86)\Windows Kits\10.1\Include\10.1.18362.1" ]; then
   echo "Windows SDK files are present in the correct installation path. (10.1.18362.1)"
