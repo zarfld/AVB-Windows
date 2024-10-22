@@ -85,7 +85,7 @@ jobs:
       run: choco install windows-sdk-10 --source=https://chocolatey.org/api/v2/ > install_windows_sdk_10.log 2>&1
 
     - name: Upload Install Windows SDK10 Logs
-      id: upload_install_windows_sdk_logs
+      id: upload_install_windows_sdk10_logs
       uses: actions/upload-artifact@v4
       with:
         name: install-windows-sdk10-logs-${{ github.job }}-${{ github.run_id }}
@@ -94,7 +94,7 @@ jobs:
         if-no-files-found: error
 
     - name: Upload SDK10 Chocolatey Logs
-      id: upload_chocolatey_logs
+      id: upload_chocolatey_sdk10_logs
       uses: actions/upload-artifact@v4
       with:
         name: chocolatey-sdk10-logs-${{ github.job }}-${{ github.run_id }}
