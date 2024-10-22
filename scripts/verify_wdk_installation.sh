@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the WDK_IncludePath environment variable
-export WDK_IncludePath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0;C:\Program Files (x86)\Windows Kits\11\Include\11.0.22000.0"
+export WDK_IncludePath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km;C:\Program Files (x86)\Windows Kits\11\Include\11.0.22000.0;C:\Program Files (x86)\Windows Kits\11\Include\11.0.22000.0\km"
 
 # Check if the WDK files are present in the correct installation path for Windows 10
 if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0" ]; then
