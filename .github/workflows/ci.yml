@@ -75,12 +75,12 @@ jobs:
     - name: Check GitHub Actions Permissions
       run: |
         echo "Checking GitHub Actions permissions..."
-        if [ -z "${{ github.token }}" ]; then
+        if ($env:GITHUB_TOKEN -eq $null) {
           echo "GitHub Actions token is not set. Please check repository settings."
           exit 1
-        else
+        } else {
           echo "GitHub Actions token is set."
-        fi
+        }
 
     - name: Clean solution
       run: msbuild AVB_Windows.sln /t:Clean
@@ -378,12 +378,12 @@ jobs:
     - name: Check GitHub Actions Permissions
       run: |
         echo "Checking GitHub Actions permissions..."
-        if [ -z "${{ github.token }}" ]; then
+        if ($env:GITHUB_TOKEN -eq $null) {
           echo "GitHub Actions token is not set. Please check repository settings."
           exit 1
-        else
+        } else {
           echo "GitHub Actions token is set."
-        fi
+        }
 
     - name: Clean solution
       run: msbuild AVB_Windows.sln /t:Clean
