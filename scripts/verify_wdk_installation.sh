@@ -92,3 +92,10 @@ if [ -d "C:\Program Files (x86)\Microsoft Visual Studio\2022\Community\Common7\I
 else
   echo "WDK Visual Studio extension is not properly installed."
 fi
+
+# Check if KMDF 1.31 is installed
+if [ -d "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\km\wdf" ]; then
+  echo "KMDF 1.31 is properly installed."
+else
+  echo "KMDF 1.31 is not properly installed. Continuing without KMDF."
+fi
