@@ -321,3 +321,139 @@ ManageStreams()
     // Implement stream management logic here
     KdPrint(("Managing Streams...\n"));
 }
+
+// Abstraction layer for NIC-specific code
+typedef struct _NIC_ABSTRACTION_LAYER {
+    void (*InitializeSocket)(SOCKET* sock, sockaddr_in* serverAddr, const char* multicastAddress, int port);
+    void (*CloseSocket)(SOCKET* sock);
+    void (*SendMessage)(SOCKET sock, const char* message, sockaddr_in* serverAddr);
+    void (*ReceiveMessage)(SOCKET sock, char* buffer, int bufferSize, sockaddr_in* serverAddr);
+} NIC_ABSTRACTION_LAYER, *PNIC_ABSTRACTION_LAYER;
+
+void InitializeSocket(SOCKET* sock, sockaddr_in* serverAddr, const char* multicastAddress, int port) {
+    *sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    if (*sock == INVALID_SOCKET) {
+        KdPrint(("Socket creation failed with error: %d\n", WSAGetLastError()));
+        return;
+    }
+
+    serverAddr->sin_family = AF_INET;
+    serverAddr->sin_port = htons(port);
+    inet_pton(AF_INET, multicastAddress, &serverAddr->sin_addr);
+}
+
+void CloseSocket(SOCKET* sock) {
+    if (*sock != INVALID_SOCKET) {
+        closesocket(*sock);
+        *sock = INVALID_SOCKET;
+    }
+}
+
+void SendMessage(SOCKET sock, const char* message, sockaddr_in* serverAddr) {
+    int result = sendto(sock, message, strlen(message), 0, (sockaddr*)serverAddr, sizeof(*ServerAddr));
+    if (result == SOCKET_ERROR) {
+        KdPrint(("Send failed with error: %d\n", WSAGetLastError()));
+    }
+}
+
+void ReceiveMessage(SOCKET sock, char* buffer, int bufferSize, sockaddr_in* serverAddr) {
+    int serverAddrSize = sizeof(*ServerAddr);
+    int result = recvfrom(sock, buffer, bufferSize, 0, (sockaddr*)serverAddr, &serverAddrSize);
+    if (result == SOCKET_ERROR) {
+        KdPrint(("Receive failed with error: %d\n", WSAGetLastError()));
+    } else {
+        buffer[result] = '\0';
+        KdPrint(("Received: %s\n", buffer));
+    }
+}
+
+// NIC-specific modules
+NIC_ABSTRACTION_LAYER IntelI210AbstractionLayer = {
+    InitializeSocket,
+    CloseSocket,
+    SendMessage,
+    ReceiveMessage
+};
+
+NIC_ABSTRACTION_LAYER AnotherNICAbstractionLayer = {
+    InitializeSocket,
+    CloseSocket,
+    SendMessage,
+    ReceiveMessage
+};
+
+// Refactor existing code to use the abstraction layer
+VOID
+GPTPThread(
+    _In_ PVOID Context
+    )
+{
+    PDEVICE_CONTEXT deviceContext = (PDEVICE_CONTEXT)Context;
+    SOCKET sock;
+    sockaddr_in serverAddr;
+    WSADATA wsaData;
+
+    WSAStartup(MAKEWORD(2, 2), &wsaData);
+    IntelI210AbstractionLayer.InitializeSocket(&sock, &serverAddr, GPTP_MULTICAST_ADDRESS, GPTP_EVENT_PORT);
+
+    while (deviceContext->Running) {
+        IntelI210AbstractionLayer.SendMessage(sock, "SYNC", &serverAddr);
+        char buffer[1024];
+        IntelI210AbstractionLayer.ReceiveMessage(sock, buffer, sizeof(buffer), &serverAddr);
+        KeWaitForSingleObject(&deviceContext->StopEvent, Executive, KernelMode, FALSE, NULL);
+    }
+
+    IntelI210AbstractionLayer.CloseSocket(&sock);
+    WSACleanup();
+}
+
+VOID
+AVTPThread(
+    _In_ PVOID Context
+    )
+{
+    PDEVICE_CONTEXT deviceContext = (PDEVICE_CONTEXT)Context;
+    SOCKET sock;
+    sockaddr_in serverAddr;
+    WSADATA wsaData;
+
+    WSAStartup(MAKEWORD(2, 2), &wsaData);
+    IntelI210AbstractionLayer.InitializeSocket(&sock, &serverAddr, AVTP_MULTICAST_ADDRESS, AVTP_PORT);
+
+    while (deviceContext->Running) {
+        char buffer[2048];
+        IntelI210AbstractionLayer.ReceiveMessage(sock, buffer, sizeof(buffer), &serverAddr);
+        KdPrint(("Captured AVB Frame: %s\n", buffer));
+        KdPrint(("Processing AVB Frames...\n"));
+        KeWaitForSingleObject(&deviceContext->StopEvent, Executive, KernelMode, FALSE, NULL);
+    }
+
+    IntelI210AbstractionLayer.CloseSocket(&sock);
+    WSACleanup();
+}
+
+VOID
+AVDECCThread(
+    _In_ PVOID Context
+    )
+{
+    PDEVICE_CONTEXT deviceContext = (PDEVICE_CONTEXT)Context;
+    SOCKET sock;
+    sockaddr_in serverAddr;
+    WSADATA wsaData;
+
+    WSAStartup(MAKEWORD(2, 2), &wsaData);
+    IntelI210AbstractionLayer.InitializeSocket(&sock, &serverAddr, AVDECC_MULTICAST_ADDRESS, AVDECC_PORT);
+
+    while (deviceContext->Running) {
+        IntelI210AbstractionLayer.SendMessage(sock, "DISCOVER", &serverAddr);
+        char buffer[1024];
+        IntelI210AbstractionLayer.ReceiveMessage(sock, buffer, sizeof(buffer), &serverAddr);
+        KdPrint(("Discovered Device: %s\n", buffer));
+        KdPrint(("Managing Streams...\n"));
+        KeWaitForSingleObject(&deviceContext->StopEvent, Executive, KernelMode, FALSE, NULL);
+    }
+
+    IntelI210AbstractionLayer.CloseSocket(&sock);
+    WSACleanup();
+}

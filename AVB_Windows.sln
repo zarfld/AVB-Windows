@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Driver", "Driver\i210AVBDri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\AVBTool.vcxproj", "{CE6F9D5G-7F6H-8E5I-CE6F-9D5G7F6H8E5I}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewNICDriver", "Driver\NewNICDriver.vcxproj", "{D1E2F3A4-B5C6-D7E8-F9A1-B2C3D4E5F6A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -60,6 +62,14 @@ Global
 		{CE6F9D5G-7F6H-8E5I-CE6F-9D5G7F6H8E5I}.Debug|x86.Build.0 = Debug|x86
 		{CE6F9D5G-7F6H-8E5I-CE6F-9D5G7F6H8E5I}.Release|x86.ActiveCfg = Release|x86
 		{CE6F9D5G-7F6H-8E5I-CE6F-9D5G7F6H8E5I}.Release|x86.Build.0 = Release|x86
+		{D1E2F3A4-B5C6-D7E8-F9A1-B2C3D4E5F6A7}.Debug|x64.ActiveCfg = Debug|x64
+		{D1E2F3A4-B5C6-D7E8-F9A1-B2C3D4E5F6A7}.Debug|x64.Build.0 = Debug|x64
+		{D1E2F3A4-B5C6-D7E8-F9A1-B2C3D4E5F6A7}.Release|x64.ActiveCfg = Release|x64
+		{D1E2F3A4-B5C6-D7E8-F9A1-B2C3D4E5F6A7}.Release|x64.Build.0 = Release|x64
+		{D1E2F3A4-B5C6-D7E8-F9A1-B2C3D4E5F6A7}.Debug|x86.ActiveCfg = Debug|x86
+		{D1E2F3A4-B5C6-D7E8-F9A1-B2C3D4E5F6A7}.Debug|x86.Build.0 = Debug|x86
+		{D1E2F3A4-B5C6-D7E8-F9A1-B2C3D4E5F6A7}.Release|x86.ActiveCfg = Release|x86
+		{D1E2F3A4-B5C6-D7E8-F9A1-B2C3D4E5F6A7}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

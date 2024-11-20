@@ -28,6 +28,17 @@ A custom driver has been developed to support AVB-specific features such as gPTP
 
 For detailed AVB-specific documentation, please refer to the [Intel i210 AVB Documentation](docs/Intel_i210_AVB_Documentation.md).
 
+### Custom Driver for Other NICs
+The custom driver has been extended to support AVB features for other NICs. Follow these steps to install and configure the driver for your target NIC:
+
+1. Download the custom driver package for your target NIC from the repository.
+2. Extract the package to a desired location.
+3. Open Device Manager and locate the target NIC.
+4. Right-click on the device and select "Update driver".
+5. Choose "Browse my computer for drivers" and navigate to the extracted driver package.
+6. Follow the on-screen instructions to complete the installation.
+7. Restart your computer to apply the changes.
+
 ### GUI-based Tool for AVB Configuration and Monitoring
 A GUI-based tool has been developed to configure and monitor AVB streams, devices, and time synchronization. Follow these steps to use the tool:
 

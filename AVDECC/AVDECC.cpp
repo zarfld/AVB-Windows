@@ -112,13 +112,79 @@ void AVDECC::controlDevice(const std::string& device) {
     // Implement device control logic here
 }
 
-int main() {
-    AVDECC avdecc;
-    avdecc.start();
+// Abstraction layer for NIC-specific code
+typedef struct _NIC_ABSTRACTION_LAYER {
+    void (*InitializeSocket)(SOCKET* sock, sockaddr_in* serverAddr, const char* multicastAddress, int port);
+    void (*CloseSocket)(SOCKET* sock);
+    void (*SendMessage)(SOCKET sock, const char* message, sockaddr_in* serverAddr);
+    void (*ReceiveMessage)(SOCKET sock, char* buffer, int bufferSize, sockaddr_in* serverAddr);
+} NIC_ABSTRACTION_LAYER, *PNIC_ABSTRACTION_LAYER;
 
-    std::cout << "Press Enter to stop..." << std::endl;
-    std::cin.get();
+void InitializeSocket(SOCKET* sock, sockaddr_in* serverAddr, const char* multicastAddress, int port) {
+    *sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    if (*sock == INVALID_SOCKET) {
+        std::cerr << "Socket creation failed with error: " << WSAGetLastError() << std::endl;
+        return;
+    }
 
-    avdecc.stop();
-    return 0;
+    serverAddr->sin_family = AF_INET;
+    serverAddr->sin_port = htons(port);
+    inet_pton(AF_INET, multicastAddress, &serverAddr->sin_addr);
+}
+
+void CloseSocket(SOCKET* sock) {
+    if (*sock != INVALID_SOCKET) {
+        closesocket(*sock);
+        *sock = INVALID_SOCKET;
+    }
+}
+
+void SendMessage(SOCKET sock, const char* message, sockaddr_in* serverAddr) {
+    int result = sendto(sock, message, strlen(message), 0, (sockaddr*)serverAddr, sizeof(*serverAddr));
+    if (result == SOCKET_ERROR) {
+        std::cerr << "Send failed with error: " << WSAGetLastError() << std::endl;
+    }
+}
+
+void ReceiveMessage(SOCKET sock, char* buffer, int bufferSize, sockaddr_in* serverAddr) {
+    int serverAddrSize = sizeof(*serverAddr);
+    int result = recvfrom(sock, buffer, bufferSize, 0, (sockaddr*)serverAddr, &serverAddrSize);
+    if (result == SOCKET_ERROR) {
+        std::cerr << "Receive failed with error: " << WSAGetLastError() << std::endl;
+    } else {
+        buffer[result] = '\0';
+        std::cout << "Received: " << buffer << std::endl;
+    }
+}
+
+// NIC-specific modules
+NIC_ABSTRACTION_LAYER IntelI210AbstractionLayer = {
+    InitializeSocket,
+    CloseSocket,
+    SendMessage,
+    ReceiveMessage
+};
+
+NIC_ABSTRACTION_LAYER AnotherNICAbstractionLayer = {
+    InitializeSocket,
+    CloseSocket,
+    SendMessage,
+    ReceiveMessage
+};
+
+// Refactor existing code to use the abstraction layer
+void AVDECC::initializeSocket() {
+    IntelI210AbstractionLayer.InitializeSocket(&sock, &serverAddr, "224.0.1.129", 1720);
+}
+
+void AVDECC::closeSocket() {
+    IntelI210AbstractionLayer.CloseSocket(&sock);
+}
+
+void AVDECC::discoverDevices() {
+    IntelI210AbstractionLayer.SendMessage(sock, "DISCOVER", &serverAddr);
+    char buffer[1024];
+    IntelI210AbstractionLayer.ReceiveMessage(sock, buffer, sizeof(buffer), &serverAddr);
+    devices.push_back(buffer);
+    std::cout << "Discovered Device: " << buffer << std::endl;
 }
