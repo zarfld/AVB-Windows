@@ -348,3 +348,31 @@ By utilizing these Intel-provided resources, you can significantly accelerate yo
 - **Porting Open Source Code**: Adapting existing open-source AVB components to work on Windows.
 - **Performance Optimization**: Ensuring the AVB stack and driver are optimized for performance on Windows.
 - **Testing and Validation**: Building test environments to ensure compatibility and functionality with AVB networks and devices.
+
+## New Driver Project and Abstraction Layer
+
+### New Driver Project for Target NIC
+
+To support AVB features for other NICs, a new driver project has been added. This project includes the necessary modifications to support AVB functionalities such as gPTP, AVTP, and AVDECC.
+
+### Abstraction Layer for NIC-Specific Code
+
+An abstraction layer has been created to separate NIC-specific code from the AVBStreamHandler core functionality. This makes it easier to support multiple NICs.
+
+### Refactoring Existing Code
+
+The existing code in `AVDECC/AVDECC.cpp`, `AVTP/AVTP.cpp`, and `gPTP/gPTP.cpp` has been refactored to use the abstraction layer. This ensures that the AVBStreamHandler components can work with different NICs by implementing the necessary functions defined in the abstraction layer.
+
+### Implementing NIC-Specific Modules
+
+Separate modules have been developed for each NIC, implementing the necessary functions defined in the abstraction layer. This allows the AVBStreamHandler to support multiple NICs seamlessly.
+
+### Updating the Build Process
+
+The build scripts and `AVB_Windows.sln` file have been updated to include the new abstraction layer and NIC-specific modules. This ensures that the new driver project and abstraction layer are part of the build process.
+
+### Testing and Validation
+
+Ensure that the integrated components work correctly by running tests and validating the functionality. Use the provided test scripts and tools, such as `scripts/verify_wdk_installation.sh` and `scripts/verify_kmdf_installation.sh`.
+
+By following these steps, you can successfully integrate AVBStreamHandler with your current project and leverage its AVB functionalities for multiple NICs.
