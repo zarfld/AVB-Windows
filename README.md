@@ -1,3 +1,10 @@
+#Status: historical research / not maintained
+
+Do not use this README as evidence that Windows AVB support is complete.
+For current driver work, see IntelAvbFilter.
+
+
+
 # AVB Functionality on Windows 10 using Intel i210
 
 This document provides detailed instructions on how to set up and use the AVB (Audio Video Bridging) functionality on Windows 10 using an Intel i210 NIC.
